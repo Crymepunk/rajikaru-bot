@@ -13,6 +13,8 @@ logger.addHandler(handler)
 #client = discord.Client()
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'))
 
+#test commit
+
 @bot.event
 async def on_ready():
     print(f"Running on {bot.user}")
