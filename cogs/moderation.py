@@ -7,7 +7,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
-    async def ban(ctx, member: nextcord.Member, *, reason="No reason provided."):
+    async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """Syntax: ban [member]"""
         if commands.has_guild_permissions(manage_messages=True) or commands.has_guild_permissions(administrator=True):
             await ctx.send("Can't ban a Moderator")
@@ -17,7 +17,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_guild_permissions(kick_members=True)
-    async def kick(ctx, member: nextcord.Member, *, reason=None):
+    async def kick(self, ctx, member: nextcord.Member, *, reason=None):
         """Syntax: kick [member]"""
         await member.kick(reason=reason)
         await ctx.send(f'{member} has been kicked for "{reason}"')
