@@ -61,4 +61,3 @@ async def say(ctx, *, arg):
 
 token = open("token","r").readline()
 bot.run(token)
-#test
