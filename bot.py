@@ -18,6 +18,8 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'))
 async def on_ready():
     print(f"Running on {bot.user}")
 
+bot.load_extension("cogs.moderation")
+
 @bot.command(aliases=['av'])
 async def avatar(ctx, member: nextcord.Member = None):
     """Syntax: avatar (member)"""
@@ -25,20 +27,6 @@ async def avatar(ctx, member: nextcord.Member = None):
         await ctx.send(member.avatar)
     else:
         await ctx.send(ctx.author.avatar)
-
-@bot.command()
-@commands.has_guild_permissions(ban_members=True)
-async def ban(ctx, member: nextcord.Member, *, reason=None):
-    """Syntax: ban [member]"""
-    await member.ban(reason=reason)
-    await ctx.send(f"{member} has been banned for {reason}")
-
-@bot.command()
-@commands.has_guild_permissions(kick_members=True)
-async def kick(ctx, member: nextcord.Member, *, reason=None):
-    """Syntax: kick [member]"""
-    await member.kick(reason=reason)
-    await ctx.send(f"{member} has been kicked for {reason}")
 
 @bot.event
 async def on_message(message):
