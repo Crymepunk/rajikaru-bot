@@ -18,7 +18,11 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'))
 async def on_ready():
     print(f"Running on {bot.user}")
 
-bot.load_extension("cogs.moderation")
+try:
+    bot.load_extension("cogs.moderation")
+    print("Moderation cog loaded!")
+except Exception as e:
+    print("Failed to load moderation cog")
 
 @bot.command(aliases=['av'])
 async def avatar(ctx, member: nextcord.Member = None):
@@ -27,6 +31,17 @@ async def avatar(ctx, member: nextcord.Member = None):
         await ctx.send(member.avatar)
     else:
         await ctx.send(ctx.author.avatar)
+
+@bot.command()
+async def reload(ctx, arg):
+    if arg == "moderation":
+        try:
+            await bot.reload_extension("cogs.moderation")
+            await ctx.send("Reloaded Moderation cog!")
+        except Exception as e:
+            await ctx.send("Failed to reload :x:")
+    else:
+        await ctx.send("Invalid extension")
 
 @bot.event
 async def on_message(message):
