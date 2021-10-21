@@ -36,6 +36,7 @@ except Exception as e:
 
 @bot.command()
 async def reload(ctx, arg = None):
+    """Reloads cogs. Options: moderation, fun, utility, all"""
     if arg == "moderation":
         try:
             bot.reload_extension("cogs.moderation")

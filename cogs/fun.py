@@ -7,8 +7,9 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def say(self, ctx, *, arg):
+        """Syntax: say [message]"""
         await ctx.send(arg)
-    
+
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.author.bot:

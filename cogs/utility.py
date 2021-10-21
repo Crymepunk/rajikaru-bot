@@ -7,7 +7,7 @@ class Utility(commands.Cog):
 
     @commands.command(aliases=['av'])
     async def avatar(self, ctx, member: nextcord.Member = None):
-        """Syntax: avatar (member)"""
+        """Shows the pinged member's avatar Syntax: avatar (member)"""
         if(member != None):
             await ctx.send(member.avatar)
         else:
