@@ -1,3 +1,4 @@
 token
 discord.log
 cogs/__pycache__
+.DS_Store

@@ -34,7 +34,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, limit: int):
         """Syntax: purge [limit]"""
-        #await ctx.channel.purge(limit=limit+1)
+        await ctx.channel.purge(limit=limit+1)
         await ctx.send('Chat purged by {}'.format(ctx.author.mention))
         await ctx.message.delete()
 
