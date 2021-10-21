@@ -4,20 +4,21 @@ import os
 from time import sleep
 from nextcord.ext import commands
 
-#Makes program log to discord.log file
+# Makes program log to discord.log file
 logger = logging.getLogger('nextcord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-#Defines bot and adds a prefix
+# Defines bot and adds a prefix
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'))
 
 @bot.event
 async def on_ready():
     print(f"Running on {bot.user}")
 
+# Loading Nextcord.py Cogs
 try:
     bot.load_extension("cogs.moderation")
     print("Moderation cog loaded!")
@@ -77,6 +78,6 @@ async def reload(ctx, arg = None):
         await ctx.send("Invalid extension.")
 
 
-
+# Runs the bot, token needs to be in "token" file.
 token = open("token","r").readline()
 bot.run(token)
