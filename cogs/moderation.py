@@ -16,6 +16,11 @@ class Moderation(commands.Cog):
             await ctx.send("Cannot ban this user.")
 
     @commands.command()
+    @commands.has_guild_permissions(ban_members=True)
+    async def unban(self, ctx, member: nextcord.Member):
+        await ctx.guild.unban(user)
+
+    @commands.command()
     @commands.has_guild_permissions(kick_members=True)
     async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """Syntax: kick [member]"""
@@ -25,12 +30,11 @@ class Moderation(commands.Cog):
         except Exception as e:
             await ctx.send("Cannot kick this user.")
 
-
     @commands.command(pass_context=True,aliases=['clean'])
     @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, limit: int):
         """Syntax: purge [limit]"""
-        await ctx.channel.purge(limit=limit+1)
+        #await ctx.channel.purge(limit=limit+1)
         await ctx.send('Chat purged by {}'.format(ctx.author.mention))
         await ctx.message.delete()
 
