@@ -47,7 +47,7 @@ async def reload(ctx, arg = None):
             print("Reloaded All Cogs!")
         except Exception as e:
             await ctx.send("Failed to reload all cogs :x:")
-            print("Failed to reload all cogs :x:")
+            print("Failed to reload all cogs.")
     elif arg.lower() == "moderation" or arg.lower() == "fun" or arg.lower() =="utility":
         try:
             bot.reload_extension(f"cogs.{arg}")
@@ -55,7 +55,7 @@ async def reload(ctx, arg = None):
             print(f"Reloaded {arg.capitalize()} cog!")
         except Exception as e:
             await ctx.send("Failed to reload cog :x:")
-            print("Failed to reload cog :x:")
+            print("Failed to reload cog.")
     elif arg == None:
         await ctx.send("Missing argument!")
     else:
