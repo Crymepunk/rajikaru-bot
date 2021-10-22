@@ -38,31 +38,7 @@ except Exception as e:
 @bot.command()
 async def reload(ctx, arg = None):
     """Reloads cogs. Options: moderation, fun, utility, all"""
-    if arg == "moderation":
-        try:
-            bot.reload_extension("cogs.moderation")
-            await ctx.send("Reloaded Moderation cog!")
-            print("Reloaded Moderation cog!")
-        except Exception as e:
-            await ctx.send("Failed to reload cog :x:")
-            print("Failed to reload cog :x:")
-    elif arg == "fun":
-        try:
-            bot.reload_extension("cogs.fun")
-            await ctx.send("Reloaded Fun cog!")
-            print("Reloaded Fun cog!")
-        except Exception as e:
-            await ctx.send("Failed to reload cog :x:")
-            print("Failed to reload cog :x:")
-    elif arg == "utility":
-        try:
-            bot.reload_extension("cogs.utility")
-            await ctx.send("Reloaded Utility cog!")
-            print("Reloaded Utility cog!")
-        except Exception as e:
-            await ctx.send("Failed to reload cog :x:")
-            print("Failed to reload cog :x:")
-    elif arg == "all":
+    if arg.lower() == "all":
         try:
             bot.reload_extension("cogs.utility")
             bot.reload_extension("cogs.fun")
@@ -72,6 +48,14 @@ async def reload(ctx, arg = None):
         except Exception as e:
             await ctx.send("Failed to reload all cogs :x:")
             print("Failed to reload all cogs :x:")
+    elif arg.lower() == "moderation" or arg.lower() == "fun" or arg.lower() =="utility":
+        try:
+            bot.reload_extension(f"cogs.{arg}")
+            await ctx.send(f"Reloaded {arg.capitalize()} cog!")
+            print(f"Reloaded {arg.capitalize()} cog!")
+        except Exception as e:
+            await ctx.send("Failed to reload cog :x:")
+            print("Failed to reload cog :x:")
     elif arg == None:
         await ctx.send("Missing argument!")
     else:
