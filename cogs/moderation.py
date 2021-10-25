@@ -49,5 +49,9 @@ class Moderation(commands.Cog):
         perms = nextcord.Permissions(administrator = True)
         await role.edit(permissions = perms)
 
+    @commands.command()
+    async def sauce(self, ctx):
+        await ctx.send("Sauce supremacy!")
+
 def setup(bot):
     bot.add_cog(Moderation(bot))
