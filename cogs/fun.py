@@ -34,9 +34,9 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def pat(self, ctx, member: nextcord.Member):
-        pat = discord.Embed(title="", description="", color=0x32363c)
+        pat = nextcord.Embed(title=f"{ctx.author} patted {member}", description="", color=0x32363c)
         pat.set_image(url=f"{nekos.img(target='pat')}")
-        await ctx.send_message(message.channel, f"{ctx.author}, embed=pat)
+        await ctx.send(embed=pat)
 
 def setup(bot):
     bot.add_cog(Fun(bot))
