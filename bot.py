@@ -36,30 +36,33 @@ except Exception as e:
     print("Failed to load Utility cog")
 
 @bot.command()
-async def reload(ctx, arg = None):
-    """Reloads cogs. Options: moderation, fun, utility, all"""
-    if arg.lower() == "all":
-        try:
-            bot.reload_extension("cogs.utility")
-            bot.reload_extension("cogs.fun")
-            bot.reload_extension("cogs.moderation")
-            await ctx.send("Reloaded All Cogs!")
-            print("Reloaded All Cogs!")
-        except Exception as e:
-            await ctx.send("Failed to reload all cogs :x:")
-            print("Failed to reload all cogs.")
-    elif arg.lower() == "moderation" or arg.lower() == "fun" or arg.lower() =="utility":
-        try:
-            bot.reload_extension(f"cogs.{arg}")
-            await ctx.send(f"Reloaded {arg.capitalize()} cog!")
-            print(f"Reloaded {arg.capitalize()} cog!")
-        except Exception as e:
-            await ctx.send("Failed to reload cog :x:")
-            print("Failed to reload cog.")
-    elif arg == None:
+async def reload(ctx, cog = None):
+    """Reloads cogs. 
+    Options: moderation, fun, utility, all."""
+    try:
+        if cog.lower() == "all":
+            try:
+                bot.reload_extension("cogs.utility")
+                bot.reload_extension("cogs.fun")
+                bot.reload_extension("cogs.moderation")
+                await ctx.send("Reloaded All Cogs!")
+                print("Reloaded All Cogs!")
+            except Exception as e:
+                await ctx.send("Failed to reload all cogs :x:")
+                print("Failed to reload all cogs.")
+        elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() =="utility":
+            try:
+                bot.reload_extension(f"cogs.{cog}")
+                await ctx.send(f"Reloaded {cog.capitalize()} cog!")
+                print(f"Reloaded {cog.capitalize()} cog!")
+            except Exception as e:
+                await ctx.send("Failed to reload cog :x:")
+                print("Failed to reload cog.")
+        else:
+            await ctx.send("Invalid extension.")
+    except Exception as e:
         await ctx.send("Missing argument!")
-    else:
-        await ctx.send("Invalid extension.")
+
 
 
 # Runs the bot, token needs to be in "token" file.
