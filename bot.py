@@ -34,6 +34,11 @@ try:
     print("Utility cog loaded!")
 except Exception as e:
     print("Failed to load Utility cog")
+try:
+    bot.load_extension("cogs.nsfw")
+    print("NSFW cog loaded!")
+except Exception as e:
+    print("Failed to load NSFW cog")
 
 @bot.command()
 async def reload(ctx, cog = None):
@@ -45,12 +50,13 @@ async def reload(ctx, cog = None):
                 bot.reload_extension("cogs.utility")
                 bot.reload_extension("cogs.fun")
                 bot.reload_extension("cogs.moderation")
+                bot.reload_extension("cogs.nsfw")
                 await ctx.send("Reloaded All Cogs!")
                 print("Reloaded All Cogs!")
             except Exception as e:
                 await ctx.send("Failed to reload all cogs :x:")
                 print("Failed to reload all cogs.")
-        elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() =="utility":
+        elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "nsfw":
             try:
                 bot.reload_extension(f"cogs.{cog}")
                 await ctx.send(f"Reloaded {cog.capitalize()} cog!")
