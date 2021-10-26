@@ -28,8 +28,9 @@ class Fun(commands.Cog):
         await ctx.send(nekos.owoify(text=message))
 
     @commands.command()
-    async def lewdneko(self, ctx, arg = None):
-        """'?help lewdneko' for more info
+    @commands.is_nsfw()
+    async def lewd(self, ctx, arg = None):
+        """'?help lewd' for more info
         Possible Choices:
         feet, yuri, trap, futanari, hololewd, lewdkemo, solog, feetg, 
         cum, erokemo, les, wallpaper, lewdk, ngif, tickle, lewd, feed, 
@@ -40,7 +41,7 @@ class Fun(commands.Cog):
         boobs, random_hentai_gif, smallboobs, hug, ero, smug, goose, baka, woof"""
         try:
             if arg == None:
-                await ctx.send(nekos.img(target=yuri))
+                await ctx.send(nekos.img(target="yuri"))
             else:
                 await ctx.send(nekos.img(target=arg))
         except Exception as e:
