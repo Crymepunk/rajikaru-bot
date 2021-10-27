@@ -13,9 +13,5 @@ class Utility(commands.Cog):
         else:
             await ctx.reply(ctx.author.avatar)
 
-    @commands.command()
-    async def ping(ctx):
-        await ctx.send(f"{bot.latency}")
-
 def setup(bot):
     bot.add_cog(Utility(bot))
