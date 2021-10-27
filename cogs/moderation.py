@@ -13,7 +13,7 @@ class Moderation(commands.Cog):
             await member.ban(reason=reason)
             await ctx.send(f'{member} has been banned for "{reason}"')
         except Exception as e:
-            await ctx.send("Cannot ban this user.")
+            await ctx.reply("Cannot ban this user.")
 
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
@@ -28,7 +28,7 @@ class Moderation(commands.Cog):
             await member.kick(reason=reason)
             await ctx.send(f'{member} has been kicked for "{reason}"')
         except Exception as e:
-            await ctx.send("Cannot kick this user.")
+            await ctx.reply("Cannot kick this user.")
 
     @commands.command(pass_context=True,aliases=['clean'])
     @commands.has_permissions(manage_messages=True)

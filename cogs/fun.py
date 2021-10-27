@@ -32,35 +32,35 @@ class Fun(commands.Cog):
     @commands.command()
     async def neko(self, ctx):
         """Sends a random catperson image"""
-        await ctx.send(nekos.img(target="neko"))
+        await ctx.reply(nekos.img(target="neko"))
 
     @commands.command()
     async def pat(self, ctx, member: nextcord.Member):
         """Pats the pinged member"""
         pat = nextcord.Embed(title=f"{ctx.author} pats {member}", description="", color = random.randint(0, 0xFFFFFF))
         pat.set_image(url=f"{nekos.img(target='pat')}")
-        await ctx.send(embed=pat)
+        await ctx.reply(embed=pat)
 
     @commands.command()
     async def slap(self, ctx, member: nextcord.Member):
         """Slaps the pinged member"""
         slap = nextcord.Embed(title=f"{ctx.author} slaps {member}", description="", color = random.randint(0, 0xFFFFFF))
         slap.set_image(url=f"{nekos.img(target='slap')}")
-        await ctx.send(embed=slap)
+        await ctx.reply(embed=slap)
 
     @commands.command()
     async def cuddle(self, ctx, member: nextcord.Member):
         """Cuddles the pinged member"""
         cuddle = nextcord.Embed(title=f"{ctx.author} cuddles {member}", description="", color = random.randint(0, 0xFFFFFF))
         cuddle.set_image(url=f"{nekos.img(target='cuddle')}")
-        await ctx.send(embed=cuddle)
+        await ctx.reply(embed=cuddle)
 
     @commands.command()
     async def hug(self, ctx, member: nextcord.Member):
         """Hugs the pinged member"""
         hug = nextcord.Embed(title=f"{ctx.author} hugs {member}", description="", color = random.randint(0, 0xFFFFFF))
         hug.set_image(url=f"{nekos.img(target='hug')}")
-        await ctx.send(embed=hug)
+        await ctx.reply(embed=hug)
 
 def setup(bot):
     bot.add_cog(Fun(bot))

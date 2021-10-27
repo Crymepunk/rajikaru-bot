@@ -20,9 +20,9 @@ class NSFW(commands.Cog):
         boobs, random_hentai_gif, smallboobs, ero, smug, goose, baka, woof"""
         try:
             if arg == None:
-                await ctx.send(nekos.img(target="yuri"))
+                await ctx.reply(nekos.img(target="yuri"))
             else:
-                await ctx.send(nekos.img(target=arg))
+                await ctx.reply(nekos.img(target=arg))
         except Exception as e:
             await ctx.send("Invalid argument.")
 

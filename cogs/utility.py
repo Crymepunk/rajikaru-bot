@@ -9,9 +9,13 @@ class Utility(commands.Cog):
     async def avatar(self, ctx, member: nextcord.Member = None):
         """Shows the pinged member's avatar Syntax: avatar (member)"""
         if(member != None):
-            await ctx.send(member.avatar)
+            await ctx.reply(member.avatar)
         else:
-            await ctx.send(ctx.author.avatar)
+            await ctx.reply(ctx.author.avatar)
+
+    @commands.command()
+    async def ping(ctx):
+        await ctx.send(f"{bot.latency}")
 
 def setup(bot):
     bot.add_cog(Utility(bot))

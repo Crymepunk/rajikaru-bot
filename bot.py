@@ -42,7 +42,7 @@ except Exception as e:
 
 @bot.command()
 async def reload(ctx, cog = None):
-    """Reloads cogs. 
+    """Reloads cogs.
     Options: moderation, fun, utility, all."""
     try:
         if cog.lower() == "all":
@@ -51,21 +51,21 @@ async def reload(ctx, cog = None):
                 bot.reload_extension("cogs.fun")
                 bot.reload_extension("cogs.moderation")
                 bot.reload_extension("cogs.nsfw")
-                await ctx.send("Reloaded All Cogs!")
+                await ctx.reply("Reloaded All Cogs!")
                 print("Reloaded All Cogs!")
             except Exception as e:
-                await ctx.send("Failed to reload all cogs :x:")
+                await ctx.reply("Failed to reload all cogs :x:")
                 print("Failed to reload all cogs.")
         elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "nsfw":
             try:
                 bot.reload_extension(f"cogs.{cog}")
-                await ctx.send(f"Reloaded {cog.capitalize()} cog!")
+                await ctx.reply(f"Reloaded {cog.capitalize()} cog!")
                 print(f"Reloaded {cog.capitalize()} cog!")
             except Exception as e:
                 await ctx.send("Failed to reload cog :x:")
                 print("Failed to reload cog.")
         else:
-            await ctx.send("Invalid extension.")
+            await ctx.reply("Invalid extension.")
     except Exception as e:
         await ctx.send("Missing argument!")
 
