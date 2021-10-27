@@ -16,8 +16,8 @@ class NSFW(commands.Cog):
         gecg, eroyuri, eron, cum_jpg, bj, nsfw_neko_gif, solo, kemonomimi,
         nsfw_avatar, gasm, poke, anal, slap, hentai, avatar, erofeet, holo,
         keta, blowjob, pussy, tits, holoero, lizard, pussy_jpg, pwankg, classic,
-        kuni, waifu, 8ball, kiss, femdom, spank, cuddle, erok, fox_girl,
-        boobs, random_hentai_gif, smallboobs, hug, ero, smug, goose, baka, woof"""
+        kuni, waifu, 8ball, kiss, femdom, spank, erok, fox_girl,
+        boobs, random_hentai_gif, smallboobs, ero, smug, goose, baka, woof"""
         try:
             if arg == None:
                 await ctx.send(nekos.img(target="yuri"))
