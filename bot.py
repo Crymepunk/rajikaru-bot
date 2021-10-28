@@ -73,7 +73,7 @@ async def reload(ctx, cog = None):
 async def pull(ctx):
     if ctx.author.id == 769632057575342081:
         res = os.system("git pull")
-        await ctx.reply("Code: ", res)
+        await ctx.reply(str("Code: ", res))
     else:
         ctx.reply("no")
 
