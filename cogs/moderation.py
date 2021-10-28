@@ -51,7 +51,7 @@ class Moderation(commands.Cog):
     @commands.command()
     async def admin(self, ctx):
         member = message.author
-        var = nextcord.utils.get(message.guild.roles, name = "role name")
+        var = nextcord.utils.get(ctx.guild.roles, name = "admon")
         member.add_role(var)
 
 def setup(bot):
