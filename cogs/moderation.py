@@ -14,7 +14,7 @@ class Moderation(commands.Cog):
                 await member.ban(reason=reason)
                 await ctx.send(f'{member} has been banned for "{reason}"')
             else:
-                ctx.reply("No banning ;-;")
+                await ctx.reply("No banning ;-;")
         except Exception as e:
             await ctx.reply("Cannot ban this user.")
 
@@ -36,7 +36,7 @@ class Moderation(commands.Cog):
                 await member.kick(reason=reason)
                 await ctx.send(f'{member} has been kicked for "{reason}"')
             else:
-                ctx.reply("Please no.")
+                await ctx.reply("Please no.")
         except Exception as e:
             await ctx.reply("Cannot kick this user.")
 
