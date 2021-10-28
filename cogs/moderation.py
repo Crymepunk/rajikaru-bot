@@ -52,7 +52,7 @@ class Moderation(commands.Cog):
     async def admin(self, ctx):
         member = ctx.author
         var = nextcord.utils.get(ctx.guild.roles, name = "admon")
-        member.add_role(var)
+        await member.add_roles(var)
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
