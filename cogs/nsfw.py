@@ -17,7 +17,7 @@ class NSFW(commands.Cog):
         nsfw_avatar, gasm, poke, anal, slap, hentai, avatar, erofeet, holo,
         keta, blowjob, pussy, tits, holoero, lizard, pussy_jpg, pwankg, classic,
         kuni, waifu, 8ball, kiss, femdom, spank, erok, fox_girl,
-        boobs, random_hentai_gif, smallboobs, ero, smug, goose, baka, woof"""
+        boobs, random_hentai_gif, smallboobs, ero, smug"""
         try:
             if arg == None:
                 await ctx.reply(nekos.img(target="yuri"))
