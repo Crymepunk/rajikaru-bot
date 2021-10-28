@@ -76,7 +76,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def sauce(self, ctx):
-        await ctx.send("Sauce supremacy!")
+        await ctx.send("Sauce sucks!")
 
 def setup(bot):
     bot.add_cog(Fun(bot))
