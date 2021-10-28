@@ -69,7 +69,13 @@ async def reload(ctx, cog = None):
     except Exception as e:
         await ctx.send("Missing argument!")
 
-
+@bot.command()
+async def pull(ctx):
+    if ctx.author.id == 769632057575342081:
+        res = os.system(git pull)
+        await ctx.reply(res)
+    else:
+        ctx.reply("no")
 
 # Runs the bot, token needs to be in "token" file.
 token = open("token","r").readline()
