@@ -10,8 +10,11 @@ class Moderation(commands.Cog):
     async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """B a n  h a m m e r"""
         try:
-            await member.ban(reason=reason)
-            await ctx.send(f'{member} has been banned for "{reason}"')
+            if ctx.guild.id != 903236631958548501:
+                await member.ban(reason=reason)
+                await ctx.send(f'{member} has been banned for "{reason}"')
+            else:
+                ctx.reply("No banning ;-;")
         except Exception as e:
             await ctx.reply("Cannot ban this user.")
 
@@ -19,11 +22,8 @@ class Moderation(commands.Cog):
     @commands.has_guild_permissions(ban_members=True)
     async def unban(self, ctx, member: nextcord.Member):
         try:
-            if ctx.guild.id != 903236631958548501:
-                await ctx.guild.unban(member)
-                await ctx.send(f"{member} has been unbanned")
-            else:
-                ctx.reply("No banning ;-;")
+            await ctx.guild.unban(member)
+            await ctx.send(f"{member} has been unbanned")
         except Exception as e:
             await ctx.reply(f"Failed to unban {member}")
 
