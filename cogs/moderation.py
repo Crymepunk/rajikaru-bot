@@ -18,7 +18,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
     async def unban(self, ctx, member: nextcord.Member):
-        await ctx.guild.unban(user)
+        await ctx.guild.unban(member)
 
     @commands.command()
     @commands.has_guild_permissions(kick_members=True)

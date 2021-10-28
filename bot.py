@@ -44,30 +44,33 @@ except Exception as e:
 async def reload(ctx, cog = None):
     """Reloads cogs.
     Options: moderation, fun, utility, all."""
-    try:
-        if cog.lower() == "all":
-            try:
-                bot.reload_extension("cogs.utility")
-                bot.reload_extension("cogs.fun")
-                bot.reload_extension("cogs.moderation")
-                bot.reload_extension("cogs.nsfw")
-                await ctx.reply("Reloaded All Cogs!")
-                print("Reloaded All Cogs!")
-            except Exception as e:
-                await ctx.reply("Failed to reload all cogs :x:")
-                print("Failed to reload all cogs.")
-        elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "nsfw":
-            try:
-                bot.reload_extension(f"cogs.{cog}")
-                await ctx.reply(f"Reloaded {cog.capitalize()} cog!")
-                print(f"Reloaded {cog.capitalize()} cog!")
-            except Exception as e:
-                await ctx.send("Failed to reload cog :x:")
-                print("Failed to reload cog.")
-        else:
-            await ctx.reply("Invalid extension.")
-    except Exception as e:
-        await ctx.send("Missing argument!")
+    if ctx.author.id == 769632057575342081:
+        try:
+            if cog.lower() == "all":
+                try:
+                    bot.reload_extension("cogs.utility")
+                    bot.reload_extension("cogs.fun")
+                    bot.reload_extension("cogs.moderation")
+                    bot.reload_extension("cogs.nsfw")
+                    await ctx.reply("Reloaded All Cogs!")
+                    print("Reloaded All Cogs!")
+                except Exception as e:
+                    await ctx.reply("Failed to reload all cogs :x:")
+                    print("Failed to reload all cogs.")
+            elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "nsfw":
+                try:
+                    bot.reload_extension(f"cogs.{cog}")
+                    await ctx.reply(f"Reloaded {cog.capitalize()} cog!")
+                    print(f"Reloaded {cog.capitalize()} cog!")
+                except Exception as e:
+                    await ctx.send("Failed to reload cog :x:")
+                    print("Failed to reload cog.")
+            else:
+                await ctx.reply("Invalid extension.")
+        except Exception as e:
+            await ctx.send("Missing argument!")
+    else:
+        ctx.reply("please dont.")
 
 @bot.command()
 async def pull(ctx):
