@@ -18,5 +18,6 @@ class Utility(commands.Cog):
     async def nick(self, ctx, member: nextcord.Member, nick):
         await member.edit(nick=nick)
         await ctx.send(f"Changed {member}'s nickname to {member.mention}")
+
 def setup(bot):
     bot.add_cog(Utility(bot))
