@@ -29,20 +29,10 @@ class Moderation(commands.Cog):
         except Exception as e:
             await ctx.reply(f"Cannot ban {member}.")
 
-
-    @commands.command()
-    @commands.has_guild_permissions(ban_members=True)
-    async def unban(self, ctx, member: nextcord.Member):
-        try:
-            await nextcord.Member.unban(member, reason=None)
-            await ctx.send(f"{member} has been unbanned")
-        except Exception as e:
-            await ctx.reply(f"Failed to unban {member}")
-
     @commands.command()
     @commands.has_guild_permissions(kick_members=True)
     @commands.check(no_hommies_check)
-    async def kick(self, ctx, member: nextcord.ClientUser.id, *, reason="No reason provided."):
+    async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """KicKkk"""
         try:
                 await member.kick(reason=reason)
