@@ -15,6 +15,9 @@ class Moderation(commands.Cog):
     def no_hommies_general_check(ctx):
         return ctx.channel.id != 903236632684138559
 
+    def no_hommies_japog_check(ctx):
+        return ctx.channel.id != 903240630480805898
+
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
     @commands.check(no_hommies_check)
@@ -49,6 +52,7 @@ class Moderation(commands.Cog):
 
     @commands.command(pass_context=True,aliases=['clean'])
     @commands.check(no_hommies_general_check)
+    @commands.check(no_hommies_japog_check)
     @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, limit: int):
         """Removes messages"""
