@@ -16,6 +16,7 @@ class Utility(commands.Cog):
     @commands.command(pass_context=True)
     @commands.has_guild_permissions(manage_nicknames=True)
     async def nick(self, ctx, member: nextcord.Member, nick):
+        """Give a nickname to the mentioned user."""
         await member.edit(nick=nick)
         await ctx.send(f"Changed {member}'s nickname to {member.mention}")
 
