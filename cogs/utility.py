@@ -7,7 +7,7 @@ class Utility(commands.Cog):
 
     @commands.command(aliases=['av'])
     async def avatar(self, ctx, member: nextcord.Member = None):
-        """Shows the pinged member's avatar Syntax: avatar (member)"""
+        """Shows the pinged member's avatar."""
         if(member != None):
             await ctx.reply(member.avatar)
         else:
@@ -23,7 +23,7 @@ class Utility(commands.Cog):
     @commands.command()
     @commands.has_guild_permissions(manage_roles=True)
     async def role(self, ctx, member: nextcord.Member, role: nextcord.Role):
-        """Ignore this please."""
+        """Adds role to the pinged user."""
         try: 
             await member.add_roles(role)
             await ctx.send(f"Added {role.name} to {member.display_name}")
