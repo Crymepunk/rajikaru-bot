@@ -43,7 +43,7 @@ except Exception as e:
 @bot.command()
 async def reload(ctx, cog = None):
     """Reloads cogs.
-    Options: moderation, fun, utility, all."""
+    Options: moderation, fun, utility, NSFW, all."""
     if ctx.author.id == 744982881562263592:
         try:
             if cog.lower() == "all":
@@ -74,6 +74,7 @@ async def reload(ctx, cog = None):
 
 @bot.command()
 async def pull(ctx):
+    "Pulls the latest version from github, use reload after using this command."
     if ctx.author.id == 744982881562263592:
         res = os.system("git pull")
         await ctx.reply(res)

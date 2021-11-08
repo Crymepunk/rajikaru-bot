@@ -19,5 +19,11 @@ class Utility(commands.Cog):
         await member.edit(nick=nick)
         await ctx.send(f"Changed {member}'s nickname to {member.mention}")
 
+    @commands.command()
+    @commands.has_guild_permissions(manage_roles=True)
+    async def role(self, ctx, member: nextcord.Member, role: nextcord.Role):
+        """Ignore this please."""
+        await member.add_roles(role)
+
 def setup(bot):
     bot.add_cog(Utility(bot))
