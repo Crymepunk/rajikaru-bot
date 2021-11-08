@@ -75,6 +75,14 @@ class Fun(commands.Cog):
         await ctx.reply(embed=hug)
 
     @commands.command()
+    async def gayrate(self, ctx, member: nextcord.Member = None):
+        if member != None:
+            embed = nextcord.Embed(title=f"Gayness Percentage", description=f"{member.display_name} is {random.randint(0,101)}% gay", color = random.randint(0, 0xFFFFFF))
+        else:
+            embed = nextcord.Embed(title=f"Gayness Percentage", description=f"You are {random.randint(0,101)}% gay", color = random.randint(0, 0xFFFFFF))
+        await ctx.reply(embed=embed)
+
+    @commands.command()
     async def sauce(self, ctx):
         await ctx.send("Sauce sucks!")
 
