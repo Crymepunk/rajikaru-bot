@@ -11,11 +11,9 @@ Help command output:
   say    Says the message you tell it to say.
   slap   Slaps the pinged member.
 Moderation:
-  admin  
   ban    B a n  h a m m e r
   kick   KicKkk
   purge  Removes messages
-  unban  
 Utility:
   avatar Shows the pinged member's avatar Syntax: avatar (member)
   nick   
