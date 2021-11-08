@@ -30,6 +30,5 @@ class Utility(commands.Cog):
         except Exception as e:
             await ctx.send(f"Can't give {role.name} to {member.display_name}")
 
-
 def setup(bot):
     bot.add_cog(Utility(bot))

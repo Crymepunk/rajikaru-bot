@@ -76,6 +76,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def gayrate(self, ctx, member: nextcord.Member = None):
+        """How gay is the pinged person O_o"""
         if member != None:
             embed = nextcord.Embed(title=f"Gayness Percentage", description=f"{member.display_name} is {random.randint(0,101)}% gay", color = random.randint(0, 0xFFFFFF))
         else:
