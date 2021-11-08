@@ -24,7 +24,12 @@ class Utility(commands.Cog):
     @commands.has_guild_permissions(manage_roles=True)
     async def role(self, ctx, member: nextcord.Member, role: nextcord.Role):
         """Ignore this please."""
-        await member.add_roles(role)
+        try: 
+            await member.add_roles(role)
+            await ctx.send(f"Added {role.name} to {member.display_name}")
+        except Exception as e:
+            await ctx.send(f"Can't give {role.name} to {member.display_name}")
+
 
 def setup(bot):
     bot.add_cog(Utility(bot))
