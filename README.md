@@ -2,6 +2,9 @@
 
 Help command output:
 ```
+Base:
+  pull       Pulls the latest version from github
+  reload     Reloads cogs.
 Fun:
   cuddle     Cuddles the pinged member.
   gayrate    How gay is the pinged person O_o
@@ -24,8 +27,6 @@ Utility:
   userinfo   Shows member information.
 No Category:
   help       Shows this message
-  pull       Pulls the latest version from github
-  reload     Reloads cogs.
 
 Type ?help command for more info on a command.
 You can also type ?help category for more info on a category.
