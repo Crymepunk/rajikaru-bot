@@ -12,12 +12,15 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
+# Loads config.json
 with open("config.json") as f:
     config = json.load(f)
 
 token = config.get("token")
 prefix = config.get("prefix")
 uid = int(config.get("uid"))
+
+# Check if required variables have been changed.
 if token == "CHANGEME":
     print("Please change the token in config.json!")
     exit()
@@ -28,31 +31,32 @@ elif uid == 1234567890:
 # Defines bot and adds a prefix
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
 
+# Check if the bot is running and ready
 @bot.event
 async def on_ready():
-    print(f"Running on {bot.user}")
+    print(f"{Fore.RED}R{Fore.GREEN}u{Fore.YELLOW}nn{Fore.BLUE}i{Fore.MAGENTA}n{Fore.CYAN}g {Fore.WHITE}on {bot.user}")
 
 # Loading Nextcord.py Cogs
 try:
     bot.load_extension("cogs.moderation")
-    print(f"{Fore.GREEN}Moderation cog loaded!")
+    print(f"{Fore.GREEN}Moderation {Fore.WHITE}cog loaded!")
 except Exception as e:
-    print("Failed to load Moderation cog")
+    print(f"{Fore.RED}Failed to load Moderation cog")
 try:
     bot.load_extension("cogs.fun")
-    print("Fun cog loaded!")
+    print(f"{Fore.GREEN}Fun {Fore.WHITE}cog loaded!")
 except Exception as e:
-    print("Failed to load Fun cog")
+    print(f"{Fore.RED}Failed to load Fun cog")
 try:
     bot.load_extension("cogs.utility")
-    print("Utility cog loaded!")
+    print(f"{Fore.GREEN}Utility {Fore.WHITE}cog loaded!")
 except Exception as e:
-    print("Failed to load Utility cog")
+    print(f"{Fore.RED}Failed to load Utility cog")
 try:
     bot.load_extension("cogs.nsfw")
-    print("NSFW cog loaded!")
+    print(f"{Fore.MAGENTA}NSFW {Fore.WHITE}cog loaded!")
 except Exception as e:
-    print("Failed to load NSFW cog")
+    print(f"{Fore.RED}Failed to load NSFW cog")
 
 @bot.command()
 async def reload(ctx, cog = None):
@@ -67,18 +71,18 @@ async def reload(ctx, cog = None):
                     bot.reload_extension("cogs.moderation")
                     bot.reload_extension("cogs.nsfw")
                     await ctx.reply("Reloaded All Cogs!")
-                    print("Reloaded All Cogs!")
+                    print(f"{Fore.WHITE}Reloaded {Fore.GREEN}All {Fore.WHITE}Cogs!")
                 except Exception as e:
                     await ctx.reply("Failed to reload all cogs :x:")
-                    print("Failed to reload all cogs.")
+                    print(f"{Fore.RED}Failed to reload all cogs.")
             elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "nsfw":
                 try:
                     bot.reload_extension(f"cogs.{cog}")
                     await ctx.reply(f"Reloaded {cog.capitalize()} cog!")
-                    print(f"Reloaded {cog.capitalize()} cog!")
+                    print(f"{Fore.WHITE}Reloaded {Fore.GREEN}{cog.capitalize()} {Fore.WHITE}cog!")
                 except Exception as e:
                     await ctx.send("Failed to reload cog :x:")
-                    print("Failed to reload cog.")
+                    print(f"{Fore.RED}Failed to reload {cog.capitalize()} cog.")
             else:
                 await ctx.reply("Invalid extension.")
         except Exception as e:
@@ -96,6 +100,4 @@ async def pull(ctx):
     else:
         await ctx.reply("no")
 
-# Runs the bot, token needs to be in "token" file.
-# token = open("token","r").readline()
 bot.run(token)
