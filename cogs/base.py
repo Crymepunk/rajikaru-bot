@@ -1,6 +1,7 @@
 from nextcord.ext import commands
 import json
 from colorama import Fore
+import os
 
 # Loads config.json
 with open("config.json") as f:

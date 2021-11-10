@@ -1,6 +1,5 @@
 import nextcord
 import logging
-import os
 from colorama import Fore
 from nextcord.ext import commands
 import json
