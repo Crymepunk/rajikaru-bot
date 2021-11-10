@@ -17,7 +17,7 @@ Moderation:
   kick    KicKkk
   purge   Removes messages
 Utility:
-  avatar  Shows the pinged member's avatar Syntax: avatar (member)
+  avatar  Shows the pinged member's avatar.
   nick    Give a nickname to the mentioned user.
   role    Adds role to the pinged user.
 No Category:
