@@ -1,8 +1,9 @@
 import nextcord
 import logging
 import os
-from time import sleep
+from colorama import Fore, init
 from nextcord.ext import commands
+import json
 
 # Makes program log to discord.log file
 logger = logging.getLogger('nextcord')
@@ -11,8 +12,21 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
+with open("config.json") as f:
+    config = json.load(f)
+
+token = config.get("token")
+prefix = config.get("prefix")
+uid = int(config.get("uid"))
+if token == "CHANGEME":
+    print("Please change the token in config.json!")
+    exit()
+elif uid == 1234567890:
+    print("Please change the uid in config.json!")
+    exit()
+
 # Defines bot and adds a prefix
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'))
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
 
 @bot.event
 async def on_ready():
@@ -21,7 +35,7 @@ async def on_ready():
 # Loading Nextcord.py Cogs
 try:
     bot.load_extension("cogs.moderation")
-    print("Moderation cog loaded!")
+    print(f"{Fore.GREEN}Moderation cog loaded!")
 except Exception as e:
     print("Failed to load Moderation cog")
 try:
@@ -44,7 +58,7 @@ except Exception as e:
 async def reload(ctx, cog = None):
     """Reloads cogs.
     Options: moderation, fun, utility, NSFW, all."""
-    if ctx.author.id == 744982881562263592:
+    if ctx.author.id == uid:
         try:
             if cog.lower() == "all":
                 try:
@@ -76,12 +90,12 @@ async def reload(ctx, cog = None):
 async def pull(ctx):
     """Pulls the latest version from github
     use reload after using this command."""
-    if ctx.author.id == 744982881562263592:
+    if ctx.author.id == uid:
         res = os.system("git pull")
         await ctx.reply(res)
     else:
         await ctx.reply("no")
 
 # Runs the bot, token needs to be in "token" file.
-token = open("token","r").readline()
+# token = open("token","r").readline()
 bot.run(token)
