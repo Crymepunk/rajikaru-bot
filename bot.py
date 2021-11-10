@@ -28,8 +28,11 @@ elif uid == 1234567890:
     print("Please change the uid in config.json!")
     exit()
 
+intents = nextcord.Intents.default()
+intents.members = True
+
 # Defines bot and adds a prefix
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix), intents=intents)
 
 # Check if the bot is running and ready
 @bot.event

@@ -1,8 +1,5 @@
-from os import name
-from typing import Sized
 import nextcord
 from nextcord.ext import commands
-import datetime
 import random
 
 class Utility(commands.Cog):
@@ -45,6 +42,20 @@ class Utility(commands.Cog):
         embed.add_field(name="Joined Server at\n", value=joined, inline=True)
         embed.add_field(name="Joined Discord at\n", value=created, inline=True)
         embed.set_thumbnail(url=f"{member.avatar}")
+        await ctx.reply(embed=embed)
+
+    @commands.command(aliases=['server-info'])
+    async def serverinfo(self, ctx):
+        created = ctx.guild.created_at.strftime("%d/%m/%Y")
+        embed = nextcord.Embed(title=f"{ctx.guild.name}", color = random.randint(0, 0xFFFFFF))
+        embed.add_field(name="Owner\n", value=ctx.guild.owner, inline=True)
+        embed.add_field(name="Category Channels\n", value=f"{len(ctx.guild.categories)}", inline=True)
+        embed.add_field(name="Text Channels\n", value=f"{len(ctx.guild.text_channels)}", inline=True)
+        embed.add_field(name="Voice Channels\n", value=f"{len(ctx.guild.voice_channels)}", inline=True)
+        embed.add_field(name="Members\n", value=ctx.guild.member_count, inline=True)
+        embed.add_field(name="Roles\n", value=f"{len(ctx.guild.roles)}", inline=True)
+        embed.set_footer(text=f"ID: {ctx.guild.id} | Server Created -> {created}")
+        embed.set_thumbnail(url=(ctx.guild.icon or "https://cdn.discordapp.com/avatars/900694117355487283/1da67d4f41e66eb8aa222bd8d5837857.png?size=1024"))
         await ctx.reply(embed=embed)
 
 def setup(bot):
