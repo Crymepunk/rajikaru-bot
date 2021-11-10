@@ -33,6 +33,7 @@ class Utility(commands.Cog):
 
     @commands.command(aliases=['user-info'])
     async def userinfo(self, ctx, member: nextcord.Member = None):
+        """Shows member information."""
         if member == None:
             member = ctx.author
         joined = member.joined_at.strftime("%H:%M %d/%m/%Y in %Z")
@@ -46,6 +47,7 @@ class Utility(commands.Cog):
 
     @commands.command(aliases=['server-info'])
     async def serverinfo(self, ctx):
+        """Shows server information."""
         created = ctx.guild.created_at.strftime("%d/%m/%Y")
         embed = nextcord.Embed(title=f"{ctx.guild.name}", color = random.randint(0, 0xFFFFFF))
         embed.add_field(name="Owner\n", value=ctx.guild.owner, inline=True)
