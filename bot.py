@@ -1,7 +1,7 @@
 import nextcord
 import logging
 import os
-from colorama import Fore, init
+from colorama import Fore
 from nextcord.ext import commands
 import json
 
@@ -41,6 +41,11 @@ async def on_ready():
 
 # Loading Nextcord.py Cogs
 try:
+    bot.load_extension("cogs.base")
+    print(f"{Fore.GREEN}Base {Fore.WHITE}cog loaded!")
+except Exception as e:
+    print(f"{Fore.RED}Failed to load Base cog")
+try:
     bot.load_extension("cogs.moderation")
     print(f"{Fore.GREEN}Moderation {Fore.WHITE}cog loaded!")
 except Exception as e:
@@ -60,47 +65,5 @@ try:
     print(f"{Fore.MAGENTA}NSFW {Fore.WHITE}cog loaded!")
 except Exception as e:
     print(f"{Fore.RED}Failed to load NSFW cog")
-
-@bot.command()
-async def reload(ctx, cog = None):
-    """Reloads cogs.
-    Options: moderation, fun, utility, NSFW, all."""
-    if ctx.author.id == uid:
-        try:
-            if cog.lower() == "all":
-                try:
-                    bot.reload_extension("cogs.utility")
-                    bot.reload_extension("cogs.fun")
-                    bot.reload_extension("cogs.moderation")
-                    bot.reload_extension("cogs.nsfw")
-                    await ctx.reply("Reloaded All Cogs!")
-                    print(f"{Fore.WHITE}Reloaded {Fore.GREEN}All {Fore.WHITE}Cogs!")
-                except Exception as e:
-                    await ctx.reply("Failed to reload all cogs :x:")
-                    print(f"{Fore.RED}Failed to reload all cogs.")
-            elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "nsfw":
-                try:
-                    bot.reload_extension(f"cogs.{cog}")
-                    await ctx.reply(f"Reloaded {cog.capitalize()} cog!")
-                    print(f"{Fore.WHITE}Reloaded {Fore.GREEN}{cog.capitalize()} {Fore.WHITE}cog!")
-                except Exception as e:
-                    await ctx.send("Failed to reload cog :x:")
-                    print(f"{Fore.RED}Failed to reload {cog.capitalize()} cog.")
-            else:
-                await ctx.reply("Invalid extension.")
-        except Exception as e:
-            await ctx.reply("Missing argument!")
-    else:
-        await ctx.reply("please dont.")
-
-@bot.command()
-async def pull(ctx):
-    """Pulls the latest version from github
-    use reload after using this command."""
-    if ctx.author.id == uid:
-        res = os.system("git pull")
-        await ctx.reply(res)
-    else:
-        await ctx.reply("no")
 
 bot.run(token)
