@@ -20,8 +20,8 @@ Utility:
   avatar     Shows the pinged member's avatar.
   nick       Give a nickname to the mentioned user.
   role       Adds role to the pinged user.
-  serverinfo 
-  userinfo   
+  serverinfo Shows server information.
+  userinfo   Shows member information.
 No Category:
   help       Shows this message
   pull       Pulls the latest version from github
