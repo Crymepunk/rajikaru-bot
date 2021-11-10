@@ -19,7 +19,7 @@ Moderation:
 Utility:
   avatar  Shows the pinged member's avatar Syntax: avatar (member)
   nick    Give a nickname to the mentioned user.
-  role    Ignore this please.
+  role    Adds role to the pinged user.
 No Category:
   help    Shows this message
   pull    Pulls the latest version from github

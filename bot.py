@@ -68,7 +68,7 @@ async def reload(ctx, cog = None):
             else:
                 await ctx.reply("Invalid extension.")
         except Exception as e:
-            await ctx.send("Missing argument!")
+            await ctx.reply("Missing argument!")
     else:
         await ctx.reply("please dont.")
 
