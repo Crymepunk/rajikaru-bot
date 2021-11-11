@@ -3,6 +3,7 @@ import logging
 from colorama import Fore
 from nextcord.ext import commands
 import json
+import os
 
 # Makes program log to discord.log file
 logger = logging.getLogger('nextcord')
@@ -10,6 +11,8 @@ logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
+
+os.system("cls" if os.name == "nt" else "clear")
 
 # Loads config.json
 with open("config.json") as f:
