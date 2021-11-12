@@ -19,6 +19,8 @@ Moderation:
   ban        B a n  h a m m e r
   kick       KicKkk
   purge      Removes messages
+NSFW:
+  lewd       '?help lewd' for more info
 Utility:
   avatar     Shows the pinged member's avatar.
   nick       Give a nickname to the mentioned user.
