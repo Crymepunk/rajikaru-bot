@@ -7,6 +7,7 @@ import os
 with open("config.json") as f:
     config = json.load(f)
 
+# Gets uid from the config
 uid = int(config.get("uid"))
 
 class Base(commands.Cog):

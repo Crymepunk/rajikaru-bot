@@ -12,6 +12,7 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
+# Clear the terminal/cmd
 os.system("cls" if os.name == "nt" else "clear")
 
 # Loads config.json
@@ -30,6 +31,7 @@ elif uid == 1234567890:
     print("Please change the uid in config.json!")
     exit()
 
+# Enables required intents for serverinfo and userinfo commands
 intents = nextcord.Intents.default()
 intents.members = True
 
@@ -68,4 +70,6 @@ try:
 except Exception as e:
     print(f"{Fore.RED}Failed to load NSFW cog")
 
+
+# Start the bot when everything is loaded
 bot.run(token)
