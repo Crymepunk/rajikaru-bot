@@ -24,8 +24,8 @@ class Moderation(commands.Cog):
     async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """B a n  h a m m e r"""
         try:
-                await member.ban(reason=reason)
-                await ctx.send(f'{member} has been banned for "{reason}"')
+            await member.ban(reason=reason)
+            await ctx.send(f'{member} has been banned for "{reason}"')
         except Exception as e:
             await ctx.reply(f"Cannot ban {member}.")
 
@@ -35,8 +35,8 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """KicKkk"""
         try:
-                await member.kick(reason=reason)
-                await ctx.send(f'{member} has been kicked for "{reason}"')
+            await member.kick(reason=reason)
+            await ctx.send(f'{member} has been kicked for "{reason}"')
         except Exception as e:
             await ctx.reply("Cannot kick this user.")
 
