@@ -67,7 +67,7 @@ class Moderation(commands.Cog):
         await ctx.message.delete()
 
     @commands.command(pass_context=True)
-    async def mute(self, ctx, member : nextcord.Member = None, reason = "No reason provided."):
+    async def mute(self, ctx, member: nextcord.Member = None, reason = "No reason provided."):
         """Mutes the pinged member."""
         if member == None:
             await ctx.send("You need to mention someone to mute! `mute [member] (reason)`")
@@ -78,8 +78,21 @@ class Moderation(commands.Cog):
         else:
             role = nextcord.utils.get(ctx.guild.roles, name = "Muted")
             await member.add_roles(role)
-            await member.send(f"You have been muted.\nReason: {reason}")
+            await member.send(f"You have been muted in {ctx.guild.name}.\nReason: {reason}")
             await ctx.send(embed=embed(title=f"{ctx.author} muted {member.name}", desc=f"Reason: {reason}"))
+
+    @commands.command()
+    async def unmute(self, ctx, member: nextcord.Member = None):
+        role = nextcord.utils.get(ctx.guild.roles, name = "Muted")
+        mrole = member.get_role(role.id)
+        if member == None:
+            await ctx.send("Please ping someone to unmute")
+            return
+        elif mrole != role:
+            await ctx.send("Member is not muted.")
+        else:
+            await member.remove_roles(role)
+            await ctx.send(embed=embed(title=f"{member.name} is now unmuted.", desc=""))
 
     @commands.command()
     @commands.check(hommies_check)
