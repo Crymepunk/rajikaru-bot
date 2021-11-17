@@ -18,6 +18,7 @@ Fun:
 Moderation:
   ban        B a n  h a m m e r
   kick       KicKkk
+  mute       Mutes the pinged member.
   purge      Removes messages
 NSFW:
   lewd       '?help lewd' for more info
