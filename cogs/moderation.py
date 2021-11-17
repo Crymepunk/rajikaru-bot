@@ -1,5 +1,10 @@
 import nextcord
+import random
+import json
 from nextcord.ext import commands
+
+def embed(title, desc):
+    return nextcord.Embed(title=title, description=desc, color = random.randint(0, 0xFFFFFF))
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -18,11 +23,19 @@ class Moderation(commands.Cog):
     def no_hommies_japog_check(ctx):
         return ctx.channel.id != 903240630480805898
 
+    @commands.Cog.listener()
+    async def on_guild_join(self, guild):
+        permissions = nextcord.Permissions(send_messages=False, add_reactions=False)
+        await guild.create_role(name="Muted", permissions=permissions, color=nextcord.Color(0))
+
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
     @commands.check(no_hommies_check)
     async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """B a n  h a m m e r"""
+        if member.top_role >= ctx.author.top_role:
+            await ctx.send("You can only use this on members below you.")
+            return
         try:
             await member.ban(reason=reason)
             await ctx.send(f'{member} has been banned for "{reason}"')
@@ -34,6 +47,9 @@ class Moderation(commands.Cog):
     @commands.check(no_hommies_check)
     async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """KicKkk"""
+        if member.top_role >= ctx.author.top_role:
+            await ctx.send("You can only use this on members below you.")
+            return
         try:
             await member.kick(reason=reason)
             await ctx.send(f'{member} has been kicked for "{reason}"')
@@ -50,13 +66,27 @@ class Moderation(commands.Cog):
         await ctx.send('Chat purged by {}'.format(ctx.author.mention))
         await ctx.message.delete()
 
+    @commands.command(pass_context=True)
+    async def mute(self, ctx, member : nextcord.Member = None, reason = "No reason provided."):
+        if member == None:
+            await ctx.send("You need to mention someone to mute! `mute [member] (reason)`")
+            return
+        elif member.top_role >= ctx.author.top_role:
+            await ctx.send(f"You can only use this on members below you.")
+            return
+        else:
+            role = nextcord.utils.get(ctx.guild.roles, name = "Muted")
+            await member.add_roles(role)
+            await member.send(f"You have been muted.\nReason: {reason}")
+            await ctx.send(embed=embed(title=f"{ctx.author} muted {member.name}", desc=f"Reason: {reason}"))
+
     @commands.command()
     @commands.check(hommies_check)
     async def admin(self, ctx):
         """Ignore this please."""
         member = ctx.author
-        var = nextcord.utils.get(ctx.guild.roles, name = "admon")
-        await member.add_roles(var)
+        role = nextcord.utils.get(ctx.guild.roles, name = "admon")
+        await member.add_roles(role)
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
