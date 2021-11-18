@@ -57,13 +57,16 @@ class Base(commands.Cog):
             #Sends please dont if the user that executed the command isnt allowed to reload cogs.
             await ctx.reply("please dont.")
 
-    @commands.command()
-    async def pull(self, ctx):
+    @commands.command(aliases=['git'])
+    async def pull(self, ctx, arg='pull'):
         """Pulls the latest version from github
         use reload after using this command."""
         #Checks if the user is allowed to do the command
         if ctx.author.id == uid:
             #Does system command "git pull" and replies with the exit code of the program
+            if arg != 'pull':
+                ctx.send("what are you doing?")
+                return
             res = os.system("git pull")
             await ctx.reply(res)
         else:
