@@ -65,7 +65,7 @@ class Base(commands.Cog):
         if ctx.author.id == uid:
             #Does system command "git pull" and replies with the exit code of the program
             if arg != 'pull':
-                ctx.send("what are you doing?")
+                await ctx.reply("what are you doing?")
                 return
             res = os.system("git pull")
             await ctx.reply(res)
