@@ -11,7 +11,7 @@ with open("config.json") as f:
 
 uid = int(config.get("uid"))
 
-def embed(title, desc = ""):
+def embed(title = "", desc = ""):
     return nextcord.Embed(title=title, description=desc, color = random.randint(0, 0xFFFFFF))
 
 class Fun(commands.Cog):
@@ -87,13 +87,14 @@ class Fun(commands.Cog):
     @commands.command()
     async def gayrate(self, ctx, member: nextcord.Member = None):
         """How gay is the pinged person O_o"""
+        title=f"Gayness Percentage"
         if member != None:
-           title=f"Gayness Percentage"
            desc=f"{member.display_name} is {random.randint(0,101)}% gay"
         else:
-            title=f"Gayness Percentage" 
+            member = ctx.author
             desc=f"You are {random.randint(0,101)}% gay"
-        await ctx.reply(embed=embed(title=title, desc=desc))
+        send = embed(title=title, desc=desc).set_thumbnail(url=f"{member.avatar}")
+        await ctx.reply(embed=send)
 
     @commands.command()
     async def sauce(self, ctx):
