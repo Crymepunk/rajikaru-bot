@@ -79,7 +79,7 @@ class Moderation(commands.Cog):
 
     @commands.command(pass_context=True)
     @commands.check(modcheck)
-    async def mute(self, ctx, member: nextcord.Member = None, reason = "No reason provided."):
+    async def mute(self, ctx, member: nextcord.Member = None, *, reason="No reason provided."):
         """Mutes the pinged member."""
         if member == None:
             await ctx.send("You need to mention someone to mute! `mute [member] (reason)`")
