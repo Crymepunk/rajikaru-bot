@@ -3,7 +3,7 @@ import random
 import json
 from nextcord.ext import commands
 
-def embed(title, desc):
+def embed(title = "", desc = ""):
     return nextcord.Embed(title=title, description=desc, color = random.randint(0, 0xFFFFFF))
 
 class Moderation(commands.Cog):
@@ -84,7 +84,7 @@ class Moderation(commands.Cog):
         if member == None:
             await ctx.send("You need to mention someone to mute! `mute [member] (reason)`")
             return
-        elif member.top_role >= ctx.author.top_role:
+        elif ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
             await ctx.send(f"You can only use this on members below you.")
             return
         else:
@@ -105,7 +105,7 @@ class Moderation(commands.Cog):
             await ctx.send("Member is not muted.")
         else:
             await member.remove_roles(role)
-            await ctx.send(embed=embed(title=f"{member.name} is now unmuted.", desc=""))
+            await ctx.send(embed=embed(title=f"{member.name} is now unmuted."))
 
     @commands.command()
     @commands.has_permissions(administrator=True)
