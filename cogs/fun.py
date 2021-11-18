@@ -11,6 +11,9 @@ with open("config.json") as f:
 
 uid = int(config.get("uid"))
 
+def embed(title, desc = ""):
+    return nextcord.Embed(title=title, description=desc, color = random.randint(0, 0xFFFFFF))
+
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -45,50 +48,52 @@ class Fun(commands.Cog):
     async def pat(self, ctx, member: nextcord.Member):
         """Pats the pinged member."""
         if ctx.author == member:
-            pat = nextcord.Embed(title=f"{ctx.author} pats themselves", description="", color = random.randint(0, 0xFFFFFF))
+            title = f"{ctx.author} pats themselves"
         else:
-            pat = nextcord.Embed(title=f"{ctx.author} pats {member}", description="", color = random.randint(0, 0xFFFFFF))
-        pat.set_image(url=f"{nekos.img(target='pat')}")
-        await ctx.reply(embed=pat)
+            title=f"{ctx.author} pats {member}"
+        send = embed(title=title).set_image(url=f"{nekos.img(target='pat')}")
+        await ctx.reply(embed=send)
 
     @commands.command()
     async def slap(self, ctx, member: nextcord.Member):
         """Slaps the pinged member."""
         if ctx.author == member:
-            slap = nextcord.Embed(title=f"{ctx.author} slaps themselves :(", description="", color = random.randint(0, 0xFFFFFF))
+            title=f"{ctx.author} slaps themselves :("
         else:
-            slap = nextcord.Embed(title=f"{ctx.author} slaps {member}", description="", color = random.randint(0, 0xFFFFFF))
-        slap.set_image(url=f"{nekos.img(target='slap')}")
-        await ctx.reply(embed=slap)
+            title=f"{ctx.author} slaps {member}"
+        send = embed(title=title).set_image(url=f"{nekos.img(target='slap')}")
+        await ctx.reply(embed=send)
 
     @commands.command()
     async def cuddle(self, ctx, member: nextcord.Member):
         """Cuddles the pinged member."""
         if ctx.author == member:
-            cuddle = nextcord.Embed(title=f"{ctx.author} cuddles themselves", description="", color = random.randint(0, 0xFFFFFF))
+            title=f"{ctx.author} cuddles themselves"
         else:
-            cuddle = nextcord.Embed(title=f"{ctx.author} cuddles {member}", description="", color = random.randint(0, 0xFFFFFF))
-        cuddle.set_image(url=f"{nekos.img(target='cuddle')}")
-        await ctx.reply(embed=cuddle)
+            title=f"{ctx.author} cuddles {member}"
+        send = embed(title=title).set_image(url=f"{nekos.img(target='cuddle')}")
+        await ctx.reply(embed=send)
 
     @commands.command()
     async def hug(self, ctx, member: nextcord.Member):
         """Hugs the pinged member."""
         if ctx.author == member:
-            hug = nextcord.Embed(title=f"{ctx.author} hugs themselves", description="", color = random.randint(0, 0xFFFFFF))
+            title=f"{ctx.author} hugs themselves"
         else:
-            hug = nextcord.Embed(title=f"{ctx.author} hugs {member}", description="", color = random.randint(0, 0xFFFFFF))
-        hug.set_image(url=f"{nekos.img(target='hug')}")
-        await ctx.reply(embed=hug)
+            title=f"{ctx.author} hugs {member}"
+        send = embed(title=title).set_image(url=f"{nekos.img(target='hug')}")
+        await ctx.reply(embed=send)
 
     @commands.command()
     async def gayrate(self, ctx, member: nextcord.Member = None):
         """How gay is the pinged person O_o"""
         if member != None:
-            embed = nextcord.Embed(title=f"Gayness Percentage", description=f"{member.display_name} is {random.randint(0,101)}% gay", color = random.randint(0, 0xFFFFFF))
+           title=f"Gayness Percentage"
+           desc=f"{member.display_name} is {random.randint(0,101)}% gay"
         else:
-            embed = nextcord.Embed(title=f"Gayness Percentage", description=f"You are {random.randint(0,101)}% gay", color = random.randint(0, 0xFFFFFF))
-        await ctx.reply(embed=embed)
+            title=f"Gayness Percentage" 
+            desc=f"You are {random.randint(0,101)}% gay"
+        await ctx.reply(embed=embed(title=title, desc=desc))
 
     @commands.command()
     async def sauce(self, ctx):
