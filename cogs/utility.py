@@ -10,13 +10,15 @@ class Utility(commands.Cog):
     async def avatar(self, ctx, member: nextcord.Member = None):
         """Shows the pinged member's avatar."""
         if member != None:
+            #If member is not None then send their avatar
             await ctx.reply(member.avatar)
         else:
+            #If it is then send the author's avatar
             await ctx.reply(ctx.author.avatar)
 
     @commands.command(pass_context=True)
     @commands.has_guild_permissions(manage_nicknames=True)
-    async def nick(self, ctx, member: nextcord.Member, nick):
+    async def nick(self, ctx, member: nextcord.Member, *, nick):
         """Give a nickname to the mentioned user."""
         await member.edit(nick=nick)
         await ctx.send(f"Changed {member}'s nickname to {member.mention}")
