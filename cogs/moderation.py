@@ -3,8 +3,8 @@ import random
 import json
 from nextcord.ext import commands
 
-def embed(title = "", desc = ""):
-    return nextcord.Embed(title=title, description=desc, color = random.randint(0, 0xFFFFFF))
+def embed(title = "", desc = "", color = random.randint(0, 0xFFFFFF)):
+    return nextcord.Embed(title=title, description=desc, color=color)
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
