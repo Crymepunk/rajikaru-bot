@@ -24,7 +24,7 @@ class Base(commands.Cog):
                 #Checks if all cogs should be reloaded.
                 if cog.lower() == "all":
                     try:
-                        #tries to reload all extensions AKA cogs.
+                        #Tries to reload all extensions AKA cogs.
                         self.bot.reload_extension("cogs.utility")
                         self.bot.reload_extension("cogs.fun")
                         self.bot.reload_extension("cogs.moderation")
@@ -38,8 +38,8 @@ class Base(commands.Cog):
                         print(f"{Fore.RED}Failed to reload all cogs.")
                 #Checks if any of these cogs should be reloaded
                 elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "nsfw" or cog.lower() == "base":
-                    #Tries to reload a single extension AKA cog.
                     try:
+                        #Tries to reload a single extension AKA cog.
                         self.bot.reload_extension(f"cogs.{cog}")
                         await ctx.reply(f"Reloaded {cog.capitalize()} cog!")
                         print(f"{Fore.WHITE}Reloaded {Fore.GREEN}{cog.capitalize()} {Fore.WHITE}cog!")
