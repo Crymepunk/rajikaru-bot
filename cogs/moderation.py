@@ -26,10 +26,11 @@ class Moderation(commands.Cog):
     def modcheck(ctx):
         with open("mod_roles.json", "r") as f:
             mod_roles = json.load(f)
-        mod1 = nextcord.utils.get(ctx.guild.roles, id = int(mod_roles.get(str(ctx.guild.id))))
-        mod2 = ctx.author.get_role(mod1.id)
-        if mod2 == mod1:
-            return True
+        try:
+            mod1 = nextcord.utils.get(ctx.guild.roles, id = int(mod_roles.get(str(ctx.guild.id))))
+        except Exception as e:
+            mod1 = None
+        return mod1
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
@@ -38,7 +39,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
-    @commands.check(modcheck)
+    @commands.has_role(modcheck)
     @commands.check(no_hommies_check)
     async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """B a n  h a m m e r"""
@@ -53,7 +54,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_guild_permissions(kick_members=True)
-    @commands.check(modcheck)
+    @commands.has_role(modcheck)
     @commands.check(no_hommies_check)
     async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """KicKkk"""
@@ -69,7 +70,7 @@ class Moderation(commands.Cog):
     @commands.command(pass_context=True,aliases=['clean'])
     @commands.check(no_hommies_general_check)
     @commands.check(no_hommies_japog_check)
-    @commands.check(modcheck)
+    @commands.has_role(modcheck)
     @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, limit: int):
         """Removes messages"""
@@ -78,7 +79,7 @@ class Moderation(commands.Cog):
         await ctx.message.delete()
 
     @commands.command(pass_context=True)
-    @commands.check(modcheck)
+    @commands.has_role(modcheck)
     async def mute(self, ctx, member: nextcord.Member = None, *, reason="No reason provided."):
         """Mutes the pinged member."""
         if member == None:
@@ -94,7 +95,7 @@ class Moderation(commands.Cog):
             await ctx.send(embed=embed(title=f"{ctx.author} muted {member.name}", desc=f"Reason: {reason}"))
 
     @commands.command()
-    @commands.check(modcheck)
+    @commands.has_role(modcheck)
     async def unmute(self, ctx, member: nextcord.Member = None):
         role = nextcord.utils.get(ctx.guild.roles, name = "Muted")
         mrole = member.get_role(role.id)
