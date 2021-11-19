@@ -30,7 +30,7 @@ class Base(commands.Cog):
                         self.bot.reload_extension("cogs.moderation")
                         self.bot.reload_extension("cogs.nsfw")
                         self.bot.reload_extension("cogs.base")
-                        await ctx.reply("Reloaded All Cogs!")
+                        await ctx.reply(":white_check_mark: Reloaded All Cogs!")
                         print(f"{Fore.WHITE}Reloaded {Fore.GREEN}All {Fore.WHITE}Cogs!")
                     except Exception as e:
                         #Sends and prints out an error message if it fails to reload.
@@ -41,7 +41,7 @@ class Base(commands.Cog):
                     try:
                         #Tries to reload a single extension AKA cog.
                         self.bot.reload_extension(f"cogs.{cog}")
-                        await ctx.reply(f"Reloaded {cog.capitalize()} cog!")
+                        await ctx.reply(f":white_check_mark: Reloaded {cog.capitalize()} cog!")
                         print(f"{Fore.WHITE}Reloaded {Fore.GREEN}{cog.capitalize()} {Fore.WHITE}cog!")
                     except Exception as e:
                         #Sends and prints out an error message if it fails to reload.
@@ -68,7 +68,10 @@ class Base(commands.Cog):
                 await ctx.reply("what are you doing?")
                 return
             res = os.system("git pull")
-            await ctx.reply(res)
+            if res == 0:
+                await ctx.reply(f":white_check_mark: Success!\n       Exit code: {str(res)}")
+            else:
+                await ctx.reply(f":x: Failed \n       Exit code: {str(res)}")
         else:
             #Sends no if user isnt allowed to execute the command
             await ctx.reply("no")
