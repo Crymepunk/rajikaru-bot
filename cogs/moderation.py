@@ -43,7 +43,7 @@ class Moderation(commands.Cog):
     @commands.check(no_hommies_check)
     async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """B a n  h a m m e r"""
-        if member.top_role >= ctx.author.top_role:
+        if ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
             await ctx.send("You can only use this on members below you.")
             return
         try:
@@ -58,7 +58,7 @@ class Moderation(commands.Cog):
     @commands.check(no_hommies_check)
     async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """KicKkk"""
-        if member.top_role >= ctx.author.top_role:
+        if ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
             await ctx.send("You can only use this on members below you.")
             return
         try:
