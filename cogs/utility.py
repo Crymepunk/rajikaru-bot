@@ -11,20 +11,20 @@ class Utility(commands.Cog):
 
     @commands.command(aliases=['av'])
     async def avatar(self, ctx, member: nextcord.Member = None):
-        """Shows the pinged member's avatar."""
-        if member != None:
-            #If member is not None then send their avatar
-            await ctx.reply(member.avatar)
-        else:
-            #If it is then send the author's avatar
-            await ctx.reply(ctx.author.avatar)
+        """Shows the pinged member's avatar."""   
+        if member == None:
+            #If member is None then set member to author and execute as normal.
+            member = ctx.author
+        #If member is not None then dont do anything and execute the code below as normal.
+        send = embed(title = f"{member.name}'s avatar").set_image(url=f"{member.display_avatar}")
+        await ctx.reply(send)
 
     @commands.command(pass_context=True)
     @commands.has_guild_permissions(manage_nicknames=True)
     async def nick(self, ctx, member: nextcord.Member, *, nick):
         """Give a nickname to the mentioned user."""
         await member.edit(nick=nick)
-        await ctx.send(f"Changed {member}'s nickname to {member.mention}")
+        await ctx.send(f"Changed {member.name}'s nickname to {member.mention}")
 
     @commands.command()
     @commands.has_guild_permissions(manage_roles=True)
@@ -47,7 +47,7 @@ class Utility(commands.Cog):
         emb.add_field(name="UserID\n", value=member.id, inline=True)
         emb.add_field(name="Joined Server at\n", value=joined, inline=True)
         emb.add_field(name="Joined Discord at\n", value=created, inline=True)
-        emb.set_thumbnail(url=f"{member.avatar}")
+        emb.set_thumbnail(url=f"{member.display_avatar}")
         await ctx.reply(embed=emb)
 
     @commands.command(aliases=['server-info'])

@@ -93,7 +93,7 @@ class Fun(commands.Cog):
         else:
             member = ctx.author
             desc=f"You are {random.randint(0,101)}% gay"
-        send = embed(title=title, desc=desc).set_thumbnail(url=f"{member.avatar}")
+        send = embed(title=title, desc=desc).set_thumbnail(url=f"{member.display_avatar}")
         await ctx.reply(embed=send)
 
     @commands.command()
