@@ -17,7 +17,7 @@ class Utility(commands.Cog):
             member = ctx.author
         #If member is not None then dont do anything and execute the code below as normal.
         send = embed(title = f"{member.name}'s avatar").set_image(url=f"{member.display_avatar}")
-        await ctx.reply(send)
+        await ctx.reply(embed=send)
 
     @commands.command(pass_context=True)
     @commands.has_guild_permissions(manage_nicknames=True)
