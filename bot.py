@@ -64,11 +64,6 @@ try:
     print(f"{Fore.GREEN}Utility {Fore.WHITE}cog loaded!")
 except Exception as e:
     print(f"{Fore.RED}Failed to load Utility cog")
-try:
-    bot.load_extension("cogs.nsfw")
-    print(f"{Fore.MAGENTA}NSFW {Fore.WHITE}cog loaded!")
-except Exception as e:
-    print(f"{Fore.RED}Failed to load NSFW cog")
 
 
 # Start the bot when everything is loaded
