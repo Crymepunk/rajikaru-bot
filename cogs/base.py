@@ -17,7 +17,7 @@ class Base(commands.Cog):
     @commands.command()
     async def reload(self, ctx, cog = None):
         """Reloads cogs.
-        Options: moderation, fun, utility, NSFW, all."""
+        Options: moderation, fun, utility, all."""
         #Checks if the user is allowed to do the command
         if ctx.author.id == uid:
             try:
