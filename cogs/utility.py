@@ -30,6 +30,13 @@ class Utility(commands.Cog):
     @commands.has_guild_permissions(manage_roles=True)
     async def role(self, ctx, member: nextcord.Member, role: nextcord.Role):
         """Adds role to the pinged user."""
+        if ctx.guild.id == 903236631958548501:
+            if ctx.author != ctx.guild.owner or member.top_role > ctx.author.top_role:
+                await ctx.send("Stop trying to break my shit!")
+                return
+        elif ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
+            await ctx.send("You can only use this on members below you.")
+            return
         try:
             await member.add_roles(role)
             await ctx.send(f"Added {role.name} to {member.display_name}")
