@@ -8,7 +8,8 @@ import json
 # Loads config.json
 with open("config.json") as f:
     config = json.load(f)
-
+    
+# Gets uid from the config
 uid = int(config.get("uid"))
 
 def embed(title = "", desc = "", color = random.randint(0, 0xFFFFFF)):

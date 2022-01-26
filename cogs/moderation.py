@@ -7,7 +7,7 @@ from nextcord.ext import commands
 with open("config.json") as f:
     config = json.load(f)
 
-# Gets uid from the config
+# Gets friendserver from the config
 friendserver = int(config.get("friendserver"))
 
 def embed(title = "", desc = "", color = random.randint(0, 0xFFFFFF)):

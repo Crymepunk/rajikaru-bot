@@ -7,7 +7,7 @@ import json
 with open("config.json") as f:
     config = json.load(f)
 
-# Gets uid from the config
+# Gets friendserver from the config
 friendserver = int(config.get("friendserver"))
 
 def embed(title = "", desc = "", color = random.randint(0, 0xFFFFFF)):
@@ -21,9 +21,9 @@ class Utility(commands.Cog):
     async def avatar(self, ctx, member: nextcord.Member = None):
         """Shows the pinged member's avatar."""   
         if member == None:
-            #If member is None then set member to author and execute as normal.
+            # If member is None then set member to author and execute as normal.
             member = ctx.author
-        #If member is not None then dont do anything and execute the code below as normal.
+        # If member is not None then dont do anything and execute the code below as normal.
         send = embed(title = f"{member.name}'s avatar").set_image(url=f"{member.display_avatar}")
         await ctx.reply(embed=send)
 
