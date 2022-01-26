@@ -3,6 +3,13 @@ import random
 import json
 from nextcord.ext import commands
 
+# Loads config.json
+with open("config.json") as f:
+    config = json.load(f)
+
+# Gets uid from the config
+friendserver = int(config.get("friendserver"))
+
 def embed(title = "", desc = "", color = random.randint(0, 0xFFFFFF)):
     return nextcord.Embed(title=title, description=desc, color=color)
 
@@ -11,11 +18,11 @@ class Moderation(commands.Cog):
         self.bot = bot
 
     # Checks to perform before doing certain commands:
-    def hommies_check(ctx):
-        return ctx.guild.id == 903236631958548501
+    def friendserver_check(ctx):
+        return ctx.guild.id == friendserver
 
-    def no_hommies_check(ctx):
-        return ctx.guild.id != 903236631958548501
+    def no_friendserver_check(ctx):
+        return ctx.guild.id != friendserver
 
     def no_hommies_general_check(ctx):
         return ctx.channel.id != 903236632684138559
@@ -45,7 +52,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
     @commands.check(modcheck)
-    @commands.check(no_hommies_check)
+    @commands.check(no_friendserver_check)
     async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """B a n  h a m m e r"""
         if ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
@@ -60,7 +67,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_guild_permissions(kick_members=True)
     @commands.check(modcheck)
-    @commands.check(no_hommies_check)
+    @commands.check(no_friendserver_check)
     async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """KicKkk"""
         if ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
@@ -125,7 +132,7 @@ class Moderation(commands.Cog):
         await ctx.send(f"{role.mention} is now a moderator role!")
 
     @commands.command()
-    @commands.check(hommies_check)
+    @commands.check(friendserver_check)
     async def admin(self, ctx):
         """Ignore this please."""
         member = ctx.author

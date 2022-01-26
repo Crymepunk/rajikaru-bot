@@ -1,6 +1,14 @@
 import nextcord
 from nextcord.ext import commands
 import random
+import json
+
+# Loads config.json
+with open("config.json") as f:
+    config = json.load(f)
+
+# Gets uid from the config
+friendserver = int(config.get("friendserver"))
 
 def embed(title = "", desc = "", color = random.randint(0, 0xFFFFFF)):
     return nextcord.Embed(title=title, description=desc, color=color)
@@ -30,7 +38,7 @@ class Utility(commands.Cog):
     @commands.has_guild_permissions(manage_roles=True)
     async def role(self, ctx, member: nextcord.Member, role: nextcord.Role):
         """Adds role to the pinged user."""
-        if ctx.guild.id == 903236631958548501:
+        if ctx.guild.id == friendserver:
             if ctx.author != ctx.guild.owner or member.top_role > ctx.author.top_role:
                 await ctx.send("Stop trying to break my shit!")
                 return
