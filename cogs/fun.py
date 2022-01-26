@@ -19,9 +19,12 @@ class Fun(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def say(self, ctx, *, message):
+    async def say(self, ctx, *, message = None):
         """Says the message you tell it to say."""
-        await ctx.send(message)
+        if message == None:
+            await ctx.send("Please add something to be said")
+        else:
+            await ctx.send(message)
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -35,9 +38,12 @@ class Fun(commands.Cog):
                 sleep(3)
 
     @commands.command()
-    async def owoify(self, ctx, *, message):
+    async def owoify(self, ctx, *, message = None):
         """Owoifies your text."""
-        await ctx.send(nekos.owoify(text=message))
+        if message == None:
+            await ctx.send("Please say something to be owoified after the command!")
+        else:
+            await ctx.send(nekos.owoify(text=message))
 
     @commands.command()
     async def neko(self, ctx):
@@ -48,9 +54,9 @@ class Fun(commands.Cog):
     async def pat(self, ctx, member: nextcord.Member):
         """Pats the pinged member."""
         if ctx.author == member:
-            title = f"{ctx.author} pats themselves"
+            title = f"{ctx.author.display_name} pats themselves"
         else:
-            title=f"{ctx.author} pats {member}"
+            title=f"{ctx.author.display_name} pats {member.display_name}"
         send = embed(title=title).set_image(url=f"{nekos.img(target='pat')}")
         await ctx.reply(embed=send)
 
@@ -58,9 +64,9 @@ class Fun(commands.Cog):
     async def slap(self, ctx, member: nextcord.Member):
         """Slaps the pinged member."""
         if ctx.author == member:
-            title=f"{ctx.author} slaps themselves :("
+            title=f"{ctx.author.display_name} slaps themselves :("
         else:
-            title=f"{ctx.author} slaps {member}"
+            title=f"{ctx.author.display_name} slaps {member.display_name}"
         send = embed(title=title).set_image(url=f"{nekos.img(target='slap')}")
         await ctx.reply(embed=send)
 
@@ -68,9 +74,9 @@ class Fun(commands.Cog):
     async def cuddle(self, ctx, member: nextcord.Member):
         """Cuddles the pinged member."""
         if ctx.author == member:
-            title=f"{ctx.author} cuddles themselves"
+            title=f"{ctx.author.display_name} cuddles themselves"
         else:
-            title=f"{ctx.author} cuddles {member}"
+            title=f"{ctx.author.display_name} cuddles {member.display_name}"
         send = embed(title=title).set_image(url=f"{nekos.img(target='cuddle')}")
         await ctx.reply(embed=send)
 
@@ -78,9 +84,9 @@ class Fun(commands.Cog):
     async def hug(self, ctx, member: nextcord.Member):
         """Hugs the pinged member."""
         if ctx.author == member:
-            title=f"{ctx.author} hugs themselves"
+            title=f"{ctx.author.display_name} hugs themselves"
         else:
-            title=f"{ctx.author} hugs {member}"
+            title=f"{ctx.author.display_name} hugs {member.display_name}"
         send = embed(title=title).set_image(url=f"{nekos.img(target='hug')}")
         await ctx.reply(embed=send)
 
