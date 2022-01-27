@@ -56,7 +56,7 @@ class Moderation(commands.Cog):
     async def ban(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """B a n  h a m m e r"""
         if ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
-            await ctx.send("You can only use this on members below you.")
+            await ctx.reply("You can only use this on members below you.")
             return
         try:
             await member.ban(reason=reason)
@@ -71,7 +71,7 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, member: nextcord.Member, *, reason="No reason provided."):
         """KicKkk"""
         if ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
-            await ctx.send("You can only use this on members below you.")
+            await ctx.reply("You can only use this on members below you.")
             return
         try:
             await member.kick(reason=reason)
@@ -95,16 +95,16 @@ class Moderation(commands.Cog):
     async def mute(self, ctx, member: nextcord.Member = None, *, reason="No reason provided."):
         """Mutes the pinged member."""
         if member == None:
-            await ctx.send("You need to mention someone to mute! `mute [member] (reason)`")
+            await ctx.reply("You need to mention someone to mute! `mute [member] (reason)`")
             return
         elif ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
-            await ctx.send(f"You can only use this on members below you.")
+            await ctx.reply(f"You can only use this on members below you.")
             return
         else:
             role = nextcord.utils.get(ctx.guild.roles, name = "Muted")
             await member.add_roles(role)
             await member.send(f"You have been muted in {ctx.guild.name}.\nReason: {reason}")
-            await ctx.send(embed=embed(title=f"{ctx.author} muted {member.name}", desc=f"Reason: {reason}"))
+            await ctx.send(embed=embed(title=f"{ctx.author} muted {member.mention}", desc=f"Reason: {reason}"))
 
     @commands.command()
     @commands.check(modcheck)
@@ -112,13 +112,13 @@ class Moderation(commands.Cog):
         role = nextcord.utils.get(ctx.guild.roles, name = "Muted")
         mrole = member.get_role(role.id)
         if member == None:
-            await ctx.send("Please ping someone to unmute")
+            await ctx.reply("Please ping someone to unmute")
             return
         elif mrole != role:
-            await ctx.send("Member is not muted.")
-        else:
+            await ctx.reply("Member is not muted.")
+        else: 
             await member.remove_roles(role)
-            await ctx.send(embed=embed(title=f"{member.name} is now unmuted."))
+            await ctx.send(embed=embed(title=f"{member.mention} is now unmuted."))
 
     @commands.command()
     @commands.has_permissions(administrator=True)

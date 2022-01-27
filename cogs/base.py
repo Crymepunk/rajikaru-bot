@@ -33,7 +33,7 @@ class Base(commands.Cog):
                         print(f"{Fore.WHITE}Reloaded {Fore.GREEN}All {Fore.WHITE}Cogs!")
                     except Exception as e:
                         # Sends and prints out an error message if it fails to reload.
-                        await ctx.reply("Failed to reload all cogs :x:")
+                        await ctx.reply(":x: Failed to reload all cogs.")
                         print(f"{Fore.RED}Failed to reload all cogs.")
                 # Checks if any of these cogs should be reloaded
                 elif cog.lower() == "moderation" or cog.lower() == "fun" or cog.lower() == "utility" or cog.lower() == "base":
@@ -44,7 +44,7 @@ class Base(commands.Cog):
                         print(f"{Fore.WHITE}Reloaded {Fore.GREEN}{cog.capitalize()} {Fore.WHITE}cog!")
                     except Exception as e:
                         # Sends and prints out an error message if it fails to reload.
-                        await ctx.send("Failed to reload cog :x:")
+                        await ctx.reply(":x: Failed to reload cog.")
                         print(f"{Fore.RED}Failed to reload {cog.capitalize()} cog.")
                 else:
                     # Sends out an error if the extension doesnt exist.

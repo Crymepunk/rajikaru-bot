@@ -23,7 +23,7 @@ class Fun(commands.Cog):
     async def say(self, ctx, *, message = None):
         """Says the message you tell it to say."""
         if message == None:
-            await ctx.send("Please add something to be said")
+            await ctx.reply("Please add something to be said")
         else:
             await ctx.send(message)
 
@@ -42,7 +42,7 @@ class Fun(commands.Cog):
     async def owoify(self, ctx, *, message = None):
         """Owoifies your text."""
         if message == None:
-            await ctx.send("Please say something to be owoified after the command!")
+            await ctx.reply("Please say something to be owoified after the command!")
         else:
             await ctx.send(nekos.owoify(text=message))
 

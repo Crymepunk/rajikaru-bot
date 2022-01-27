@@ -40,16 +40,16 @@ class Utility(commands.Cog):
         """Adds role to the pinged user."""
         if ctx.guild.id == friendserver:
             if ctx.author != ctx.guild.owner or member.top_role > ctx.author.top_role:
-                await ctx.send("Stop trying to break my shit!")
+                await ctx.reply("Stop trying to break my shit!")
                 return
         elif ctx.author != ctx.guild.owner or member.top_role >= ctx.author.top_role:
-            await ctx.send("You can only use this on members below you.")
+            await ctx.reply("You can only use this on members below you.")
             return
         try:
             await member.add_roles(role)
             await ctx.send(f"Added {role.name} to {member.display_name}")
         except Exception as e:
-            await ctx.send(f"Can't give {role.name} to {member.display_name}")
+            await ctx.reply(f"Can't give {role.name} to {member.display_name}")
 
     @commands.command(aliases=['user-info'])
     async def userinfo(self, ctx, member: nextcord.Member = None):
