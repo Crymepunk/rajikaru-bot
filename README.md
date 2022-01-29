@@ -25,9 +25,9 @@ And you can get the token by making an application in the "discord developer por
 
 ```json
 {
-    "token": "CHANGEME",
+    "token": "put your token here",
     "prefix": "?",
-    "uid": "1234567890",
+    "uid": "Put your User ID here (Example: 6162286911558778122)",
     "friendserver": "1234567890", 
     "_comment": "'friendserver' is not required"
 }
