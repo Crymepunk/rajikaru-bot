@@ -1,4 +1,0 @@
-nextcord == 2.0.0a3 
-nekos.py == 1.0.3
-colorama == 0.4.4
-wheel == 0.37.0
