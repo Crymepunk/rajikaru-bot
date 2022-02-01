@@ -62,7 +62,7 @@ module.exports = {
                 .setTitle('Base Commands')
                 .setDescription('Here are the commands in the **Base** category')
                 .addFields(
-                    { name: 'pull', value: '- Pulls the latest version from github.' },
+                    { name: '/pull', value: '- Pulls the latest version from github.' },
                 );
             interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'utility') {
@@ -71,13 +71,13 @@ module.exports = {
                 .setTitle('Utility Commands')
                 .setDescription('Here are the commands in the **Utility** category')
                 .addFields(
-                    { name: 'avatar', value: `- Replies with the user's avatar` },
-                    { name: 'nick', value: '- Give a nickname to the mentioned user.' },
-                    { name: 'say', value: '- Says the message you tell it to say.' },
-                    { name: 'role', value: '- Adds role to the pinged user. (TBS)' },
-                    { name: 'serverinfo', value: '- Shows server information. (WIP)' },
-                    { name: 'userinfo', value: '- Shows member information. (WIP)' },
-                    { name: 'ping', value: 'Replies with Pong!' },
+                    { name: '/avatar', value: `- Replies with the user's avatar` },
+                    { name: '/nick', value: '- Give a nickname to the mentioned user.' },
+                    { name: '/say', value: '- Says the message you tell it to say.' },
+                    { name: '/role', value: '- Adds role to the pinged user. (TBS)' },
+                    { name: '/serverinfo', value: '- Shows server information. (WIP)' },
+                    { name: '/userinfo', value: '- Shows member information. (WIP)' },
+                    { name: '/ping', value: 'Replies with Pong!' },
                 );
             interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'moderation') {
@@ -86,10 +86,10 @@ module.exports = {
                 .setTitle('Moderation Commands')
                 .setDescription('Here are the commands in the **Moderation** category')
                 .addFields(
-                    { name: 'ban', value: '- Bans the pinged member.' },
-                    { name: 'kick', value: '- Kicks the pinged member.' },
-                    { name: 'mute', value: '- Mutes the pinged member. (TBS)' },
-                    { name: 'purge', value: '- Removes messages.' },
+                    { name: '/ban', value: '- Bans the pinged member.' },
+                    { name: '/kick', value: '- Kicks the pinged member.' },
+                    { name: '/mute', value: '- Mutes the pinged member. (TBS)' },
+                    { name: '/purge', value: '- Removes messages.' },
                 );
             interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'fun') {
@@ -98,13 +98,13 @@ module.exports = {
                 .setTitle('Fun Commands')
                 .setDescription('Here are the commands in the **Fun** category')
                 .addFields(
-                    { name: 'cuddle', value: '- Cuddles the pinged member.' },
-                    { name: 'hug', value: '- Hugs the pinged member.' },
-                    { name: 'pat', value: '- Pats the pinged member.' },
-                    { name: 'slap', value: '- Slaps the pinged member.' },
-                    { name: 'neko', value: '- Sends a random catperson image.' },
-                    { name: 'owoify', value: '- Owoifies your text.' },
-                    { name: 'gayrate', value: '-  How gay is the pinged person (Random)' },
+                    { name: '/cuddle', value: '- Cuddles the pinged member.' },
+                    { name: '/hug', value: '- Hugs the pinged member.' },
+                    { name: '/pat', value: '- Pats the pinged member.' },
+                    { name: '/slap', value: '- Slaps the pinged member.' },
+                    { name: '/neko', value: '- Sends a random catperson image.' },
+                    { name: '/owoify', value: '- Owoifies your text.' },
+                    { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
                 );
             interaction.reply({ embeds: [helpemb] });
         } else {
