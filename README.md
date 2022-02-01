@@ -45,7 +45,7 @@ Categories soon to come
   gayrate    How gay is the pinged person O_o
   hug        Hugs the pinged member.
   neko       Sends a random catperson image.
-  owoify     Owoifies your text. (TBS)
+  owoify     Owoifies your text. (WIP)
   pat        Pats the pinged member.
   say        Says the message you tell it to say.
   slap       Slaps the pinged member.
