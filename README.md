@@ -54,6 +54,6 @@ Categories soon to come
   mute       Mutes the pinged member. (TBS)
   purge      Removes messages.
   role       Adds role to the pinged user. (TBS)
-  serverinfo Shows server information. (TBS)
-  userinfo   Shows member information. (TBS)
+  serverinfo Shows server information. (WIP)
+  userinfo   Shows member information. (WIP)
 ```
