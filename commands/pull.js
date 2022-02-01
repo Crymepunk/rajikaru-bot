@@ -8,7 +8,6 @@ module.exports = {
 	async execute(interaction) {
 		if (interaction.user.id == uid) {
 			const { exec } = require("child_process");
-
 			exec("git pull", (error, stdout, stderr) => {
 				if (error) {
 					interaction.reply({ content: `error: ${error.message}`, ephemeral: true });

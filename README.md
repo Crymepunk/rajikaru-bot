@@ -42,7 +42,7 @@ Categories soon to come
   nick       Give a nickname to the mentioned user.
   cuddle     Cuddles the pinged member. (WIP)
   reload     Reloads cogs. (Not Started On)
-  gayrate    How gay is the pinged person O_o (WIP)
+  gayrate    How gay is the pinged person O_o
   hug        Hugs the pinged member. (Not Started On)
   neko       Sends a random catperson image. (Not Started On)
   owoify     Owoifies your text. (Not Started On)

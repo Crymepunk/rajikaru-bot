@@ -19,19 +19,19 @@ module.exports = {
 		.setDescription("Cuddles the pinged member.")
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
-			const user = interaction.options.getUser('member');
-			if (user != interaction.user) {
-                const cudlemb = new MessageEmbed()
+		const user = interaction.options.getUser('member');
+		if (user != interaction.user) {
+            const cudlemb = new MessageEmbed()
                 .setTitle(`${user.username}'s avatar`)
                 .setColor(`${randomColor()}`)
-				.setImage(`${await neko.sfw.cuddle()}`);
-                interaction.reply({ embeds: [cudlemb] });
-			} else {
-                const cudlemb = new MessageEmbed()
+                .setImage(`${await neko.sfw.cuddle()}`);
+            interaction.reply({ embeds: [cudlemb] });
+		} else {
+            const cudlemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} cuddles themselves`)
                 .setColor(`${randomColor()}`)
 				.setImage(`${await neko.sfw.cuddle()}`);
-                interaction.reply({ embeds: [cudlemb] });
+            interaction.reply({ embeds: [cudlemb] });
 			}
 	},
 };
