@@ -7,9 +7,9 @@ module.exports = {
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true))
         .addStringOption(option => option.setName('nick').setDescription('New Nickname').setRequired(true)),
 	async execute(interaction) {
-			const user = interaction.options.getMember('member');
-            const nick = interaction.options.getString('nick');
-            user.edit({ nick: nick });
-            interaction.reply(`Changed ${user.displayName}'s nickname to ${user.user}`);
-	},
+        const user = interaction.options.getMember('member');
+        const nick = interaction.options.getString('nick');
+        user.edit({ nick: nick });
+        interaction.reply(`Changed ${user.displayName}'s nickname to ${user.user}`);
+    },
 };
