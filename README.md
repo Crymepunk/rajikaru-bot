@@ -49,8 +49,8 @@ Categories soon to come
   pat        Pats the pinged member. (Not Started On)
   say        Says the message you tell it to say. (Not Started On)
   slap       Slaps the pinged member. (Not Started On)
-  ban        Ban's member (WIP)
-  kick       Kick's member (WIP)
+  ban        Ban's member
+  kick       Kick's member
   mute       Mutes the pinged member. (Not Started On)
   purge      Removes messages (Not Started On)
   role       Adds role to the pinged user. (Not Started On)
