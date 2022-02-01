@@ -52,7 +52,7 @@ Categories soon to come
   ban        Bans the pinged member.
   kick       Kicks the pinged member.
   mute       Mutes the pinged member. (TBS)
-  purge      Removes messages. (WIP)
+  purge      Removes messages.
   role       Adds role to the pinged user. (TBS)
   serverinfo Shows server information. (TBS)
   userinfo   Shows member information. (TBS)
