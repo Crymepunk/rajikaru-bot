@@ -25,25 +25,25 @@ function objToString(object) {
 }
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('cuddle')
-		.setDescription("Cuddles the pinged member.")
+		.setName('neko')
+		.setDescription("Sends a random catperson image.")
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
 		const user = interaction.options.getUser('member');
 		if (user != interaction.user) {
-            const cuddle = objToString(await neko.sfw.neko());
-            const cudlemb = new MessageEmbed()
+            const img = objToString(await neko.sfw.neko());
+            const nekoemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} cuddles ${user.username}`)
                 .setColor(`${randomColor()}`)
-				.setImage(cuddle);
-            interaction.reply({ embeds: [cudlemb] });
+				.setImage(img);
+            interaction.reply({ embeds: [nekoemb] });
 		} else {
-            const cuddle = objToString(await neko.sfw.neko());
-            const cudlemb = new MessageEmbed()
+            const img = objToString(await neko.sfw.neko());
+            const nekoemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} cuddles themselves`)
                 .setColor(`${randomColor()}`)
-				.setImage(cuddle);
-            interaction.reply({ embeds: [cudlemb] });
+				.setImage(img);
+            interaction.reply({ embeds: [nekoemb] });
 			}
 	},
 };

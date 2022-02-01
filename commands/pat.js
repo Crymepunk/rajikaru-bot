@@ -31,19 +31,19 @@ module.exports = {
 	async execute(interaction) {
 		const user = interaction.options.getUser('member');
 		if (user != interaction.user) {
-            const cuddle = objToString(await neko.sfw.pat());
-            const cudlemb = new MessageEmbed()
-                .setTitle(`${interaction.user.username} cuddles ${user.username}`)
+            const img = objToString(await neko.sfw.pat());
+            const patemb = new MessageEmbed()
+                .setTitle(`${interaction.user.username} pats ${user.username}`)
                 .setColor(`${randomColor()}`)
-				.setImage(cuddle);
-            interaction.reply({ embeds: [cudlemb] });
+				.setImage(img);
+            interaction.reply({ embeds: [patemb] });
 		} else {
-            const cuddle = objToString(await neko.sfw.pat());
-            const cudlemb = new MessageEmbed()
-                .setTitle(`${interaction.user.username} cuddles themselves`)
+            const img = objToString(await neko.sfw.pat());
+            const patemb = new MessageEmbed()
+                .setTitle(`${interaction.user.username} pats themselves`)
                 .setColor(`${randomColor()}`)
-				.setImage(cuddle);
-            interaction.reply({ embeds: [cudlemb] });
+				.setImage(img);
+            interaction.reply({ embeds: [patemb] });
 			}
 	},
 };

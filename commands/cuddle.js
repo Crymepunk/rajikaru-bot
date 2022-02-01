@@ -31,18 +31,18 @@ module.exports = {
 	async execute(interaction) {
 		const user = interaction.options.getUser('member');
 		if (user != interaction.user) {
-            const cuddle = objToString(await neko.sfw.cuddle());
+            const img = objToString(await neko.sfw.cuddle());
             const cudlemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} cuddles ${user.username}`)
                 .setColor(`${randomColor()}`)
-				.setImage(cuddle);
+				.setImage(img);
             interaction.reply({ embeds: [cudlemb] });
 		} else {
-            const cuddle = objToString(await neko.sfw.cuddle());
+            const img = objToString(await neko.sfw.cuddle());
             const cudlemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} cuddles themselves`)
                 .setColor(`${randomColor()}`)
-				.setImage(cuddle);
+				.setImage(img);
             interaction.reply({ embeds: [cudlemb] });
 			}
 	},
