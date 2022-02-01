@@ -4,7 +4,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('pull')
-		.setDescription('Pulls newest bot revision from github!'),
+		.setDescription('Pulls the latest version from github.'),
 	async execute(interaction) {
 		if (interaction.user.id == '769632057575342081') {
 			const { exec } = require("child_process");
