@@ -1,7 +1,5 @@
 {
-    "token": "CHANGEME",
-    "prefix": "?",
-    "uid": "1234567890",
-    "friendserver": "1234567890", 
-    "_comment": "'friendserver' is not required"
+    "token": "put your token here",
+    "clientId": "Application ID here"
+    "uid": "User ID Here"
 }
