@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@discordjs/rest": "^0.3.0",
+    "discord.js": "^13.6.0",
+    "nekos.life": "^2.0.9"
+  },
+  "name": "rajikaru-bot",
+  "version": "0.0.1",
+  "description": "A Discord Bot made in Javascript",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^8.8.0"
+  },
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "discord"
+  ],
+  "author": "Radical",
+  "license": "GPL-3.0"
+}
