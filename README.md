@@ -27,33 +27,36 @@ And you can get the token by making an application in the "discord developer por
 {
     "token": "put your token here",
     "clientId": "Application ID here",
-    "uid": "User ID Here"
+    "uid": "User ID Here",
+    "friendserver": "Ignore this.." // Will be removed soon
 }
 ```
 
 After doing these things you're basically good to go! Just run the bot by doing `node .` inside the bot folder. Good luck!
 
 ## Commands:
-Categories soon to come
 ```
+Base:
   pull       Pulls the latest version from github.
+Utility:
   avatar     Replies with the user's avatar
-  ping       Replies with Pong!
   nick       Give a nickname to the mentioned user.
-  cuddle     Cuddles the pinged member.
-  reload     Reloads cogs. (TBS)
-  gayrate    How gay is the pinged person O_o
-  hug        Hugs the pinged member.
-  neko       Sends a random catperson image.
-  owoify     Owoifies your text.
-  pat        Pats the pinged member.
+  role       Adds role to the pinged user. (TBS)
+  serverinfo Shows server information. (WIP)
+  userinfo   Shows member information. (WIP)
+  ping       Replies with Pong!
   say        Says the message you tell it to say.
-  slap       Slaps the pinged member.
+Moderation:
   ban        Bans the pinged member.
   kick       Kicks the pinged member.
   mute       Mutes the pinged member. (TBS)
   purge      Removes messages.
-  role       Adds role to the pinged user. (TBS)
-  serverinfo Shows server information. (WIP)
-  userinfo   Shows member information. (WIP)
+Fun:
+  cuddle     Cuddles the pinged member.
+  hug        Hugs the pinged member.
+  pat        Pats the pinged member.
+  slap       Slaps the pinged member.
+  neko       Sends a random catperson image.
+  owoify     Owoifies your text.
+  gayrate    How gay is the pinged person (Random)
 ```
