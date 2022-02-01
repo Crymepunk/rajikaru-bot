@@ -43,16 +43,16 @@ Categories soon to come
   cuddle     Cuddles the pinged member.
   reload     Reloads cogs. (TBS)
   gayrate    How gay is the pinged person O_o
-  hug        Hugs the pinged member. (TBS)
-  neko       Sends a random catperson image. (TBS)
+  hug        Hugs the pinged member.
+  neko       Sends a random catperson image.
   owoify     Owoifies your text. (TBS)
-  pat        Pats the pinged member. (TBS)
+  pat        Pats the pinged member.
   say        Says the message you tell it to say.
-  slap       Slaps the pinged member. (TBS)
-  ban        Ban's member
-  kick       Kick's member
+  slap       Slaps the pinged member.
+  ban        Bans the pinged member.
+  kick       Kicks the pinged member.
   mute       Mutes the pinged member. (TBS)
-  purge      Removes messages (TBS)
+  purge      Removes messages. (WIP)
   role       Adds role to the pinged user. (TBS)
   serverinfo Shows server information. (TBS)
   userinfo   Shows member information. (TBS)
