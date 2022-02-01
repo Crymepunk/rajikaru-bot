@@ -41,19 +41,19 @@ Categories soon to come
   ping       Replies with Pong!
   nick       Give a nickname to the mentioned user.
   cuddle     Cuddles the pinged member. (WIP)
-  reload     Reloads cogs. (Not Started On)
+  reload     Reloads cogs. (TBS)
   gayrate    How gay is the pinged person O_o
-  hug        Hugs the pinged member. (Not Started On)
-  neko       Sends a random catperson image. (Not Started On)
-  owoify     Owoifies your text. (Not Started On)
-  pat        Pats the pinged member. (Not Started On)
+  hug        Hugs the pinged member. (TBS)
+  neko       Sends a random catperson image. (TBS)
+  owoify     Owoifies your text. (TBS)
+  pat        Pats the pinged member. (TBS)
   say        Says the message you tell it to say.
-  slap       Slaps the pinged member. (Not Started On)
+  slap       Slaps the pinged member. (TBS)
   ban        Ban's member
   kick       Kick's member
-  mute       Mutes the pinged member. (Not Started On)
-  purge      Removes messages (Not Started On)
-  role       Adds role to the pinged user. (Not Started On)
-  serverinfo Shows server information. (Not Started On)
-  userinfo   Shows member information. (Not Started On)
+  mute       Mutes the pinged member. (TBS)
+  purge      Removes messages (TBS)
+  role       Adds role to the pinged user. (TBS)
+  serverinfo Shows server information. (TBS)
+  userinfo   Shows member information. (TBS)
 ```
