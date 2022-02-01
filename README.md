@@ -40,7 +40,7 @@ Categories soon to come
   avatar     Replies with the user's avatar
   ping       Replies with Pong!
   nick       Give a nickname to the mentioned user.
-  cuddle     Cuddles the pinged member. (WIP)
+  cuddle     Cuddles the pinged member.
   reload     Reloads cogs. (TBS)
   gayrate    How gay is the pinged person O_o
   hug        Hugs the pinged member. (TBS)

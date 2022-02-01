@@ -13,6 +13,16 @@ const randomColor = () => {
     return color;
  };
 
+function objToString(object) {
+    let str = '';
+    for (const k in object) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (object.hasOwnProperty(k)) {
+            str += object[k];
+        }
+    }
+    return str;
+}
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('cuddle')
@@ -21,16 +31,18 @@ module.exports = {
 	async execute(interaction) {
 		const user = interaction.options.getUser('member');
 		if (user != interaction.user) {
+            const cuddle = objToString(await neko.sfw.cuddle());
             const cudlemb = new MessageEmbed()
-                .setTitle(`${user.username}'s avatar`)
+                .setTitle(`${interaction.user.username} cuddles ${user.username}`)
                 .setColor(`${randomColor()}`)
-                .setImage(`${await neko.sfw.cuddle()}`);
+				.setImage(cuddle);
             interaction.reply({ embeds: [cudlemb] });
 		} else {
+            const cuddle = objToString(await neko.sfw.cuddle());
             const cudlemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} cuddles themselves`)
                 .setColor(`${randomColor()}`)
-				.setImage(`${await neko.sfw.cuddle()}`);
+				.setImage(cuddle);
             interaction.reply({ embeds: [cudlemb] });
 			}
 	},
