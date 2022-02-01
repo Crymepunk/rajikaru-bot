@@ -34,12 +34,13 @@ And you can get the token by making an application in the "discord developer por
 After doing these things you're basically good to go! Just run the bot by doing `node .` inside the bot folder. Good luck!
 
 ## Commands:
+Categories soon to come
 ```
   pull       Pulls the latest version from github.
   avatar     Replies with the user's avatar
   ping       Replies with Pong!
   nick       Give a nickname to the mentioned user.
-  cuddle     Cuddles the pinged member.
+  cuddle     Cuddles the pinged member. (WIP)
   reload     Reloads cogs. (Not Started On)
   gayrate    How gay is the pinged person O_o (Not Started On)
   hug        Hugs the pinged member. (Not Started On)
