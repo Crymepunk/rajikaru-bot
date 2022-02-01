@@ -11,7 +11,7 @@ const randomColor = () => {
        color += (bit).toString(16);
     }
     return color;
- };
+};
 
 function objToString(object) {
     let str = '';

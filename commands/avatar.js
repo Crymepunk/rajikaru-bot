@@ -9,7 +9,7 @@ const randomColor = () => {
        color += (bit).toString(16);
     }
     return color;
- };
+};
 
 module.exports = {
 	data: new SlashCommandBuilder()
