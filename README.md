@@ -28,7 +28,7 @@ And you can get the token by making an application in the "discord developer por
     "token": "put your token here",
     "clientId": "Application ID here",
     "uid": "User ID Here",
-    "friendserver": "Ignore this.." // Will be removed soon
+    "friendserver": ""
 }
 ```
 
