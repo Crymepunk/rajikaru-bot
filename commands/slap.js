@@ -23,6 +23,7 @@ function objToString(object) {
     }
     return str;
 }
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('slap')
