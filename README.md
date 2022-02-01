@@ -25,7 +25,7 @@ And you can get the token by making an application in the "discord developer por
 ```json
 {
     "token": "put your token here",
-    "clientId": "Application ID here"
+    "clientId": "Application ID here",
     "uid": "User ID Here"
 }
 ```
