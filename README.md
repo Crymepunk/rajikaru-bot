@@ -47,7 +47,7 @@ Categories soon to come
   neko       Sends a random catperson image. (Not Started On)
   owoify     Owoifies your text. (Not Started On)
   pat        Pats the pinged member. (Not Started On)
-  say        Says the message you tell it to say. (Not Started On)
+  say        Says the message you tell it to say. (WIP)
   slap       Slaps the pinged member. (Not Started On)
   ban        Ban's member
   kick       Kick's member
