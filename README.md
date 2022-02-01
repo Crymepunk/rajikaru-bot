@@ -15,7 +15,7 @@ $ npm i
 ```
 
 3. Change the required lines in the config.json
-The required ones are token and User ID. You can get your user id by enabling developer mode on discord, right clicking yourself and clicking
+The required ones are token, clientId and User ID. You can get your user id by enabling developer mode on discord, right clicking yourself and clicking
 
 ![image](https://user-images.githubusercontent.com/66682497/151679095-fc0025b5-ebc8-4ed3-ba46-f535cf2ac85b.png)
 
@@ -38,4 +38,21 @@ After doing these things you're basically good to go! Just run the bot by doing 
   pull       Pulls the latest version from github.
   avatar     Replies with the user's avatar
   ping       Replies with Pong!
+  nick       Give a nickname to the mentioned user.
+  cuddle     Cuddles the pinged member.
+  reload     Reloads cogs. (Not Started On)
+  gayrate    How gay is the pinged person O_o (Not Started On)
+  hug        Hugs the pinged member. (Not Started On)
+  neko       Sends a random catperson image. (Not Started On)
+  owoify     Owoifies your text. (Not Started On)
+  pat        Pats the pinged member. (Not Started On)
+  say        Says the message you tell it to say. (Not Started On)
+  slap       Slaps the pinged member. (Not Started On)
+  ban        Ban's member (Not Started On)
+  kick       Kick's member (Not Started On)
+  mute       Mutes the pinged member. (Not Started On)
+  purge      Removes messages (Not Started On)
+  role       Adds role to the pinged user. (Not Started On)
+  serverinfo Shows server information. (Not Started On)
+  userinfo   Shows member information. (Not Started On)
 ```
