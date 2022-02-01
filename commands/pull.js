@@ -1,12 +1,12 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-
+const { uid } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('pull')
 		.setDescription('Pulls the latest version from github.'),
 	async execute(interaction) {
-		if (interaction.user.id == '769632057575342081') {
+		if (interaction.user.id == uid) {
 			const { exec } = require("child_process");
 
 			exec("git pull", (error, stdout, stderr) => {
@@ -21,7 +21,7 @@ module.exports = {
 				interaction.reply({ content: `stdout: ${stdout}`, ephemeral: true });
 			});
 		} else {
-			await interaction.reply('Please dont.');
+			return;
 		}
 	},
 };
