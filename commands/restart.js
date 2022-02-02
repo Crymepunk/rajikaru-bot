@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Restarts the bot.'),
 	async execute(interaction) {
         if (interaction.user.id == uid) {
-            await interaction.reply('Restarting...');
+            await interaction.reply({ content: 'Restarting...', ephemeral: true });
             process.exit();
         }
 	},
