@@ -6,7 +6,7 @@
     "nekos.life": "^2.0.9"
   },
   "name": "rajikaru-bot",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "A Discord Bot made in Javascript",
   "main": "index.js",
   "devDependencies": {
@@ -16,7 +16,9 @@
     "test": "node index.js"
   },
   "keywords": [
-    "discord"
+    "discord",
+    "discord.js",
+    "discord-bot"
   ],
   "author": "Radical",
   "license": "GPL-3.0"
