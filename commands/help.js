@@ -25,34 +25,35 @@ module.exports = {
 //                .setDescription('Here are all the commands and what they do.                     ')
 //                .addFields(
 //                    { name: 'Base Commands', value: '\u200B' },
-//                    { name: 'pull', value: '- Pulls the latest version from github.' },
+//                    { name: '/pull', value: '- Pulls the latest version from github.' },
+//                    { name: '/restart', value: '- Restarts the bot.' },
 //                    { name: '\u200B', value: '\u200B' },
 
 //                    { name: 'Utility Commands', value: '\u200B' },
-//                    { name: 'avatar', value: `- Replies with the user's avatar` },
-//                    { name: 'nick', value: '- Give a nickname to the mentioned user.' },
-//                    { name: 'say', value: '- Says the message you tell it to say.' },
-//                    { name: 'role', value: '- Adds role to the pinged user. (TBS)' },
-//                    { name: 'serverinfo', value: '- Shows server information. (WIP)' },
-//                    { name: 'userinfo', value: '- Shows member information. (WIP)' },
-//                    { name: 'ping', value: '- Replies with Pong!' },
+//                    { name: '/avatar', value: `- Replies with the user's avatar` },
+//                    { name: '/nick', value: '- Give a nickname to the mentioned user.' },
+//                    { name: '/say', value: '- Says the message you tell it to say.' },
+//                    { name: '/role', value: '- Adds role to the pinged user. (TBS)' },
+//                    { name: '/serverinfo', value: '- Shows server information. (WIP)' },
+//                    { name: '/userinfo', value: '- Shows member information. (WIP)' },
+//                    { name: '/ping', value: '- Replies with Pong!' },
 //                    { name: '\u200B', value: '\u200B' },
 
 //                    { name: 'Moderation Commands', value: '\u200B' },
-//                    { name: 'ban', value: '- Bans the pinged member.' },
-//                    { name: 'kick', value: '- Kicks the pinged member.' },
-//                    { name: 'mute', value: '- Mutes the pinged member. (TBS)' },
-//                    { name: 'purge', value: '- Removes messages.' },
+//                    { name: '/ban', value: '- Bans the pinged member.' },
+//                    { name: '/kick', value: '- Kicks the pinged member.' },
+//                    { name: '/mute', value: '- Mutes the pinged member. (TBS)' },
+//                    { name: '/purge', value: '- Removes messages.' },
 //                    { name: '\u200B', value: '\u200B' },
 
 //                    { name: 'Fun Commands', value: '\u200B' },
-//                    { name: 'cuddle', value: '- Cuddles the pinged member.' },
-//                    { name: 'hug', value: '- Hugs the pinged member.' },
-//                    { name: 'pat', value: '- Pats the pinged member.' },
-//                    { name: 'slap', value: '- Slaps the pinged member.' },
-//                    { name: 'neko', value: '- Sends a random catperson image.' },
-//                    { name: 'owoify', value: '- Owoifies your text.' },
-//                    { name: 'gayrate', value: '-  How gay is the pinged person (Random)' },
+//                    { name: '/cuddle', value: '- Cuddles the pinged member.' },
+//                    { name: '/hug', value: '- Hugs the pinged member.' },
+//                    { name: '/pat', value: '- Pats the pinged member.' },
+//                    { name: '/slap', value: '- Slaps the pinged member.' },
+//                    { name: '/neko', value: '- Sends a random catperson image.' },
+//                    { name: '/owoify', value: '- Owoifies your text.' },
+//                    { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
 //                );
 //            interaction.reply({ embeds: [helpemb] });
 //        } else
@@ -63,6 +64,7 @@ module.exports = {
                 .setDescription('Here are the commands in the **Base** category')
                 .addFields(
                     { name: '/pull', value: '- Pulls the latest version from github.' },
+                    { name: '/restart', value: '- Restarts the bot.' },
                 );
             interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'utility') {
