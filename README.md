@@ -61,3 +61,7 @@ Fun:
   owoify     Owoifies your text.
   gayrate    How gay is the pinged person (Random)
 ```
+
+## Invite the Bot!
+https://discord.com/api/oauth2/authorize?client_id=900694117355487283&permissions=1377073080902&scope=bot%20applications.commands
+Expect downtime and unexpected outcomes because of the bot not being finished.
