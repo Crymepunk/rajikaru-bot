@@ -2,8 +2,9 @@
 
 ![Rajikaru-Banner No Square](https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png)
 
-This is the javascript remake of my python bot, when im satisfied with the bot i will push it to the main branch and make this the main version of the bot.
-Any help would be apreciated..
+Rajikaru is an Open-Source General Purpose Discord Bot.
+This bot is still in active development and will not be finished anytime soon.
+I'm making great progress and have switched from python to javascript to make my life easier when making such a big bot.
 
 ## Installation Instructions:
 1. Download node.js from your package manager on linux/mac or through their website on windows
