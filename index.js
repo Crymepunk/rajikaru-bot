@@ -40,4 +40,6 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
+client.user.setActivity('your mom', { type: 'LISTENING' });
+
 client.login(token);
