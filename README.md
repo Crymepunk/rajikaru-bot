@@ -41,7 +41,7 @@ Base:
 Utility:
   avatar     Replies with the user's avatar
   nick       Give a nickname to the mentioned user.
-  role       Adds role to the pinged user. (TBS)
+  role       Adds role to the pinged user.
   serverinfo Shows server information. (WIP)
   userinfo   Shows member information. (WIP)
   ping       Replies with Pong!
