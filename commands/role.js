@@ -3,8 +3,8 @@ const { Permissions } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('Replies with Pong!')
+		.setName('role')
+		.setDescription('Adds role to the pinged user.')
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true))
         .addMentionableOption(option => option.setName('role').setDescription('Role to add.')),
 	async execute(interaction) {
