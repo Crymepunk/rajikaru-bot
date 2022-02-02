@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
-const { friendserver } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,18 +10,23 @@ module.exports = {
 	async execute(interaction) {
         const member = interaction.options.getMember('member');
         let reason = interaction.options.getString('reason');
-        if (interaction.guild != friendserver) {
-            if (!reason) {
-                reason = 'No reason provided';
-            }
-            if (interaction.user == member) {
-                interaction.reply('Please ping someone else to kick.');
-            } else if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
-                interaction.reply(`${member.user} has been kicked for "${reason}"`);
-                member.kick(reason);
-            } else {
-                return;
-            }
+        const usrole = interaction.member.roles.highest;
+        const memrole = member.roles.highest;
+
+        if (!reason) {
+            reason = 'No reason provided';
+        }
+
+        if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+            interaction.reply('Cannot kick someone with the same or higher rank as you.');
+            return;
+        }
+
+        if (interaction.user == member) {
+            interaction.reply('Please ping someone else to kick.');
+        } else if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
+            interaction.reply(`${member.user} has been kicked for "${reason}"`);
+            member.kick(reason);
         } else {
             return;
         }
