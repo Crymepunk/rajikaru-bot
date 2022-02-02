@@ -15,7 +15,7 @@ https://nodejs.org/en/
 $ npm i
 ```
 
-3. Change the required lines in the config.json
+3. Change the name of `config.def.json` to `config.json` and change the required fields
 The required ones are token, clientId and User ID. You can get your user id by enabling developer mode on discord, right clicking yourself and clicking
 
 ![image](https://user-images.githubusercontent.com/66682497/151679095-fc0025b5-ebc8-4ed3-ba46-f535cf2ac85b.png)
@@ -64,4 +64,5 @@ Fun:
 
 ## Invite the Bot!
 https://discord.com/api/oauth2/authorize?client_id=900694117355487283&permissions=1377073080902&scope=bot%20applications.commands
+
 Expect downtime and unexpected outcomes because of the bot not being finished.
