@@ -15,12 +15,13 @@ https://nodejs.org/en/
 $ npm i
 ```
 
-3. Change the name of `config.def.json` to `config.json` and change the required fields
+3. Change the name of `config.def.json` to `config.json` and change the required fields.
+
 The required ones are token, clientId and User ID. You can get your user id by enabling developer mode on discord, right clicking yourself and clicking
 
 ![image](https://user-images.githubusercontent.com/66682497/151679095-fc0025b5-ebc8-4ed3-ba46-f535cf2ac85b.png)
 
-And you can get the token by making an application in the "discord developer portal" and then making a bot in that application also remember to copy the clientID/ApplicationID while you're there.
+You can get the token by making an application in the "discord developer portal" and then making a bot in that application also remember to copy the clientID/ApplicationID while you're there.
 
 ![Untitled](https://user-images.githubusercontent.com/66682497/151679192-60aa190d-a3b0-444b-81c4-1dea7a805229.png)
 
