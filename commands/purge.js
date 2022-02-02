@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { friendserver } = require('../config.json');
+const { Permissions, Guild } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,8 +10,16 @@ module.exports = {
 	async execute(interaction) {
         if (interaction.guild != friendserver) {
             const limit = interaction.options.getInteger('amount');
-            await interaction.channel.bulkDelete(limit + 1);
-            await interaction.reply(`Chat purged by ${interaction.user}`);
+            if (Guild.me.member.permissionsIn(interaction.channel).has(Permissions.FLAGS.MANAGE_MESSAGES)) {
+                if (interaction.member.permissionsIn(interaction.channel).has(Permissions.FLAGS.MANAGE_MESSAGES)) {
+                    await interaction.channel.bulkDelete(limit + 1);
+                    await interaction.reply(`Chat purged by ${interaction.user}`);
+                } else {
+                    interaction.reply({ content: 'You are missing the **Manage Messages** permission.', ephemeral: true });
+                }
+            } else {
+                interaction.reply({ content: 'I am missing the **Manage Messages** permission.', ephemeral: true });
+            }
         }
 	},
 };
