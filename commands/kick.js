@@ -20,15 +20,11 @@ module.exports = {
         if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
             interaction.reply('Cannot kick someone with the same or higher rank as you.');
             return;
-        }
-
-        if (interaction.user == member) {
+        } else if (interaction.user == member) {
             interaction.reply('Please ping someone else to kick.');
         } else if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
             interaction.reply(`${member.user} has been kicked for "${reason}"`);
             member.kick(reason);
-        } else {
-            return;
         }
 	},
 };
