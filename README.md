@@ -58,6 +58,7 @@ Fun:
   hug        Hugs the pinged member.
   pat        Pats the pinged member.
   slap       Slaps the pinged member.
+  coinflip   Replies with Heads or Tails.
   neko       Sends a random catperson image.
   owoify     Owoifies your text.
   gayrate    How gay is the pinged person (Random)
