@@ -80,8 +80,6 @@ module.exports = {
                     { name: '/nick', value: '- Give a nickname to the mentioned user.' },
                     { name: '/say', value: '- Says the message you tell it to say.' },
                     { name: '/role', value: '- Adds role to the pinged user.' },
-                    { name: '/serverinfo', value: '- Shows server information. (WIP)' },
-                    { name: '/userinfo', value: '- Shows member information. (WIP)' },
                     { name: '/ping', value: 'Replies with Pong!' },
                 );
             interaction.reply({ embeds: [helpemb] });
