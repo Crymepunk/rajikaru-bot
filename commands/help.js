@@ -24,12 +24,11 @@ module.exports = {
                 .setTitle('Rajikaru Bot - Commands')
                 .setDescription('Here are all the commands and what they do.                     ')
                 .addFields(
-                    { name: 'Base Commands', value: '\u200B' },
+                    { name: '\u200B', value: '**Base Commands**' },
                     { name: '/pull', value: '- Pulls the latest version from github.' },
                     { name: '/restart', value: '- Restarts the bot.' },
-                    { name: '\u200B', value: '\u200B' },
 
-                    { name: 'Utility Commands', value: '\u200B' },
+                    { name: '\u200B', value: '**Utility Commands**' },
                     { name: '/avatar', value: `- Replies with the user's avatar` },
                     { name: '/nick', value: '- Give a nickname to the mentioned user.' },
                     { name: '/say', value: '- Says the message you tell it to say.' },
@@ -37,15 +36,14 @@ module.exports = {
                     { name: '/serverinfo', value: '- Shows server information. (WIP)' },
                     { name: '/userinfo', value: '- Shows member information. (WIP)' },
                     { name: '/ping', value: '- Replies with Pong!' },
-                    { name: '\u200B', value: '\u200B' },
 
-                    { name: 'Moderation Commands', value: '\u200B' },
+                    { name: '\u200B', value: '**Moderation Commands**' },
                     { name: '/ban', value: '- Bans the pinged member.' },
                     { name: '/kick', value: '- Kicks the pinged member.' },
                     { name: '/mute', value: '- Mutes the pinged member. (TBS)' },
                     { name: '/purge', value: '- Removes messages.' },
-                    { name: '\u200B', value: '\u200B' },
 
+                    { name: '\u200B', value: '**Fun Commands**' },
                     { name: '/cuddle', value: '- Cuddles the pinged member.' },
                     { name: '/hug', value: '- Hugs the pinged member.' },
                     { name: '/pat', value: '- Pats the pinged member.' },
