@@ -104,6 +104,7 @@ module.exports = {
                     { name: '/hug', value: '- Hugs the pinged member.' },
                     { name: '/pat', value: '- Pats the pinged member.' },
                     { name: '/slap', value: '- Slaps the pinged member.' },
+                    { name: '/coinflip', value: '- Replies with Heads or Tails.' },
                     { name: '/neko', value: '- Sends a random catperson image.' },
                     { name: '/owoify', value: '- Owoifies your text.' },
                     { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
