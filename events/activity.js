@@ -22,7 +22,7 @@ module.exports = {
 				client.user.setActivity('The Game');
 				console.log('Set Activity to "Playing The Game"');
 				lastoutcome = 1;
-				await wait(7200000);
+				await wait(600000);
 			} else if (lastoutcome != outcome && outcome == 2) {
 				client.user.setActivity('Genshin Impact');
 				console.log('Set Activity to "Playing Genshin Impact"');
