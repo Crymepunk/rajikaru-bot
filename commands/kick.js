@@ -17,11 +17,11 @@ module.exports = {
             reason = 'No reason provided';
         }
 
-        if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+        if (interaction.user == member) {
+            interaction.reply('Please ping someone else to kick.');
+        } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
             interaction.reply('Cannot kick someone with the same or higher rank as you.');
             return;
-        } else if (interaction.user == member) {
-            interaction.reply('Please ping someone else to kick.');
         } else if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
             interaction.reply(`${member.user} has been kicked for "${reason}"`);
             member.kick(reason);

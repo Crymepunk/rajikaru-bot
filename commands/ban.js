@@ -17,11 +17,11 @@ module.exports = {
             reason = 'No reason provided';
         }
 
-        if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+        if (interaction.user == member) {
+            interaction.reply('Please ping someone else to ban.');
+        } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
             interaction.reply('Cannot ban someone with the same or higher rank as you.');
             return;
-        } else if (interaction.user == member) {
-            interaction.reply('Please ping someone else to ban.');
         } else if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
             interaction.reply(`${member.user} has been banned for "${reason}"`);
             member.ban({ days: 0, reason: reason });
