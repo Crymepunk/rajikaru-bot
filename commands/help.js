@@ -14,7 +14,7 @@ const randomColor = () => {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setDescription('Shows this message.')
+		.setDescription('View a list of commands')
         .addStringOption(option => option.setName('category').setDescription('Which category to show')),
 	async execute(interaction) {
         const category = interaction.options.getString('category');
@@ -24,10 +24,6 @@ module.exports = {
                 .setTitle('Rajikaru Bot - Commands')
                 .setDescription('Here are all the commands and what they do.                     ')
                 .addFields(
-                    { name: '\u200B', value: '**Base Commands**' },
-                    { name: '/pull', value: '- Pulls the latest version from github.' },
-                    { name: '/restart', value: '- Restarts the bot.' },
-
                     { name: '\u200B', value: '**Utility Commands**' },
                     { name: '/avatar', value: `- Replies with the user's avatar` },
                     { name: '/nick', value: '- Give a nickname to the mentioned user.' },
@@ -60,17 +56,7 @@ module.exports = {
                 interaction.reply({ embeds: [helpemb] });
             }
         } else
-        if (category.toLowerCase() == 'base') {
-            const helpemb = new MessageEmbed()
-                .setColor(randomColor())
-                .setTitle('Base Commands')
-                .setDescription('Here are the commands in the **Base** category')
-                .addFields(
-                    { name: '/pull', value: '- Pulls the latest version from github.' },
-                    { name: '/restart', value: '- Restarts the bot.' },
-                );
-            interaction.reply({ embeds: [helpemb] });
-        } else if (category.toLowerCase() == 'utility') {
+        if (category.toLowerCase() == 'utility') {
             const helpemb = new MessageEmbed()
                 .setColor(randomColor())
                 .setTitle('Utility Commands')
