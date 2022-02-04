@@ -77,7 +77,6 @@ module.exports = {
                 .addFields(
                     { name: '/ban', value: '- Bans the pinged member.' },
                     { name: '/kick', value: '- Kicks the pinged member.' },
-                    { name: '/mute', value: '- Mutes the pinged member. (TBS)' },
                     { name: '/purge', value: '- Removes messages.' },
                 );
             interaction.reply({ embeds: [helpemb] });
