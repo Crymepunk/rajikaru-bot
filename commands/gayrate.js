@@ -9,7 +9,7 @@ const randomColor = () => {
        color += (bit).toString(16);
     }
     return color;
- };
+};
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
