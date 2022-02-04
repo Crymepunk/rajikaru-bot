@@ -4,7 +4,7 @@
 
 Rajikaru is an Open-Source General Purpose Discord Bot.
 This bot is still in active development and will not be finished anytime soon.
-I'm making great progress and have switched from python to javascript to make my life easier when making such a big bot.
+I'm making great progress and have switched from python to javascript to make my life easier when making such an advanced bot.
 
 ## Installation Instructions:
 1. Download node.js from your package manager on linux/mac or through their website on windows
@@ -44,14 +44,11 @@ Utility:
   avatar     Replies with the user's avatar
   nick       Give a nickname to the mentioned user.
   role       Adds role to the pinged user.
-  serverinfo Shows server information. (TBS)
-  userinfo   Shows member information. (TBS)
   ping       Replies with Pong!
   say        Says the message you tell it to say.
 Moderation:
   ban        Bans the pinged member.
   kick       Kicks the pinged member.
-  mute       Mutes the pinged member. (TBS)
   purge      Removes messages.
 Fun:
   cuddle     Cuddles the pinged member.
