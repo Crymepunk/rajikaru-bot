@@ -37,9 +37,6 @@ After doing these things you're basically good to go! Just run the bot by doing 
 
 ## Commands:
 ```
-Base:
-  pull       Pulls the latest version from github.
-  restart    Restarts the bot.
 Utility:
   avatar     Replies with the user's avatar
   nick       Give a nickname to the mentioned user.
