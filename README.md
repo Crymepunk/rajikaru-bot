@@ -1,4 +1,3 @@
-# Rajikaru Bot
 <p align='center'>
   <img src='https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png'/>
 </p>
