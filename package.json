@@ -3,7 +3,8 @@
     "@discordjs/rest": "^0.3.0",
     "discord.js": "^13.6.0",
     "dotenv": "^15.0.0",
-    "nekos.life": "^2.0.9"
+    "nekos.life": "^2.0.9",
+    "sequelize": "^6.15.0"
   },
   "name": "rajikaru-bot",
   "version": "0.2.0",
