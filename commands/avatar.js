@@ -23,7 +23,7 @@ module.exports = {
             .setTitle(`${user.username}'s avatar`)
             .setColor(`${randomColor()}`)
 			.setImage(`${user.avatarURL()}?size=1024`);
-            interaction.reply({ embeds: [aviemb] });
+            await interaction.reply({ embeds: [aviemb] });
 		} else {
             const aviemb = new MessageEmbed()
             .setTitle(`${interaction.user.username}'s avatar`)

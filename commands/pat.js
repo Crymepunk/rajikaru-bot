@@ -37,14 +37,14 @@ module.exports = {
                 .setTitle(`${interaction.user.username} pats ${user.username}`)
                 .setColor(`${randomColor()}`)
 				.setImage(img);
-            interaction.reply({ embeds: [patemb] });
+            await interaction.reply({ embeds: [patemb] });
 		} else {
             const img = objToString(await neko.sfw.pat());
             const patemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} pats themselves`)
                 .setColor(`${randomColor()}`)
 				.setImage(img);
-            interaction.reply({ embeds: [patemb] });
+            await interaction.reply({ embeds: [patemb] });
 			}
 	},
 };

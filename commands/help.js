@@ -50,10 +50,10 @@ module.exports = {
                     { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
                 );
             if (interaction.inGuild()) {
-                interaction.reply('Check your DMs for a full list of commands!');
+                await interaction.reply('Check your DMs for a full list of commands!');
                 interaction.user.send({ embeds: [helpemb] });
             } else {
-                interaction.reply({ embeds: [helpemb] });
+                await interaction.reply({ embeds: [helpemb] });
             }
         } else
         if (category.toLowerCase() == 'utility') {
@@ -68,7 +68,7 @@ module.exports = {
                     { name: '/role', value: '- Adds role to the pinged user.' },
                     { name: '/ping', value: 'Replies with Pong!' },
                 );
-            interaction.reply({ embeds: [helpemb] });
+            await interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'moderation') {
             const helpemb = new MessageEmbed()
                 .setColor(randomColor())
@@ -79,7 +79,7 @@ module.exports = {
                     { name: '/kick', value: '- Kicks the pinged member.' },
                     { name: '/purge', value: '- Removes messages.' },
                 );
-            interaction.reply({ embeds: [helpemb] });
+            await interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'fun') {
             const helpemb = new MessageEmbed()
                 .setColor(randomColor())
@@ -95,9 +95,9 @@ module.exports = {
                     { name: '/owoify', value: '- Owoifies your text.' },
                     { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
                 );
-            interaction.reply({ embeds: [helpemb] });
+            await interaction.reply({ embeds: [helpemb] });
         } else {
-            interaction.reply({ content: 'Valid categories include: Base, Fun, Utility and Moderation', ephemeral: true });
+            await interaction.reply({ content: 'Valid categories include: Base, Fun, Utility and Moderation', ephemeral: true });
         }
 	},
 };

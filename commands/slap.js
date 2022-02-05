@@ -37,14 +37,14 @@ module.exports = {
                 .setTitle(`${interaction.user.username} slaps ${user.username}`)
                 .setColor(`${randomColor()}`)
 				.setImage(img);
-            interaction.reply({ embeds: [slapemb] });
+            await interaction.reply({ embeds: [slapemb] });
 		} else {
             const img = objToString(await neko.sfw.slap());
             const slapemb = new MessageEmbed()
                 .setTitle(`${interaction.user.username} slaps themselves`)
                 .setColor(`${randomColor()}`)
 				.setImage(img);
-            interaction.reply({ embeds: [slapemb] });
+            await interaction.reply({ embeds: [slapemb] });
 			}
 	},
 };

@@ -9,7 +9,7 @@ module.exports = {
         .addStringOption(option => option.setName('reason').setDescription('Reason for banning')),
 	async execute(interaction) {
         if (interaction.guild == null) {
-            interaction.reply('This command only works in Guilds!');
+            await interaction.reply('This command only works in Guilds!');
         } else {
             const member = interaction.options.getMember('member');
             let reason = interaction.options.getString('reason');
@@ -21,19 +21,19 @@ module.exports = {
             }
 
             if (interaction.member == member) {
-                interaction.reply({ content: 'Please ping someone else to ban.', ephemeral: true });
+                await interaction.reply({ content: 'Please ping someone else to ban.', ephemeral: true });
             } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-                interaction.reply({ content: 'Cannot ban someone with the same or higher rank as you.', ephemeral: true });
+                await interaction.reply({ content: 'Cannot ban someone with the same or higher rank as you.', ephemeral: true });
                 return;
             } else if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
-                    interaction.reply(`${member.user} has been banned for "${reason}"`);
+                    await interaction.reply(`${member.user} has been banned for "${reason}"`);
                     member.ban({ days: 0, reason: reason });
                 } else {
                     await interaction.reply({ content: 'I am missing the **Kick Members** permission.', ephemeral: true });
                 }
             } else {
-                interaction.reply({ content: 'You are missing the **Kick Members** permission.', ephemeral: true });
+                await interaction.reply({ content: 'You are missing the **Kick Members** permission.', ephemeral: true });
             }
         }
 	},

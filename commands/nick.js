@@ -14,14 +14,14 @@ module.exports = {
         const memrole = member.roles.highest;
 
         if (interaction.guild == null) {
-            interaction.reply('This command only works in Guilds!');
+            await interaction.reply('This command only works in Guilds!');
         } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-            interaction.reply({ content: 'Cannot change nickname of someone with the same or higher rank as you.', ephemeral: true });
+            await interaction.reply({ content: 'Cannot change nickname of someone with the same or higher rank as you.', ephemeral: true });
             return;
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_NICKNAMES)) {
             if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_NICKNAMES)) {
             member.edit({ nick: nick });
-            interaction.reply(`Changed ${member.displayName}'s nickname to ${member.user}`);
+            await interaction.reply(`Changed ${member.displayName}'s nickname to ${member.user}`);
             } else {
                 await interaction.reply({ content: 'I am missing the **Kick Members** permission.', ephemeral: true });
             }

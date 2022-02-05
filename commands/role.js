@@ -12,9 +12,9 @@ module.exports = {
         const role = interaction.options.getRole('role');
         const usrole = interaction.member.roles.highest;
         if (interaction.guild == null) {
-            interaction.reply('This command only works in Guilds!');
+            await interaction.reply('This command only works in Guilds!');
         } else if (usrole.comparePositionTo(role) <= role.comparePositionTo(usrole)) {
-            interaction.reply({ content: 'This role is equal to or higher than your highest role!', ephemeral: true });
+            await interaction.reply({ content: 'This role is equal to or higher than your highest role!', ephemeral: true });
             return;
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
@@ -23,7 +23,7 @@ module.exports = {
                 await interaction.reply({ content: 'I am missing the **Manage Roles** permission.', ephemeral: true });
             }
         } else {
-            interaction.reply({ content: 'You are missing the **Manage Roles** permission.', ephemeral: true });
+            await interaction.reply({ content: 'You are missing the **Manage Roles** permission.', ephemeral: true });
         }
 	},
 };

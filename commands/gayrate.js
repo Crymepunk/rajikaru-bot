@@ -29,13 +29,13 @@ module.exports = {
                 .setTitle(`Gayness Percentage`)
                 .setColor(`${randomColor()}`)
                 .setDescription(`You are ${getRandomIntInclusive(0, 101)}% gay`);
-            interaction.reply({ embeds: [gayemb] });
+            await interaction.reply({ embeds: [gayemb] });
 		} else {
             const gayemb = new MessageEmbed()
                 .setTitle(`Gayness Percentage`)
                 .setColor(`${randomColor()}`)
                 .setDescription(`${user.displayName} is ${getRandomIntInclusive(0, 101)}% gay`);
-            interaction.reply({ embeds: [gayemb] });
+            await interaction.reply({ embeds: [gayemb] });
 		}
 	},
 };

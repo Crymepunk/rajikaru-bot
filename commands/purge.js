@@ -9,7 +9,7 @@ module.exports = {
 	async execute(interaction) {
         const limit = interaction.options.getInteger('amount');
         if (interaction.guild == null) {
-            interaction.reply('This command only works in Guilds!');
+            await interaction.reply('This command only works in Guilds!');
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
             if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
                 await interaction.channel.bulkDelete(limit);

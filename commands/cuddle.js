@@ -37,7 +37,7 @@ module.exports = {
                 .setTitle(`${interaction.user.username} cuddles ${user.username}`)
                 .setColor(`${randomColor()}`)
 				.setImage(img);
-            interaction.reply({ embeds: [cudlemb] });
+            await interaction.reply({ embeds: [cudlemb] });
 		} else {
             const img = objToString(await neko.sfw.cuddle());
             const cudlemb = new MessageEmbed()
