@@ -11,7 +11,9 @@ module.exports = {
 
 		if (message.includes(['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'])) {
 			await interaction.reply({ content: 'This contains a bad word.', ephemeral: true });
-		} else if (interaction.user.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
+		} else if (interaction.guild == null) {
+			await interaction.reply(message);
+		} else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
 			await interaction.reply(message);
 		} else {
 			await interaction.reply({ content: 'You are missing the **Manage Server** permission.\n (Needed to prevent spam and stop bad word usage, etc.)', ephemeral: true });
