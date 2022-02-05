@@ -1,6 +1,11 @@
 # Rajikaru Bot
+<p align='center'>
+  <img src='https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png'/>
+</p>
 
-![Rajikaru-Banner No Square](https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png)
+![License](https://img.shields.io:/github/license/Radiicall/rajikaru-bot?color=informational)
+![Issues](https://img.shields.io:/github/issues/Radiicall/rajikaru-bot?color=important)
+![Tweet](https://img.shields.io:/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2FRadiicall%2Frajikaru-bot)
 
 Rajikaru is an Open-Source General Purpose Discord Bot.
 This bot is still in active development and will not be finished anytime soon.
