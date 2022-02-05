@@ -13,18 +13,28 @@ module.exports = {
         const usrole = interaction.member.roles.highest;
         const memrole = member.roles.highest;
 
-        if (!reason) {
-            reason = 'No reason provided';
-        }
+        if (interaction.guild == null) {
+            interaction.reply('This command only works in Guilds!');
+        } else {
+            if (!reason) {
+                reason = 'No reason provided';
+            }
 
-        if (interaction.member == member) {
-            interaction.reply({ content: 'Please ping someone else to ban.', ephemeral: true });
-        } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-            interaction.reply({ content: 'Cannot ban someone with the same or higher rank as you.', ephemeral: true });
-            return;
-        } else if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
-            interaction.reply(`${member.user} has been banned for "${reason}"`);
-            member.ban({ days: 0, reason: reason });
+            if (interaction.member == member) {
+                interaction.reply({ content: 'Please ping someone else to ban.', ephemeral: true });
+            } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+                interaction.reply({ content: 'Cannot ban someone with the same or higher rank as you.', ephemeral: true });
+                return;
+            } else if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+                if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+                    interaction.reply(`${member.user} has been banned for "${reason}"`);
+                    member.ban({ days: 0, reason: reason });
+                } else {
+                    await interaction.reply({ content: 'I am missing the **Kick Members** permission.', ephemeral: true });
+                }
+            } else {
+                interaction.reply({ content: 'You are missing the **Kick Members** permission.', ephemeral: true });
+            }
         }
 	},
 };

@@ -11,11 +11,19 @@ module.exports = {
         const member = interaction.options.getMember('member');
         const role = interaction.options.getRole('role');
         const usrole = interaction.member.roles.highest;
-        if (usrole.comparePositionTo(role) <= role.comparePositionTo(usrole)) {
+        if (interaction.guild == null) {
+            interaction.reply('This command only works in Guilds!');
+        } else if (usrole.comparePositionTo(role) <= role.comparePositionTo(usrole)) {
             interaction.reply({ content: 'This role is equal to or higher than your highest role!', ephemeral: true });
             return;
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
+            if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             member.roles.add(role);
+            } else {
+                await interaction.reply({ content: 'I am missing the **Manage Roles** permission.', ephemeral: true });
+            }
+        } else {
+            interaction.reply({ content: 'You are missing the **Manage Roles** permission.', ephemeral: true });
         }
 	},
 };
