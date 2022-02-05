@@ -8,14 +8,14 @@ module.exports = {
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription('Reason for kicking')),
 	async execute(interaction) {
-        const member = interaction.options.getMember('member');
-        let reason = interaction.options.getString('reason');
-        const usrole = interaction.member.roles.highest;
-        const memrole = member.roles.highest;
-
         if (interaction.guild == null) {
             interaction.reply('This command only works in Guilds!');
         } else {
+            const member = interaction.options.getMember('member');
+            let reason = interaction.options.getString('reason');
+            const usrole = interaction.member.roles.highest;
+            const memrole = member.roles.highest;
+
             if (!reason) {
                 reason = 'No reason provided';
             }
