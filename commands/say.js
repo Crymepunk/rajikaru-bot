@@ -2,7 +2,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
 
 function contentcheck(message, filter) {
-	for (let i = 0; i < filter.length; i++) {
+	const len = filter.length;
+	for (let i = 0; i < len; i++) {
 		if (message.includes(filter[i])) {
 			return true;
 		}
@@ -17,8 +18,9 @@ module.exports = {
         .addStringOption(option => option.setName('message').setDescription('Message to say').setRequired(true)),
 	async execute(interaction) {
         const message = interaction.options.getString('message');
+		const filter = ['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'];
 
-		if (contentcheck({ message: message, filter: ['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'] })) {
+		if (contentcheck(message, filter)) {
 			await interaction.reply({ content: 'This contains a bad word.', ephemeral: true });
 		} else if (interaction.guild == null) {
 			await interaction.reply(message);
