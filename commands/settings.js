@@ -27,7 +27,9 @@ module.exports = {
 			guildTableCreate({ name: interaction.guild.id });
 		}
 
-		if (interaction.options.getSubcommand() === 'modrole') {
+		if (interaction.guild == null) {
+            return interaction.reply('This command only works in Guilds!');
+        } else if (interaction.options.getSubcommand() === 'modrole') {
 			const role = interaction.options.getRole('modrole');
 			await guildTable.update({ modrole: `${role.id}` }, { where: { name: interaction.guild.id } });
 			await interaction.reply(`Set moderator role to ${role.name}`);
