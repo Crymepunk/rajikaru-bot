@@ -14,7 +14,9 @@ module.exports = {
         const usertable = await userTable.findOne({ where: { name: tableName } });
         const guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
 
-        if (reason.includes('§')) {
+        if (interaction.guild == null) {
+            return interaction.reply('This command only works in Guilds!');
+        } else if (reason.includes('§')) {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         }
         if (usertable && guildtable) {
