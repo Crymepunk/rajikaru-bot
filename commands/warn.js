@@ -14,6 +14,7 @@ module.exports = {
         const guildTableName = String(interaction.guild.id + '-guild');
         const usertable = await userTables.findOne({ where: { name: userTableName } });
         let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+        interaction.deferReply();
 
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
