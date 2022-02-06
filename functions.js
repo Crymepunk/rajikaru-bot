@@ -41,21 +41,21 @@ const guildTables = sequelize.define('guildtables', {
     },
 });
 
-async function userTableCreate(name, infractions, max) {
-try {
-	const usertable = await userTables.create({
-		name: name,
-        infractions: infractions,
-        maxinfractions: max,
-	});
-    return usertable;
+async function userTableCreate(name, infractions) {
+    try {
+        const usertable = await userTables.create({
+            name: name,
+            infractions: infractions,
+        });
+        return usertable;
+    }
+    catch (error) {
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return error.name;
+        }
+        return error;
+    }
 }
-catch (error) {
-	if (error.name === 'SequelizeUniqueConstraintError') {
-		return error.name;
-	}
-	return error;
-}}
 
 async function guildTableCreate(name, max, manrole, modrole) {
     try {
@@ -72,7 +72,8 @@ async function guildTableCreate(name, max, manrole, modrole) {
             return error.name;
         }
         return error;
-    }}
+    }
+}
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
