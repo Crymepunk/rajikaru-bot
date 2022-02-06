@@ -14,7 +14,11 @@ const Tables = sequelize.define('', {
 		unique: true,
 	},
     infractions: Sequelize.ARRAY(Sequelize.STRING),
-    maxinfractions: Sequelize.NUMBER,
+    maxinfractions: {
+        type: Sequelize.INTEGER,
+        defaultValue: 3,
+		allowNull: false,
+    },
 });
 
 async function userTableCreate(name, infractions, num, max) {
