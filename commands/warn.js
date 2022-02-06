@@ -42,7 +42,7 @@ module.exports = {
             userTableCreate(userTableName, reason);
             userTables.sync();
             await interaction.reply(`${member.user} has been warned for "${reason}"`);
-            if (guildTables.get('maxinfractions') <= 1) {
+            if (guildtable.get('maxinfractions') <= 1) {
                 await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
                 member.ban({ days: 0, reason: 'Too many infractions.' });
             }
