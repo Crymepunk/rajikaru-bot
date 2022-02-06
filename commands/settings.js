@@ -22,24 +22,26 @@ module.exports = {
 				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions').setRequired(true))),
 
 	async execute(interaction) {
-		const guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
+		const guildTableName = `${interaction.guild.id}`;
+		const guildtable = await guildTable.findOne({ where: { name: guildTableName } });
+
 		if (!guildtable) {
-			guildTableCreate({ name: interaction.guild.id });
+			guildTableCreate({ name: guildTableName });
 		}
 
 		if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
         } else if (interaction.options.getSubcommand() === 'modrole') {
 			const role = interaction.options.getRole('modrole');
-			await guildTable.update({ modrole: `${role.id}` }, { where: { name: interaction.guild.id } });
+			await guildTable.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });
 			await interaction.reply(`Set moderator role to ${role.name}`);
 		} else if (interaction.options.getSubcommand() === 'managerrole') {
 			const role = interaction.options.getRole('manrole');
-			await guildTable.update({ manrole: `${role.id}` }, { where: { name: interaction.guild.id } });
+			await guildTable.update({ manrole: `${role.id}` }, { where: { name: guildTableName } });
 			await interaction.reply(`Set manager role to ${role.name}`);
 		} else if (interaction.options.getSubcommand() === 'maxinfractions') {
 			const int = interaction.options.getInteger('number');
-			await guildTable.update({ maxinfractions: int - 1 }, { where: { name: interaction.guild.id } });
+			await guildTable.update({ maxinfractions: int - 1 }, { where: { name: guildTableName } });
 			await interaction.reply(`Set max infractions to ${int}`);
 		}
 	},
