@@ -6,8 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('infractions')
 		.setDescription('How many infractions the user has and what they are.')
-        .addUserOption(option => option.setName('user').setDescription('User to check.').setRequired(true))
-        .addIntegerOption(),
+        .addUserOption(option => option.setName('user').setDescription('User to check.').setRequired(true)),
 	async execute(interaction) {
         const user = interaction.options.getUser('user');
         const tableName = `${interaction.guild.id}-${user.id}`;
