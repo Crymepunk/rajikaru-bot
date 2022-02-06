@@ -13,7 +13,7 @@ module.exports = {
         const usertable = await userTable.findOne({ where: { name: tableName } });
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
-        } else if (usertable.get('infractions')) {
+        } else if (usertable) {
             console.log(usertable.get('infractions'));
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
