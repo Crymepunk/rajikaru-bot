@@ -1,4 +1,4 @@
-const { userTables, sequelize } = require('../functions');
+const { userTable, sequelize, guildTable } = require('../functions');
 
 module.exports = {
 	name: 'ready',
@@ -10,7 +10,8 @@ module.exports = {
 		} catch (error) {
 			console.error('Unable to connect to the database:', error);
 		}
-		userTables.sync({ force: true });
+		userTable.sync({ force: true });
+		guildTable.sync({ force: true });
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };

@@ -8,7 +8,7 @@ const sequelize = new Sequelize('discord', sqluser, sqlpass, {
 });
 
 
-const userTables = sequelize.define('usertables', {
+const userTable = sequelize.define('usertable', {
 	name: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -18,17 +18,33 @@ const userTables = sequelize.define('usertables', {
         type: Sequelize.TEXT,
         allowNull: true,
     },
+});
+
+const guildTable = sequelize.define('guildtable', {
+    name: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
+    },
+    modrole: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
     maxinfractions: {
         type: Sequelize.INTEGER,
-        defaultValue: 3,
+        defaultValue: 2,
 		allowNull: false,
+    },
+    manrole: {
+        type: Sequelize.STRING,
+        allowNull: true,
     },
 });
 
 async function userTableCreate(name, infractions, max) {
 try {
 	// equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
-	const usertable = await userTables.create({
+	const usertable = await userTable.create({
 		name: name,
         infractions: infractions,
         maxinfractions: max,
@@ -39,9 +55,27 @@ catch (error) {
 	if (error.name === 'SequelizeUniqueConstraintError') {
 		return error.name;
 	}
-
 	return error;
 }}
+
+async function guildTableCreate(name, infractions, max, manrole, modrole) {
+    try {
+        // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
+        const guildtable = await guildTable.create({
+            name: name,
+            infractions: infractions,
+            maxinfractions: max,
+            manrole: manrole,
+            modrole: modrole,
+        });
+        return guildtable;
+    }
+    catch (error) {
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return error.name;
+        }
+        return error;
+    }}
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -81,4 +115,4 @@ function contentcheck(message) {
 	return false;
 }
 
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, userTableCreate };
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTable, guildTable, userTableCreate, guildTableCreate };

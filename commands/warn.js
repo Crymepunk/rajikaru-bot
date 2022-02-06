@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { userTables, userTableCreate } = require('../functions');
+const { userTable, guildTable, userTableCreate, guildTableCreate } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,26 +11,29 @@ module.exports = {
         const member = interaction.options.getMember('member');
         const reason = interaction.options.getString('reason');
         const tableName = `${interaction.guild.id}-${member.id}`;
-        const usertable = await userTables.findOne({ where: { name: tableName } });
+        const usertable = await userTable.findOne({ where: { name: tableName } });
+        const guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
 
         if (reason.includes('§')) {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         }
-        if (usertable) {
+        if (usertable && guildtable) {
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
-            if (infractions.length == usertable.get('maxinfractions')) {
+            if (infractions.length == guildtable.get('maxinfractions')) {
                 await interaction.reply(`${member.user} has been banned for "Too many infractions."`);
                 member.ban({ days: 0, reason: 'Too many infractions.' });
             } else {
                 infractions.push(reason);
                 infractions = infractions.join('§');
-                await userTables.update({ infractions: infractions }, { where: { name: tableName } });
+                await userTable.update({ infractions: infractions }, { where: { name: tableName } });
                 interaction.reply(`${member.user} has been warned for "${reason}"`);
             }
         } else {
+            guildTableCreate({ name: interaction.guild.id });
             userTableCreate(tableName, reason, 3);
-            userTables.sync();
+            userTable.sync();
+            guildTable.sync();
             return interaction.reply(`${member.user} has been warned for "${reason}"`);
         }
 	},

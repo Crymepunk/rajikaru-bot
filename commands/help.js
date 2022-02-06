@@ -6,7 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('View a list of commands')
-        .addStringOption(option => option.setName('category').setDescription('Which category to show')),
+        .addStringOption(option => option.setName('category').setDescription('Which category to show').addChoice('all').addChoice('utility').addChoice('manager').addChoice('moderation').addChoice('fun')),
 	async execute(interaction) {
         const category = interaction.options.getString('category');
         if (!category || category.toLowerCase() == 'all') {
@@ -19,15 +19,17 @@ module.exports = {
                     { name: '/avatar', value: `- Replies with the user's avatar` },
                     { name: '/nick', value: '- Give a nickname to the mentioned user.' },
                     { name: '/say', value: '- Says the message you tell it to say.' },
-                    { name: '/role', value: '- Adds role to the pinged user. (TBS)' },
-                    { name: '/serverinfo', value: '- Shows server information. (WIP)' },
-                    { name: '/userinfo', value: '- Shows member information. (WIP)' },
+                    { name: '/role', value: '- Adds role to the pinged user.' },
                     { name: '/ping', value: '- Replies with Pong!' },
+
+                    { name: '\u200B', value: '**Manager Commands**' },
+                    { name: '/settings', value: 'Bot Settings' },
 
                     { name: '\u200B', value: '**Moderation Commands**' },
                     { name: '/ban', value: '- Bans the pinged member.' },
                     { name: '/kick', value: '- Kicks the pinged member.' },
-                    { name: '/mute', value: '- Mutes the pinged member. (TBS)' },
+                    { name: '/warn', value: '- Mutes the pinged member. (TBS)' },
+                    { name: '/infractions', value: '- Mutes the pinged member. (TBS)' },
                     { name: '/purge', value: '- Removes messages.' },
 
                     { name: '\u200B', value: '**Fun Commands**' },
@@ -60,6 +62,15 @@ module.exports = {
                     { name: '/ping', value: 'Replies with Pong!' },
                 );
             await interaction.reply({ embeds: [helpemb] });
+        } else if (category.toLowerCase() == 'manager') {
+            const helpemb = new MessageEmbed()
+            .setColor(randomColor())
+            .setTitle('Manager Commands')
+            .setDescription('Here are the commands in the **Manager** category')
+            .addFields(
+                { name: '/settings', value: 'Bot Settings' },
+            );
+        await interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'moderation') {
             const helpemb = new MessageEmbed()
                 .setColor(randomColor())
@@ -88,7 +99,7 @@ module.exports = {
                 );
             await interaction.reply({ embeds: [helpemb] });
         } else {
-            await interaction.reply({ content: 'Valid categories include: Base, Fun, Utility and Moderation', ephemeral: true });
+            await interaction.reply({ content: 'Valid categories include: All, Utility, Manager, Moderation and Fun', ephemeral: true });
         }
 	},
 };
