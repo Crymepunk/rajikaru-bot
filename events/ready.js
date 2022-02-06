@@ -10,7 +10,7 @@ module.exports = {
 		} catch (error) {
 			console.error('Unable to connect to the database:', error);
 		}
-		userTables.sync();
+		userTables.sync({ force: true });
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };
