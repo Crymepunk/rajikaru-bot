@@ -12,12 +12,12 @@ module.exports = {
         const usertable = await userTables.findOne({ where: { name: tableName } });
         try {
             const infractions = usertable.get('infractions');
+            console.log(usertable.get('infractions'));
             interaction.reply(infractions);
         } catch (error) {
-            interaction.reply(error);
             console.log('An error has occurred');
             console.error(error);
-            interaction.followUp('This user doesnt exist/doesnt have any infractions.');
+            interaction.reply('This user doesnt exist/doesnt have any infractions.');
         }
 	},
 };
