@@ -23,7 +23,6 @@ module.exports = {
 
         if (!guildtable) {
             guildTableCreate({ name: guildTableName });
-            guildTables.sync();
             console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
         }
 
