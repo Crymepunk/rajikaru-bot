@@ -25,7 +25,7 @@ module.exports = {
             infractions.push(reason);
             interaction.reply(`${member.user} has been warned for "${reason}"`);
             if (infractions.length == guildtable.get('maxinfractions')) {
-                await interaction.reply(`${member.user} has been banned for "Too many infractions."`);
+                await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
                 member.ban({ days: 0, reason: 'Too many infractions.' });
             }
             infractions = infractions.join('§');
