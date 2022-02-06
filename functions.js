@@ -3,7 +3,7 @@ const { sqluser, sqlpass } = require('./config.json');
 
 const sequelize = new Sequelize('discord', sqluser, sqlpass, {
 	host: 'localhost',
-	dialect: 'mysql',
+	dialect: 'mariadb',
 	logging: false,
 });
 
