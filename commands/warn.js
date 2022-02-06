@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Tables, userTableCreate } = require('../functions');
+const { userTables, userTableCreate } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,13 +12,13 @@ module.exports = {
         const member = interaction.options.getUser('member');
         const reason = interaction.options.getString('reason');
         const tableName = `${interaction.guild.id}-${member.id}`;
-        let table = await Tables.findOne({ where: { name: tableName } });
-        const infractions = table.get('infractions');
+        let usertable = await userTables.findOne({ where: { name: tableName } });
+        const infractions = usertable.get('infractions');
 
-        if (!table) {
-            table = userTableCreate(tableName, [reason], 1, 3);
+        if (!usertable) {
+            usertable = userTableCreate(tableName, [reason], 1, 3);
             return interaction.reply(`${member.user} has been warned for "${reason}"`);
-        } else if (infractions.length(table.get('maxinfractions'))) {
+        } else if (infractions.length(usertable.get('maxinfractions'))) {
             await interaction.reply(`${member.user} has been banned for "Too many infractions."`);
             member.ban({ days: 0, reason: 'Too many infractions.' });
         } else {

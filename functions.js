@@ -8,7 +8,7 @@ const sequelize = new Sequelize('discord', sqluser, sqlpass, {
 });
 
 
-const Tables = sequelize.define('', {
+const userTables = sequelize.define('usertables', {
 	name: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -24,13 +24,13 @@ const Tables = sequelize.define('', {
 async function userTableCreate(name, infractions, num, max) {
 try {
 	// equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
-	const table = await Tables.create({
+	const usertable = await userTables.create({
 		name: name,
         infractions: infractions,
         infractionsnum: num,
         maxinfractions: max,
 	});
-    return table;
+    return usertable;
 }
 catch (error) {
 	if (error.name === 'SequelizeUniqueConstraintError') {
@@ -78,4 +78,4 @@ function contentcheck(message) {
 	return false;
 }
 
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, Tables, userTableCreate };
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, userTableCreate };
