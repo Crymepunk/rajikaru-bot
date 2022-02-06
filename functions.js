@@ -8,7 +8,7 @@ const sequelize = new Sequelize('discord', sqluser, sqlpass, {
 });
 
 
-const userTable = sequelize.define('usertable', {
+const userTable = sequelize.define('usertables', {
 	name: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -20,7 +20,7 @@ const userTable = sequelize.define('usertable', {
     },
 });
 
-const guildTable = sequelize.define('guildtable', {
+const guildTable = sequelize.define('guildtables', {
     name: {
         type: Sequelize.STRING,
         unique: true,
