@@ -22,7 +22,7 @@ module.exports = {
 				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions').setRequired(true))),
 
 	async execute(interaction) {
-		const guildTableName = String(interaction.guild.id);
+		const guildTableName = String(interaction.guild.id + '-guild');
 		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 
 		if (!guildtable) {

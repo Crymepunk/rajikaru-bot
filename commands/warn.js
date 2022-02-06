@@ -11,7 +11,7 @@ module.exports = {
         const member = interaction.options.getMember('member');
         const reason = interaction.options.getString('reason');
         const userTableName = `${interaction.guild.id}-${member.id}`;
-        const guildTableName = String(interaction.guild.id);
+        const guildTableName = String(interaction.guild.id + '-guild');
         const usertable = await userTables.findOne({ where: { name: userTableName } });
         let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 
@@ -22,7 +22,7 @@ module.exports = {
         }
 
         if (!guildtable) {
-            guildTableCreate({ name: guildTableName, max: 2, manrole: 'null', modrole: 'null' });
+            guildTableCreate({ name: guildTableName });
             guildTables.sync();
             console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
         }
