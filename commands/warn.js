@@ -24,6 +24,7 @@ module.exports = {
             guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
         } else {
             guildTableCreate({ name: interaction.guild.id });
+            guildTable.sync();
             guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
         }
 
