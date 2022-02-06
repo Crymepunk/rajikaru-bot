@@ -19,31 +19,33 @@ module.exports = {
             return interaction.reply('This command only works in Guilds!');
         } else if (reason.includes('§')) {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
-        }
-
-        if (!guildtable) {
-            await guildTableCreate(guildTableName);
-            console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
-        }
-
-        if (usertable) {
-            let infractions = usertable.get('infractions');
-            infractions = infractions.split('§');
-            infractions.push(reason);
-            interaction.reply(`${member.user} has been warned for "${reason}"`);
-            if (infractions.length >= await guildtable.get('maxinfractions')) {
-                await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
-                member.ban({ days: 0, reason: 'Too many infractions.' });
+        } else if (interaction.member == member) {
+            return interaction.reply({ content: 'Please ping someone else to ban.', ephemeral: true });
+        } else if (interaction.member.roles.resolveId(await guildtable.get('modrole')) == interaction.guild.roles.fetch(await guildtable.get('modrole')) || interaction.member == interaction.guild.fetchOwner()) {
+            if (!guildtable) {
+                await guildTableCreate(guildTableName);
+                console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
             }
-            infractions = infractions.join('§');
-            await userTables.update({ infractions: infractions }, { where: { name: userTableName } });
-        } else {
-            await userTableCreate(userTableName, reason);
-            userTables.sync();
-            await interaction.reply(`${member.user} has been warned for "${reason}"`);
-            if (await guildtable.get('maxinfractions') <= 1) {
-                await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
-                member.ban({ days: 0, reason: 'Too many infractions.' });
+
+            if (usertable) {
+                let infractions = usertable.get('infractions');
+                infractions = infractions.split('§');
+                infractions.push(reason);
+                interaction.reply(`${member.user} has been warned for "${reason}"`);
+                if (infractions.length >= await guildtable.get('maxinfractions')) {
+                    await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
+                    member.ban({ days: 0, reason: 'Too many infractions.' });
+                }
+                infractions = infractions.join('§');
+                await userTables.update({ infractions: infractions }, { where: { name: userTableName } });
+            } else {
+                await userTableCreate(userTableName, reason);
+                userTables.sync();
+                await interaction.reply(`${member.user} has been warned for "${reason}"`);
+                if (await guildtable.get('maxinfractions') <= 1) {
+                    await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
+                    member.ban({ days: 0, reason: 'Too many infractions.' });
+                }
             }
         }
 	},
