@@ -8,7 +8,7 @@ const sequelize = new Sequelize('discord', sqluser, sqlpass, {
 });
 
 
-const userTable = sequelize.define('usertables', {
+const userTables = sequelize.define('usertables', {
 	name: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -20,7 +20,7 @@ const userTable = sequelize.define('usertables', {
     },
 });
 
-const guildTable = sequelize.define('guildtables', {
+const guildTables = sequelize.define('guildtables', {
     name: {
         type: Sequelize.STRING,
         unique: true,
@@ -43,7 +43,7 @@ const guildTable = sequelize.define('guildtables', {
 
 async function userTableCreate(name, infractions, max) {
 try {
-	const usertable = await userTable.create({
+	const usertable = await userTables.create({
 		name: name,
         infractions: infractions,
         maxinfractions: max,
@@ -59,7 +59,7 @@ catch (error) {
 
 async function guildTableCreate(name, max, manrole, modrole) {
     try {
-        const guildtable = await guildTable.create({
+        const guildtable = await guildTables.create({
             name: name,
             maxinfractions: max,
             manrole: manrole,
@@ -112,4 +112,4 @@ function contentcheck(message) {
 	return false;
 }
 
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTable, guildTable, userTableCreate, guildTableCreate };
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, userTableCreate, guildTableCreate };

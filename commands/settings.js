@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { guildTable, guildTableCreate } = require('../functions');
+const { guildTables, guildTableCreate } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -23,7 +23,7 @@ module.exports = {
 
 	async execute(interaction) {
 		const guildTableName = `${interaction.guild.id}`;
-		const guildtable = await guildTable.findOne({ where: { name: guildTableName } });
+		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 
 		if (!guildtable) {
 			guildTableCreate({ name: guildTableName });
@@ -33,17 +33,17 @@ module.exports = {
             return interaction.reply('This command only works in Guilds!');
         } else if (interaction.options.getSubcommand() === 'modrole') {
 			const role = interaction.options.getRole('modrole');
-			await guildTable.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });
+			await guildTables.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });
 			await interaction.reply(`Set moderator role to ${role.name}`);
 		} else if (interaction.options.getSubcommand() === 'managerrole') {
 			const role = interaction.options.getRole('manrole');
-			await guildTable.update({ manrole: `${role.id}` }, { where: { name: guildTableName } });
+			await guildTables.update({ manrole: `${role.id}` }, { where: { name: guildTableName } });
 			await interaction.reply(`Set manager role to ${role.name}`);
 		} else if (interaction.options.getSubcommand() === 'maxinfractions') {
 			const int = interaction.options.getInteger('number');
-			await guildTable.update({ maxinfractions: int - 1 }, { where: { name: guildTableName } });
+			await guildTables.update({ maxinfractions: int - 1 }, { where: { name: guildTableName } });
 			await interaction.reply(`Set max infractions to ${int}`);
 		}
-		guildTable.sync();
+		guildTables.sync();
 	},
 };
