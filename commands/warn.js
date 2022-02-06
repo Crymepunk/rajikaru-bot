@@ -32,7 +32,7 @@ module.exports = {
             await userTable.update({ infractions: infractions }, { where: { name: tableName } });
         } else {
             guildTableCreate({ name: interaction.guild.id });
-            userTableCreate(tableName, reason, 3);
+            userTableCreate(tableName, reason);
             userTable.sync();
             guildTable.sync();
             return interaction.reply(`${member.user} has been warned for "${reason}"`);
