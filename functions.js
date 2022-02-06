@@ -58,7 +58,7 @@ catch (error) {
 	return error;
 }}
 
-async function guildTableCreate(name, max = 2, manrole, modrole) {
+async function guildTableCreate(name, max = 2, manrole = null, modrole = null) {
     try {
         // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
         const guildtable = await guildTable.create({
