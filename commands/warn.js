@@ -10,7 +10,8 @@ module.exports = {
 	async execute(interaction) {
         const member = interaction.options.getMember('member');
         const reason = interaction.options.getString('reason');
-        const tableName = `${interaction.guild.id}-${member.id}`;
+        const userTableName = `${interaction.guild.id}-${member.id}`;
+        const guildTableName = `${interaction.guild.id}`;
         let usertable = '';
         let guildtable = '';
 
@@ -20,16 +21,16 @@ module.exports = {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         }
 
-        if (guildTable.findOne({ where: { name: interaction.guild.id } })) {
-            guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
+        if (guildTable.findOne({ where: { name: guildTableName } })) {
+            guildtable = await guildTable.findOne({ where: { name: guildTableName } });
         } else {
-            guildTableCreate({ name: interaction.guild.id });
+            guildTableCreate({ name: guildTableName });
             guildTable.sync();
-            guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
+            guildtable = await guildTable.findOne({ where: { name: guildTableName } });
         }
 
-        if (await userTable.findOne({ where: { name: tableName } })) {
-            usertable = await userTable.findOne({ where: { name: tableName } });
+        if (await userTable.findOne({ where: { name: userTableName } })) {
+            usertable = await userTable.findOne({ where: { name: userTableName } });
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
             infractions.push(reason);
@@ -39,9 +40,9 @@ module.exports = {
                 member.ban({ days: 0, reason: 'Too many infractions.' });
             }
             infractions = infractions.join('§');
-            await userTable.update({ infractions: infractions }, { where: { name: tableName } });
+            await userTable.update({ infractions: infractions }, { where: { name: userTableName } });
         } else {
-            userTableCreate(tableName, reason);
+            userTableCreate(userTableName, reason);
             userTable.sync();
             await interaction.reply(`${member.user} has been warned for "${reason}"`);
             if (guildtable.get('maxinfractions') <= 1) {
