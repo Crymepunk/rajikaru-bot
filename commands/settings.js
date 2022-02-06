@@ -26,7 +26,7 @@ module.exports = {
 		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 
 		if (!guildtable) {
-			guildTableCreate({ name: guildTableName });
+			guildTableCreate(guildTableName);
 		}
 
 		if (interaction.guild == null) {
