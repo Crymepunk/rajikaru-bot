@@ -13,7 +13,7 @@ const userTables = sequelize.define('usertables', {
 		type: Sequelize.STRING,
 		unique: true,
 	},
-    infractions: Sequelize.ARRAY(Sequelize.STRING),
+    infractions: Sequelize.ARRAY(Sequelize.TEXT),
     maxinfractions: {
         type: Sequelize.INTEGER,
         defaultValue: 3,
