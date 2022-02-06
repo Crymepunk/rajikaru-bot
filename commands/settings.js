@@ -44,5 +44,6 @@ module.exports = {
 			await guildTable.update({ maxinfractions: int - 1 }, { where: { name: guildTableName } });
 			await interaction.reply(`Set max infractions to ${int}`);
 		}
+		guildTable.sync();
 	},
 };
