@@ -11,13 +11,10 @@ module.exports = {
         const member = interaction.options.getUser('member');
         const reason = interaction.options.getString('reason');
         const tableName = `${interaction.guild.id}-${member.id}`;
-        let usertable = await userTables.findOne({ where: { name: tableName } });
+        const usertable = await userTables.findOne({ where: { name: tableName } });
         let infractions = '';
 
-        if (!usertable) {
-            usertable = userTableCreate(tableName, [reason], 1, 3);
-            return interaction.reply(`${member.user} has been warned for "${reason}"`);
-        } else {
+        if (usertable) {
             infractions = usertable.get('infractions');
             if (infractions.length(usertable.get('maxinfractions'))) {
                 await interaction.reply(`${member.user} has been banned for "Too many infractions."`);
@@ -26,6 +23,9 @@ module.exports = {
                 infractions.push(reason);
                 interaction.reply(`${member.user} has been warned for "${reason}"`);
             }
+        } else {
+            userTableCreate(tableName, [reason], 1, 3);
+            return interaction.reply(`${member.user} has been warned for "${reason}"`);
         }
 	},
 };
