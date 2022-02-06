@@ -8,7 +8,7 @@ module.exports = {
         .addUserOption(option => option.setName('member').setDescription('User to warn').setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription('Reason for warning').setRequired(true)),
 	async execute(interaction) {
-        const member = interaction.options.getUser('member');
+        const member = interaction.options.getMember('member');
         const reason = interaction.options.getString('reason');
         const tableName = `${interaction.guild.id}-${member.id}`;
         const usertable = await userTables.findOne({ where: { name: tableName } });
