@@ -23,13 +23,13 @@ module.exports = {
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
             infractions.push(reason);
-            infractions = infractions.join('§');
-            await userTable.update({ infractions: infractions }, { where: { name: tableName } });
             interaction.reply(`${member.user} has been warned for "${reason}"`);
             if (infractions.length == guildtable.get('maxinfractions')) {
                 await interaction.reply(`${member.user} has been banned for "Too many infractions."`);
                 member.ban({ days: 0, reason: 'Too many infractions.' });
             }
+            infractions = infractions.join('§');
+            await userTable.update({ infractions: infractions }, { where: { name: tableName } });
         } else {
             guildTableCreate({ name: interaction.guild.id });
             userTableCreate(tableName, reason, 3);
