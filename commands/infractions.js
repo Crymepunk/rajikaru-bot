@@ -10,11 +10,14 @@ module.exports = {
         const user = interaction.options.getUser('user');
         const tableName = `${interaction.guild.id}-${user.id}`;
         const usertable = await userTables.findOne({ where: { name: tableName } });
-        if (usertable) {
+        try {
             const infractions = usertable.get('infractions');
             interaction.reply(infractions);
-        } else {
-            interaction.reply('This user doesnt exist/doesnt have any infractions.');
+        } catch (error) {
+            interaction.reply(error);
+            console.send('An error has occurred');
+            console.error(error);
+            interaction.followUp('This user doesnt exist/doesnt have any infractions.');
         }
 	},
 };
