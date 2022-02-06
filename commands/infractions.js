@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { userTables, randomColor } = require('../functions');
+const { userTable, randomColor } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,7 +10,7 @@ module.exports = {
 	async execute(interaction) {
         const user = interaction.options.getUser('user');
         const tableName = `${interaction.guild.id}-${user.id}`;
-        const usertable = await userTables.findOne({ where: { name: tableName } });
+        const usertable = await userTable.findOne({ where: { name: tableName } });
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
         } else if (usertable.get('infractions')) {
