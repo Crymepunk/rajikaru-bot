@@ -11,7 +11,7 @@ module.exports = {
         const member = interaction.options.getMember('member');
         const reason = interaction.options.getString('reason');
         const userTableName = `${interaction.guild.id}-${member.id}`;
-        const guildTableName = `${interaction.guild.id}`;
+        const guildTableName = String(interaction.guild.id);
         const usertable = await userTables.findOne({ where: { name: userTableName } });
         let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 
