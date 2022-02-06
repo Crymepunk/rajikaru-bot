@@ -10,8 +10,8 @@ module.exports = {
 		} catch (error) {
 			console.error('Unable to connect to the database:', error);
 		}
-		userTables.sync({ force: true });
-		guildTables.sync({ force: true });
+		userTables.sync();
+		guildTables.sync();
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };
