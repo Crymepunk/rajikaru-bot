@@ -50,10 +50,7 @@ async function userTableCreate(name, infractions) {
         return usertable;
     }
     catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            return error.name;
-        }
-        return error;
+        console.log(error);
     }
 }
 
@@ -68,10 +65,7 @@ async function guildTableCreate(name, max, manrole, modrole) {
         return guildtable;
     }
     catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            return error.name;
-        }
-        return error;
+        console.log(error);
     }
 }
 
