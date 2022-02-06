@@ -1,3 +1,23 @@
+/*
+const Sequelize = require('sequelize');
+const { sqluser, sqlpass } = require('./config.json');
+
+const sequelize = new Sequelize('discord', sqluser, sqlpass, {
+	host: 'localhost',
+	dialect: 'mariadb',
+	logging: false,
+});
+
+
+const Tags = sequelize.define('', {
+	name: {
+		type: Sequelize.STRING,
+		unique: true,
+	},
+    infractions: Sequelize.ARRAY,
+});
+*/
+
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
