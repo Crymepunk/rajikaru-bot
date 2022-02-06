@@ -30,10 +30,10 @@ module.exports = {
                     await interaction.reply(`${member.user} has been banned for "${reason}"`);
                     member.ban({ days: 0, reason: reason });
                 } else {
-                    await interaction.reply({ content: 'I am missing the **Kick Members** permission.', ephemeral: true });
+                    await interaction.reply({ content: 'I am missing the **Ban Members** permission.', ephemeral: true });
                 }
             } else {
-                await interaction.reply({ content: 'You are missing the **Kick Members** permission.', ephemeral: true });
+                await interaction.reply({ content: 'You are missing the **Ban Members** permission.', ephemeral: true });
             }
         }
 	},

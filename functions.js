@@ -1,4 +1,3 @@
-/*
 const Sequelize = require('sequelize');
 const { sqluser, sqlpass } = require('./config.json');
 
@@ -9,14 +8,33 @@ const sequelize = new Sequelize('discord', sqluser, sqlpass, {
 });
 
 
-const Tags = sequelize.define('', {
+const Tables = sequelize.define('', {
 	name: {
 		type: Sequelize.STRING,
 		unique: true,
 	},
     infractions: Sequelize.ARRAY,
+    maxinfractions: Sequelize.NUMBER,
 });
-*/
+
+async function userTableCreate(name, infractions, num, max) {
+try {
+	// equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
+	const table = await Tables.create({
+		name: name,
+        infractions: infractions,
+        infractionsnum: num,
+        maxinfractions: max,
+	});
+    return table;
+}
+catch (error) {
+	if (error.name === 'SequelizeUniqueConstraintError') {
+		return error.name;
+	}
+
+	return error;
+}}
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -56,4 +74,4 @@ function contentcheck(message) {
 	return false;
 }
 
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck };
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, Tables, userTableCreate };

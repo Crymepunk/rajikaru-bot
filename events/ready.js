@@ -1,7 +1,16 @@
+const { Tables, sequelize } = require('../functions');
+
 module.exports = {
 	name: 'ready',
 	once: true,
-	execute(client) {
+	async execute(client) {
+		try {
+			await sequelize.authenticate();
+			console.log('Connection has been established successfully.');
+		} catch (error) {
+			console.error('Unable to connect to the database:', error);
+		}
+		Tables.sync();
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };
