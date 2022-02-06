@@ -12,15 +12,20 @@ module.exports = {
         const reason = interaction.options.getString('reason');
         const tableName = `${interaction.guild.id}-${member.id}`;
         const usertable = await userTables.findOne({ where: { name: tableName } });
-        let infractions = '';
 
+        if (reason.includes('§')) {
+            return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
+        }
         if (usertable) {
-            infractions = usertable.get('infractions');
+            let infractions = usertable.get('infractions');
+            infractions = infractions.split('§');
             if (infractions.length(usertable.get('maxinfractions'))) {
                 await interaction.reply(`${member.user} has been banned for "Too many infractions."`);
                 member.ban({ days: 0, reason: 'Too many infractions.' });
             } else {
                 infractions.push(reason);
+                infractions = infractions.join('§');
+                await userTables.update({ infractions: infractions }, { where: { name: tableName } });
                 interaction.reply(`${member.user} has been warned for "${reason}"`);
             }
         } else {

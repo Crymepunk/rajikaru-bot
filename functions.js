@@ -15,8 +15,7 @@ const userTables = sequelize.define('usertables', {
         allowNull: false,
 	},
     infractions: {
-        type: Sequelize.ARRAY(Sequelize.TEXT),
-        allowNull: true,
+        type: Sequelize.TEXT,
     },
     maxinfractions: {
         type: Sequelize.INTEGER,
