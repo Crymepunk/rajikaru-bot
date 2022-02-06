@@ -16,7 +16,6 @@ module.exports = {
         let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
         const modrole = await guildtable.get('modrole');
         const manrole = await guildtable.get('manrole');
-        interaction.deferReply();
 
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
