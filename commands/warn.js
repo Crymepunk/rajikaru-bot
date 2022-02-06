@@ -13,7 +13,7 @@ module.exports = {
         const userTableName = `${interaction.guild.id}-${member.id}`;
         const guildTableName = `${interaction.guild.id}`;
         let usertable = '';
-        let guildtable = '';
+        let guildtable = await guildTable.findOne({ where: { name: guildTableName } });
 
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
@@ -21,9 +21,7 @@ module.exports = {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         }
 
-        if (guildTable.findOne({ where: { name: guildTableName } })) {
-            guildtable = await guildTable.findOne({ where: { name: guildTableName } });
-        } else {
+        if (!guildtable) {
             guildTableCreate({ name: guildTableName });
             guildTable.sync();
             console.log(guildtable = await guildTable.findOne({ where: { name: guildTableName } }));
