@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { userTables, guildTables, userTableCreate, guildTableCreate } = require('../functions');
+const { userTables, guildTables, userTableCreate, guildTableCreate, contentcheck } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,6 +14,8 @@ module.exports = {
         const guildTableName = String(interaction.guild.id + '-guild');
         const usertable = await userTables.findOne({ where: { name: userTableName } });
         let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+        const modrole = await guildtable.get('modrole');
+        const manrole = await guildtable.get('manrole');
         interaction.deferReply();
 
         if (interaction.guild == null) {
@@ -21,8 +23,10 @@ module.exports = {
         } else if (reason.includes('§')) {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         } else if (interaction.member == member) {
-            return interaction.reply({ content: 'Please ping someone else to ban.', ephemeral: true });
-        } else if (interaction.member.roles.resolveId(await guildtable.get('modrole')) == interaction.guild.roles.fetch(await guildtable.get('modrole')) || interaction.member == interaction.guild.fetchOwner()) {
+            return interaction.reply({ content: 'Please ping someone else to warn.', ephemeral: true });
+        } else if (contentcheck(member._roles, [manrole, modrole])) {
+            return interaction.reply({ content: 'Cannot warn a Moderator.', ephemeral: true });
+        } else if (contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member == interaction.guild.fetchOwner()) {
             if (!guildtable) {
                 await guildTableCreate(guildTableName);
                 console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
@@ -48,6 +52,8 @@ module.exports = {
                     member.ban({ days: 0, reason: 'Too many infractions.' });
                 }
             }
+        } else {
+            await interaction.reply('Permission denied');
         }
 	},
 };

@@ -96,8 +96,7 @@ const randomColor = () => {
     return color;
 };
 
-function contentcheck(message) {
-    const filter = ['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'];
+function contentcheck(message, filter) {
 	const len = filter.length;
 	for (let i = 0; i < len; i++) {
 		if (message.includes(filter[i])) {

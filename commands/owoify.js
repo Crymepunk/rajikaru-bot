@@ -11,7 +11,7 @@ module.exports = {
 	async execute(interaction) {
         let message = interaction.options.getString('message');
 
-        if (contentcheck(message)) {
+        if (contentcheck(message, ['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'])) {
             await interaction.reply({ content: 'This conytainys a bad wowd.', ephemeral: true });
         } else {
             message = objToString(await neko.sfw.OwOify({ text: message }));

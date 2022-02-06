@@ -10,7 +10,7 @@ module.exports = {
 	async execute(interaction) {
         const message = interaction.options.getString('message');
 
-		if (contentcheck(message)) {
+		if (contentcheck(message, ['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'])) {
 			await interaction.reply({ content: 'This contains a bad word.', ephemeral: true });
 		} else if (interaction.guild == null) {
 			await interaction.reply(message);

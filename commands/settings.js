@@ -23,27 +23,31 @@ module.exports = {
 
 	async execute(interaction) {
 		const guildTableName = String(interaction.guild.id + '-guild');
-		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
-
-		if (!guildtable) {
-			guildTableCreate(guildTableName);
-		}
-
+		let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
-        } else if (interaction.options.getSubcommand() === 'modrole') {
-			const role = interaction.options.getRole('modrole');
-			await guildTables.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });
-			await interaction.reply(`Set moderator role to ${role.name}`);
-		} else if (interaction.options.getSubcommand() === 'managerrole') {
-			const role = interaction.options.getRole('manrole');
-			await guildTables.update({ manrole: `${role.id}` }, { where: { name: guildTableName } });
-			await interaction.reply(`Set manager role to ${role.name}`);
-		} else if (interaction.options.getSubcommand() === 'maxinfractions') {
-			const int = interaction.options.getInteger('number');
-			await guildTables.update({ maxinfractions: int - 1 }, { where: { name: guildTableName } });
-			await interaction.reply(`Set max infractions to ${int}`);
+        } else if (!guildtable) {
+			guildTableCreate(guildTableName);
+			guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		}
-		guildTables.sync();
+		const manrole = await guildtable.get('manrole');
+		if (interaction.member._roles.includes(manrole) || interaction.member == interaction.guild.fetchOwner()) {
+			if (interaction.options.getSubcommand() === 'modrole') {
+				const role = interaction.options.getRole('modrole');
+				await guildTables.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });
+				await interaction.reply(`Set moderator role to ${role.name}`);
+			} else if (interaction.options.getSubcommand() === 'managerrole') {
+				const role = interaction.options.getRole('manrole');
+				await guildTables.update({ manrole: `${role.id}` }, { where: { name: guildTableName } });
+				await interaction.reply(`Set manager role to ${role.name}`);
+			} else if (interaction.options.getSubcommand() === 'maxinfractions') {
+				const int = interaction.options.getInteger('number');
+				await guildTables.update({ maxinfractions: int - 1 }, { where: { name: guildTableName } });
+				await interaction.reply(`Set max infractions to ${int}`);
+			}
+			guildTables.sync();
+		} else {
+			await interaction.reply('You dont have the Manager Role');
+		}
 	},
 };
