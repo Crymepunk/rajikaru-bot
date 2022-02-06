@@ -11,8 +11,8 @@ module.exports = {
         const tableName = `${interaction.guild.id}-${user.id}`;
         const usertable = await userTables.findOne({ where: { name: tableName } });
         try {
-            const infractions = usertable.get('infractions');
             console.log(usertable.get('infractions'));
+            const infractions = usertable.get('infractions');
             interaction.reply(infractions);
         } catch (error) {
             console.log('An error has occurred');
