@@ -13,7 +13,7 @@ const Tables = sequelize.define('', {
 		type: Sequelize.STRING,
 		unique: true,
 	},
-    infractions: Sequelize.ARRAY,
+    infractions: Sequelize.ARRAY(Sequelize.STRING),
     maxinfractions: Sequelize.NUMBER,
 });
 
