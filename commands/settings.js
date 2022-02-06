@@ -18,8 +18,8 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('maxinfractions')
-				.setDescription('Max allowed infractions'))
-				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions').setRequired(true)),
+				.setDescription('Max allowed infractions')
+				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions').setRequired(true))),
 
 	async execute(interaction) {
 		const guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
@@ -39,8 +39,6 @@ module.exports = {
 			const int = interaction.options.getInteger('number');
 			await guildTable.update({ maxinfractions: int - 1 }, { where: { name: interaction.guild.id } });
 			await interaction.reply(`Set max infractions to ${int}`);
-		} else {
-			await interaction.reply('Valid subcommands include modrole, manrole and maxinfractions');
 		}
 	},
 };

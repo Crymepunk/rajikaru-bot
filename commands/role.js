@@ -6,7 +6,7 @@ module.exports = {
 		.setName('role')
 		.setDescription('Adds role to the pinged user.')
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true))
-        .addMentionableOption(option => option.setName('role').setDescription('Role to add.')),
+        .addMentionableOption(option => option.setName('role').setDescription('Role to add.').setRequired(true)),
 	async execute(interaction) {
         const member = interaction.options.getMember('member');
         const role = interaction.options.getRole('role');
