@@ -16,6 +16,7 @@ const userTables = sequelize.define('usertables', {
 	},
     infractions: {
         type: Sequelize.TEXT,
+        allowNull: true,
     },
     maxinfractions: {
         type: Sequelize.INTEGER,
@@ -24,13 +25,12 @@ const userTables = sequelize.define('usertables', {
     },
 });
 
-async function userTableCreate(name, infractions, num, max) {
+async function userTableCreate(name, infractions, max) {
 try {
 	// equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
 	const usertable = await userTables.create({
 		name: name,
         infractions: infractions,
-        infractionsnum: num,
         maxinfractions: max,
 	});
     return usertable;
