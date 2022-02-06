@@ -43,7 +43,6 @@ const guildTable = sequelize.define('guildtable', {
 
 async function userTableCreate(name, infractions, max) {
 try {
-	// equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
 	const usertable = await userTable.create({
 		name: name,
         infractions: infractions,
@@ -60,7 +59,6 @@ catch (error) {
 
 async function guildTableCreate(name, max, manrole, modrole) {
     try {
-        // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
         const guildtable = await guildTable.create({
             name: name,
             maxinfractions: max,
