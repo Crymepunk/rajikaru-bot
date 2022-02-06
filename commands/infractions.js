@@ -104,7 +104,7 @@ module.exports = {
             }
 
             const infemb = new MessageEmbed()
-            .color(randomColor())
+            .setColor(randomColor())
             .setTitle(`${user.username}'s infractions`)
             .addFields(
                 { name: 'Infractions', value: inf },
