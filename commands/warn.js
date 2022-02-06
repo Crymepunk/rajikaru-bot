@@ -11,8 +11,8 @@ module.exports = {
         const member = interaction.options.getMember('member');
         const reason = interaction.options.getString('reason');
         const tableName = `${interaction.guild.id}-${member.id}`;
-        const usertable = await userTable.findOne({ where: { name: tableName } });
-        const guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
+        let usertable = '';
+        let guildtable = '';
 
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
@@ -20,11 +20,15 @@ module.exports = {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         }
 
-        if (!guildtable) {
+        if (guildTable.findOne({ where: { name: interaction.guild.id } })) {
+            guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
+        } else {
             guildTableCreate({ name: interaction.guild.id });
+            guildtable = await guildTable.findOne({ where: { name: interaction.guild.id } });
         }
 
-        if (usertable) {
+        if (await userTable.findOne({ where: { name: tableName } })) {
+            usertable = await userTable.findOne({ where: { name: tableName } });
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
             infractions.push(reason);
