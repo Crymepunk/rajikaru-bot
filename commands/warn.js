@@ -29,7 +29,7 @@ module.exports = {
                 interaction.reply(`${member.user} has been warned for "${reason}"`);
             }
         } else {
-            userTableCreate(tableName, reason, 3);
+            userTableCreate(tableName, reason + '§', 3);
             userTables.sync();
             return interaction.reply(`${member.user} has been warned for "${reason}"`);
         }
