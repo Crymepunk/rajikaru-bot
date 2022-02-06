@@ -15,7 +15,7 @@ module.exports = {
             interaction.reply(infractions);
         } catch (error) {
             interaction.reply(error);
-            console.send('An error has occurred');
+            console.log('An error has occurred');
             console.error(error);
             interaction.followUp('This user doesnt exist/doesnt have any infractions.');
         }
