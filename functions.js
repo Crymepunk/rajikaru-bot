@@ -12,8 +12,12 @@ const userTables = sequelize.define('usertables', {
 	name: {
 		type: Sequelize.STRING,
 		unique: true,
+        allowNull: false,
 	},
-    infractions: Sequelize.ARRAY(Sequelize.TEXT),
+    infractions: {
+        type: Sequelize.ARRAY(Sequelize.TEXT),
+        allowNull: true,
+    },
     maxinfractions: {
         type: Sequelize.INTEGER,
         defaultValue: 3,
