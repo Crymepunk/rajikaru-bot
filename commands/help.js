@@ -6,7 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('View a list of commands')
-        .addStringOption(option => option.setName('category').setDescription('Which category to show').addChoice('all').addChoice('utility').addChoice('manager').addChoice('moderation').addChoice('fun')),
+        .addStringOption(option => option.setName('category').setDescription('Which category to show')),
 	async execute(interaction) {
         const category = interaction.options.getString('category');
         if (!category || category.toLowerCase() == 'all') {
