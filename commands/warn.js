@@ -23,9 +23,9 @@ module.exports = {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         } else if (interaction.member == member) {
             return interaction.reply({ content: 'Please ping someone else to warn.', ephemeral: true });
-        } else if (contentcheck(member._roles, [manrole, modrole])) {
+        } else if (contentcheck(member._roles, [manrole, modrole]) || member == await interaction.guild.fetchOwner()) {
             return interaction.reply({ content: 'Cannot warn a Moderator.', ephemeral: true });
-        } else if (contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member == interaction.guild.fetchOwner()) {
+        } else if (contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member == await interaction.guild.fetchOwner()) {
             if (!guildtable) {
                 await guildTableCreate(guildTableName);
                 console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
@@ -35,7 +35,7 @@ module.exports = {
                 let infractions = usertable.get('infractions');
                 infractions = infractions.split('§');
                 infractions.push(reason);
-                interaction.reply(`${member.user} has been warned for "${reason}"`);
+                await interaction.reply(`${member.user} has been warned for "${reason}"`);
                 if (infractions.length >= await guildtable.get('maxinfractions')) {
                     await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
                     member.ban({ days: 0, reason: 'Too many infractions.' });
