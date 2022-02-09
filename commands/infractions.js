@@ -28,8 +28,8 @@ module.exports = {
             if (infractions != null) {
                 infractions = infractions.split('§');
                 if (interaction.options.getSubcommand() === 'remove') {
+                    const int = interaction.options.getInteger('infractionnum');
                     if (infractions.length > 1) {
-                        const int = interaction.options.getInteger('infractionnum');
                         delete infractions[int - 1];
                         infractions = infractions.filter(el => {
                             return el != null;
@@ -38,6 +38,7 @@ module.exports = {
                         infractions = null;
                     }
                     await userTables.update({ infractions: infractions }, { where: { name: tableName } });
+                    await interaction.reply({ content: `Removed infraction number '${int}'.`, ephemeral: true });
                 } else if (interaction.options.getSubcommand() === 'list') {
                     let inf = '';
                     console.log(infractions[-1]);
