@@ -41,10 +41,9 @@ module.exports = {
                     await interaction.reply({ content: `Removed infraction number '${int}'.`, ephemeral: true });
                 } else if (interaction.options.getSubcommand() === 'list') {
                     let inf = '';
-                    console.log(infractions[-1]);
-                    if (infractions[-2]) {inf += (infractions[-2] + '\n');}
-                    if (infractions[-1]) {inf += (infractions[-1] + '\n');}
-                    if (infractions[0]) {inf += (infractions[0]);}
+                    if (infractions[-2]) {inf += `${infractions.length - 2} - ${infractions[-2]} \n`;}
+                    if (infractions[-1]) {inf += `${infractions.length - 1} - ${infractions[-1]} \n`;}
+                    if (infractions[0]) {inf += `${infractions.length} - ${infractions[0]}`;}
                     else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
                     const infemb = new MessageEmbed()
                         .setColor(randomColor())
