@@ -24,38 +24,47 @@ module.exports = {
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
         } else if (usertable) {
-            console.log(usertable.get('infractions'));
             let infractions = usertable.get('infractions');
-            infractions = infractions.split('§');
-            if (interaction.options.getSubcommand() === 'remove') {
-                if (infractions.length > 1) {
-                    const int = interaction.options.getInteger('infractionnum');
-                    delete infractions[int - 1];
-                    infractions = infractions.filter(el => {
-                        return el != null;
-                    });
-                } else {
-                    infractions = null;
+            if (infractions != null) {
+                infractions = infractions.split('§');
+                if (interaction.options.getSubcommand() === 'remove') {
+                    if (infractions.length > 1) {
+                        const int = interaction.options.getInteger('infractionnum');
+                        delete infractions[int - 1];
+                        infractions = infractions.filter(el => {
+                            return el != null;
+                        });
+                    } else {
+                        infractions = null;
+                    }
+                    await userTables.update({ infractions: infractions }, { where: { name: tableName } });
+                } else if (interaction.options.getSubcommand() === 'list') {
+                    let inf = '';
+                    console.log(infractions[-1]);
+                    if (infractions[-2]) {inf += (infractions[-2] + '\n');}
+                    if (infractions[-1]) {inf += (infractions[-1] + '\n');}
+                    if (infractions[0]) {inf += (infractions[0]);}
+                    else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
+                    const infemb = new MessageEmbed()
+                        .setColor(randomColor())
+                        .setTitle(`${user.username}'s infractions`)
+                        .addFields(
+                            { name: 'Infractions', value: inf },
+                        )
+                        .setThumbnail(`${user.avatarURL()}?size=1024`);
+                    interaction.reply({ embeds: [infemb] });
                 }
-                await userTables.update({ infractions: infractions }, { where: { name: tableName } });
-            } else if (interaction.options.getSubcommand() === 'list') {
-                let inf = '';
-                console.log(infractions[-1]);
-                if (infractions[-2]) {inf += (infractions[-2] + '\n');}
-                if (infractions[-1]) {inf += (infractions[-1] + '\n');}
-                if (infractions[0]) {inf += (infractions[0]);}
-                else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
+            } else {
                 const infemb = new MessageEmbed()
-                .setColor(randomColor())
-                .setTitle(`${user.username}'s infractions`)
-                .addFields(
-                    { name: 'Infractions', value: inf },
-                )
-                .setThumbnail('https://i.imgur.com/AfFp7pu.png');
-                interaction.reply({ embeds: [infemb] });
+                    .setColor(randomColor())
+                    .setAuthor({ name: `**${user.tag} has no infractions**`, iconURL: `${user.avatarURL()}?size=1024` });
+                return interaction.reply({ embeds: [infemb] });
             }
         } else {
-            interaction.reply('This user doesnt exist/doesnt have any infractions.');
+            const infemb = new MessageEmbed()
+                .setColor(randomColor())
+                .setAuthor({ name: `**${user.tag} has no infractions**`, iconURL: `${user.avatarURL()}?size=1024` });
+            return interaction.reply({ embeds: [infemb] });
         }
 	},
 };
