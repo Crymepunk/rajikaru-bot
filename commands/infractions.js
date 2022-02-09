@@ -28,7 +28,7 @@ module.exports = {
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
             if (interaction.options.getSubcommand() === 'remove') {
-                if (infractions.length() > 1) {
+                if (infractions.length > 1) {
                     const int = interaction.options.getInteger('infractionnum');
                     delete infractions[int - 1];
                     infractions = infractions.filter(el => {
