@@ -6,7 +6,13 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('infractions')
 		.setDescription('How many infractions the user has and what they are.')
-        .addUserOption(option => option.setName('user').setDescription('User to check.').setRequired(true)),
+        .addUserOption(option => option.setName('user').setDescription('User to check.').setRequired(true))
+        .addSubcommand(subcommand =>
+			subcommand
+				.setName('remove')
+				.setDescription('Remove an infraction.')
+				.addUserOption(option => option.setName('user').setDescription('User to remove from').setRequired(true))
+                .addIntegerOption(option => option.setName('infractionnum').setDescription('Which infraction to remove').setRequired(true))),
 	async execute(interaction) {
         const user = interaction.options.getUser('user');
         const tableName = `${interaction.guild.id}-${user.id}`;
@@ -17,21 +23,32 @@ module.exports = {
             console.log(usertable.get('infractions'));
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
-            let inf = '';
-            if (infractions[-3]) {inf += (infractions[-3] + '\n');}
-            if (infractions[-2]) {inf += (infractions[-2] + '\n');}
-            if (infractions[-1]) {inf += (infractions[-1]);}
-            const infemb = new MessageEmbed()
-            .setColor(randomColor())
-            .setTitle(`${user.username}'s infractions`)
-            .addFields(
-                { name: 'Infractions', value: inf },
-            )
-            .setThumbnail('https://i.imgur.com/AfFp7pu.png');
-            interaction.reply({ embeds: [infemb] });
+            if (interaction.options.getSubCommand() === 'remove') {
+                const int = interaction.options.getInteger('infractionnum');
+                delete infractions[int - 1];
+                infractions = infractions.filter(el => {
+                    return el != null;
+                });
+                await userTables.update({ infractions: infractions }, { where: { name: tableName } });
+            } else {
+                let inf = '';
+                console.log(infractions[-1]);
+                if (infractions[-2]) {inf += (infractions[-2] + '\n');}
+                if (infractions[-1]) {inf += (infractions[-1] + '\n');}
+                if (infractions[0]) {inf += (infractions[0]);}
+                else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
+                const infemb = new MessageEmbed()
+                .setColor(randomColor())
+                .setTitle(`${user.username}'s infractions`)
+                .addFields(
+                    { name: 'Infractions', value: inf },
+                )
+                .setThumbnail('https://i.imgur.com/AfFp7pu.png');
+                interaction.reply({ embeds: [infemb] });
+            }
         } else {
             interaction.reply('This user doesnt exist/doesnt have any infractions.');
         }
-
 	},
 };
+

@@ -32,7 +32,7 @@ const guildTables = sequelize.define('guildtables', {
     },
     maxinfractions: {
         type: Sequelize.INTEGER,
-        defaultValue: 2,
+        defaultValue: 3,
 		allowNull: false,
     },
     manrole: {

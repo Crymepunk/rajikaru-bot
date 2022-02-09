@@ -43,7 +43,7 @@ module.exports = {
 				await interaction.reply(`Set manager role to ${role.name}`);
 			} else if (interaction.options.getSubcommand() === 'maxinfractions') {
 				const int = interaction.options.getInteger('number');
-				await guildTables.update({ maxinfractions: int - 1 }, { where: { name: guildTableName } });
+				await guildTables.update({ maxinfractions: int }, { where: { name: guildTableName } });
 				await interaction.reply(`Set max infractions to ${int}`);
 			}
 			guildTables.sync();
