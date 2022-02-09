@@ -9,7 +9,7 @@ module.exports = {
         .addStringOption(option => option.setName('reason').setDescription('Reason for warning').setRequired(true)),
 	async execute(interaction) {
         const member = interaction.options.getMember('member');
-        const reason = `${interaction.options.getString('reason')} <t:${Math.floor(new Date().getTime() / 1000)}:R`;
+        const reason = `${interaction.options.getString('reason')} <t:${Math.floor(new Date().getTime() / 1000)}:R>`;
         const owner = await interaction.guild.fetchOwner();
         const userTableName = `${interaction.guild.id}-${member.id}`;
         const guildTableName = String(interaction.guild.id + '-guild');
@@ -47,7 +47,7 @@ module.exports = {
                     infractions = reason;
                     infractions = infractions.split('§');
                 }
-                await interaction.reply(`${member.user} has been warned for "${reason}"`);
+                await interaction.reply(`${member.user} has been warned for "${interaction.options.getString('reason')}"`);
                 if (infractions.length >= maxinf) {
                     await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
                     member.ban({ days: 0, reason: 'Too many infractions.' });
@@ -57,7 +57,7 @@ module.exports = {
             } else {
                 await userTableCreate(userTableName, reason + Math.floor(new Date().getTime() / 1000));
                 userTables.sync();
-                await interaction.reply(`${member.user} has been warned for "${reason}"`);
+                await interaction.reply(`${member.user} has been warned for "${interaction.options.getString('reason')}"`);
                 if (maxinf <= 1) {
                     await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
                     member.ban({ days: 0, reason: 'Too many infractions.' });
