@@ -23,6 +23,7 @@ module.exports = {
 
 	async execute(interaction) {
 		const guildTableName = String(interaction.guild.id + '-guild');
+		const owner = await interaction.guild.fetchOwner();
 		let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
@@ -31,7 +32,7 @@ module.exports = {
 			guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		}
 		const manrole = await guildtable.get('manrole');
-		if (interaction.member._roles.includes(manrole) || interaction.member == interaction.guild.fetchOwner()) {
+		if (interaction.member._roles.includes(manrole) || interaction.member == owner) {
 			if (interaction.options.getSubcommand() === 'modrole') {
 				const role = interaction.options.getRole('modrole');
 				await guildTables.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });

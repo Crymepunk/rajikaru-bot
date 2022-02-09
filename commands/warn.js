@@ -16,6 +16,7 @@ module.exports = {
         let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
         const modrole = await guildtable.get('modrole');
         const manrole = await guildtable.get('manrole');
+        const owner = await interaction.guild.fetchOwner();
 
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
@@ -23,9 +24,9 @@ module.exports = {
             return interaction.reply({ content: 'This warn contains illegal characters "§"', ephemeral: true });
         } else if (interaction.member == member) {
             return interaction.reply({ content: 'Please ping someone else to warn.', ephemeral: true });
-        } else if (contentcheck(member._roles, [manrole, modrole]) || member == await interaction.guild.fetchOwner()) {
+        } else if (contentcheck(member._roles, [manrole, modrole]) || member == owner) {
             return interaction.reply({ content: 'Cannot warn a Moderator.', ephemeral: true });
-        } else if (contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member == await interaction.guild.fetchOwner()) {
+        } else if (contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member == owner) {
             if (!guildtable) {
                 await guildTableCreate(guildTableName);
                 console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
@@ -35,6 +36,7 @@ module.exports = {
                 let infractions = usertable.get('infractions');
                 infractions = infractions.split('§');
                 infractions.push(reason);
+                console.log(infractions);
                 await interaction.reply(`${member.user} has been warned for "${reason}"`);
                 if (infractions.length >= await guildtable.get('maxinfractions')) {
                     await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
