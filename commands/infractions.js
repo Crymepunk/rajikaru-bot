@@ -28,11 +28,15 @@ module.exports = {
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
             if (interaction.options.getSubcommand() === 'remove') {
-                const int = interaction.options.getInteger('infractionnum');
-                delete infractions[int - 1];
-                infractions = infractions.filter(el => {
-                    return el != null;
-                });
+                if (infractions.length() > 1) {
+                    const int = interaction.options.getInteger('infractionnum');
+                    delete infractions[int - 1];
+                    infractions = infractions.filter(el => {
+                        return el != null;
+                    });
+                } else {
+                    infractions = null;
+                }
                 await userTables.update({ infractions: infractions }, { where: { name: tableName } });
             } else if (interaction.options.getSubcommand() === 'list') {
                 let inf = '';
