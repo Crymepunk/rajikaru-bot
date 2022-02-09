@@ -57,13 +57,13 @@ module.exports = {
             } else {
                 const infemb = new MessageEmbed()
                     .setColor(randomColor())
-                    .setAuthor({ name: `**${user.tag} has no infractions**`, iconURL: `${user.avatarURL()}?size=1024` });
+                    .setAuthor({ name: `${user.tag} has no infractions`, iconURL: `${user.avatarURL()}?size=1024` });
                 return interaction.reply({ embeds: [infemb] });
             }
         } else {
             const infemb = new MessageEmbed()
                 .setColor(randomColor())
-                .setAuthor({ name: `**${user.tag} has no infractions**`, iconURL: `${user.avatarURL()}?size=1024` });
+                .setAuthor({ name: `${user.tag} has no infractions`, iconURL: `${user.avatarURL()}?size=1024` });
             return interaction.reply({ embeds: [infemb] });
         }
 	},
