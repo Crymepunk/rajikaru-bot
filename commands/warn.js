@@ -10,13 +10,18 @@ module.exports = {
 	async execute(interaction) {
         const member = interaction.options.getMember('member');
         const reason = interaction.options.getString('reason');
+        const owner = await interaction.guild.fetchOwner();
         const userTableName = `${interaction.guild.id}-${member.id}`;
         const guildTableName = String(interaction.guild.id + '-guild');
         const usertable = await userTables.findOne({ where: { name: userTableName } });
         let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
-        const modrole = await guildtable.get('modrole');
-        const manrole = await guildtable.get('manrole');
-        const owner = await interaction.guild.fetchOwner();
+        let modrole = null;
+        let manrole = null;
+
+        if (usertable) {
+            modrole = await guildtable.get('modrole');
+            manrole = await guildtable.get('manrole');
+        }
 
         if (interaction.guild == null) {
             return interaction.reply('This command only works in Guilds!');
