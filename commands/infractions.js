@@ -6,7 +6,11 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('infractions')
 		.setDescription('How many infractions the user has and what they are.')
-        .addUserOption(option => option.setName('user').setDescription('User to check.').setRequired(true))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('list')
+                .setDescription('List the users infractions')
+                .addUserOption(option => option.setName('user').setDescription('User to check.').setRequired(true)))
         .addSubcommand(subcommand =>
 			subcommand
 				.setName('remove')
@@ -23,14 +27,14 @@ module.exports = {
             console.log(usertable.get('infractions'));
             let infractions = usertable.get('infractions');
             infractions = infractions.split('§');
-            if (interaction.options.getSubCommand() === 'remove') {
+            if (interaction.options.getSubcommand() === 'remove') {
                 const int = interaction.options.getInteger('infractionnum');
                 delete infractions[int - 1];
                 infractions = infractions.filter(el => {
                     return el != null;
                 });
                 await userTables.update({ infractions: infractions }, { where: { name: tableName } });
-            } else {
+            } else if (interaction.options.getSubcommand() === 'list') {
                 let inf = '';
                 console.log(infractions[-1]);
                 if (infractions[-2]) {inf += (infractions[-2] + '\n');}
