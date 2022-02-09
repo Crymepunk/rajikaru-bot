@@ -34,7 +34,7 @@ module.exports = {
         } else if (contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member == owner) {
             if (!guildtable) {
                 await guildTableCreate(guildTableName);
-                console.log(guildtable = await guildTables.findOne({ where: { name: guildTableName } }));
+                guildtable = await guildTables.findOne({ where: { name: guildTableName } });
             }
 
             if (usertable) {
