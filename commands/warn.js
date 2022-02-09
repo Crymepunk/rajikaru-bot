@@ -45,8 +45,8 @@ module.exports = {
                     infractions.push(reason);
                 } else {
                     infractions = reason;
+                    infractions = infractions.split('§');
                 }
-                console.log(infractions);
                 await interaction.reply(`${member.user} has been warned for "${reason}"`);
                 if (infractions.length >= maxinf) {
                     await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
