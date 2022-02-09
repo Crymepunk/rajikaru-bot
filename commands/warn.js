@@ -36,14 +36,19 @@ module.exports = {
                 await guildTableCreate(guildTableName);
                 guildtable = await guildTables.findOne({ where: { name: guildTableName } });
             }
+            const maxinf = await guildtable.get('maxinfractions');
 
             if (usertable) {
                 let infractions = usertable.get('infractions');
-                infractions = infractions.split('§');
-                infractions.push(reason);
+                if (infractions != null) {
+                    infractions = infractions.split('§');
+                    infractions.push(reason);
+                } else {
+                    infractions = reason;
+                }
                 console.log(infractions);
                 await interaction.reply(`${member.user} has been warned for "${reason}"`);
-                if (infractions.length >= await guildtable.get('maxinfractions')) {
+                if (infractions.length >= maxinf) {
                     await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
                     member.ban({ days: 0, reason: 'Too many infractions.' });
                 }
@@ -53,7 +58,7 @@ module.exports = {
                 await userTableCreate(userTableName, reason);
                 userTables.sync();
                 await interaction.reply(`${member.user} has been warned for "${reason}"`);
-                if (await guildtable.get('maxinfractions') <= 1) {
+                if (maxinf <= 1) {
                     await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
                     member.ban({ days: 0, reason: 'Too many infractions.' });
                 }
