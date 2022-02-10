@@ -16,7 +16,12 @@ module.exports = {
 				.setName('remove')
 				.setDescription('Remove an infraction.')
 				.addUserOption(option => option.setName('user').setDescription('User to remove from').setRequired(true))
-                .addIntegerOption(option => option.setName('infractionnum').setDescription('Which infraction to remove').setRequired(true))),
+                .addIntegerOption(option => option.setName('infractionnum').setDescription('Which infraction to remove').setRequired(true)))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('clear')
+                .setDescription('Clears ALL infractions!!!'))
+                .addUserOption(option => option.setName('user').setDescription('User to clear').setRequired(true)),
 	async execute(interaction) {
         const user = interaction.options.getUser('user');
         const tableName = `${interaction.guild.id}-${user.id}`;
@@ -40,6 +45,10 @@ module.exports = {
                     }
                     await userTables.update({ infractions: infractions }, { where: { name: tableName } });
                     await interaction.reply({ content: `Removed infraction number '${int}'.`, ephemeral: true });
+                } else if (interaction.options.getSubcommand() === 'clear') {
+                    infractions = null;
+                    await userTables.update({ infractions: infractions }, { where: { name: tableName } });
+                    await interaction.reply({ content: `Removed all infractions.`, ephemeral: true });
                 } else if (interaction.options.getSubcommand() === 'list') {
                     let inf = '';
                     if (infractions[0]) {inf += `${infractions.length} - ${infractions.slice(-1)} \n`;}
