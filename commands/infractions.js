@@ -34,6 +34,7 @@ module.exports = {
                         infractions = infractions.filter(el => {
                             return el != null;
                         });
+                        infractions = infractions.join('§');
                     } else {
                         infractions = null;
                     }
