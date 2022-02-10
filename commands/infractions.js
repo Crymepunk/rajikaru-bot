@@ -41,9 +41,16 @@ module.exports = {
                     await interaction.reply({ content: `Removed infraction number '${int}'.`, ephemeral: true });
                 } else if (interaction.options.getSubcommand() === 'list') {
                     let inf = '';
-                    if (infractions[2]) {inf += `${infractions.length - 2} - ${infractions.slice(-3, -2)} \n`;}
+                    if (infractions[0]) {inf += `${infractions.length} - ${infractions.slice(-1)} \n`;}
                     if (infractions[1]) {inf += `${infractions.length - 1} - ${infractions.slice(-2, -1)} \n`;}
-                    if (infractions[0]) {inf += `${infractions.length} - ${infractions.slice(-1)}`;}
+                    if (infractions[2]) {inf += `${infractions.length - 2} - ${infractions.slice(-3, -2)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.length - 3} - ${infractions.slice(-4, -3)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.length - 4} - ${infractions.slice(-5, -4)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.length - 5} - ${infractions.slice(-6, -5)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.length - 6} - ${infractions.slice(-7, -6)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.length - 7} - ${infractions.slice(-8, -7)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.length - 8} - ${infractions.slice(-9, -8)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.length - 9} - ${infractions.slice(-10, -9)}`;}
                     else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
                     const infemb = new MessageEmbed()
                         .setColor(randomColor())
