@@ -9,7 +9,7 @@ module.exports = {
         .addStringOption(option => option.setName('reason').setDescription('Reason for warning').setRequired(true)),
 	async execute(interaction) {
         const member = interaction.options.getMember('member');
-        const reason = `${interaction.options.getString('reason')} <t:${Math.floor(new Date().getTime() / 1000)}:R>`;
+        const reason = `**${interaction.options.getString('reason')}** • <t:${Math.floor(new Date().getTime() / 1000)}:R>`;
         const owner = await interaction.guild.fetchOwner();
         const userTableName = `${interaction.guild.id}-${member.id}`;
         const guildTableName = String(interaction.guild.id + '-guild');
@@ -55,7 +55,7 @@ module.exports = {
                 infractions = infractions.join('§');
                 await userTables.update({ infractions: infractions }, { where: { name: userTableName } });
             } else {
-                await userTableCreate(userTableName, reason + Math.floor(new Date().getTime() / 1000));
+                await userTableCreate(userTableName, reason);
                 userTables.sync();
                 await interaction.reply(`${member.user} has been warned for "${interaction.options.getString('reason')}"`);
                 if (maxinf <= 1) {

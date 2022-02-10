@@ -43,20 +43,21 @@ module.exports = {
                     let inf = '';
                     if (infractions[0]) {inf += `${infractions.length} - ${infractions.slice(-1)} \n`;}
                     else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
-                    if (infractions[1]) {inf += `${infractions.length - 1} - ${infractions.slice(-2, -1)} \n`;}
-                    if (infractions[2]) {inf += `${infractions.length - 2} - ${infractions.slice(-3, -2)} \n`;}
-                    if (infractions[3]) {inf += `${infractions.length - 3} - ${infractions.slice(-4, -3)} \n`;}
-                    if (infractions[4]) {inf += `${infractions.length - 4} - ${infractions.slice(-5, -4)} \n`;}
-                    if (infractions[5]) {inf += `${infractions.length - 5} - ${infractions.slice(-6, -5)} \n`;}
-                    if (infractions[6]) {inf += `${infractions.length - 6} - ${infractions.slice(-7, -6)} \n`;}
-                    if (infractions[7]) {inf += `${infractions.length - 7} - ${infractions.slice(-8, -7)} \n`;}
-                    if (infractions[8]) {inf += `${infractions.length - 8} - ${infractions.slice(-9, -8)} \n`;}
-                    if (infractions[9]) {inf += `${infractions.length - 9} - ${infractions.slice(-10, -9)}`;}
+                    if (infractions[1]) {inf += `${infractions.slice(-2, -1)} \n`;}
+                    if (infractions[2]) {inf += `${infractions.slice(-3, -2)} \n`;}
+                    if (infractions[3]) {inf += `${infractions.slice(-4, -3)} \n`;}
+                    if (infractions[4]) {inf += `${infractions.slice(-5, -4)} \n`;}
+                    if (infractions[5]) {inf += `${infractions.slice(-6, -5)} \n`;}
+                    if (infractions[6]) {inf += `${infractions.slice(-7, -6)} \n`;}
+                    if (infractions[7]) {inf += `${infractions.slice(-8, -7)} \n`;}
+                    if (infractions[8]) {inf += `${infractions.slice(-9, -8)} \n`;}
+                    if (infractions[9]) {inf += `${infractions.slice(-10, -9)}`;}
                     const infemb = new MessageEmbed()
                         .setColor(randomColor())
                         .setTitle(`${user.username}'s infractions`)
                         .addFields(
-                            { name: 'Infractions', value: inf },
+                            { name: 'Total', value: infractions.length },
+                            { name: 'Last 10 infractions', value: inf },
                         )
                         .setThumbnail(`${user.avatarURL()}?size=1024`);
                     interaction.reply({ embeds: [infemb] });
