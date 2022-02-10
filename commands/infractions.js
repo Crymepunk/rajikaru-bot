@@ -20,8 +20,8 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('clear')
-                .setDescription('Clears ALL infractions!!!'))
-                .addUserOption(option => option.setName('user').setDescription('User to clear').setRequired(true)),
+                .setDescription('Clears ALL infractions!!!')
+                .addUserOption(option => option.setName('user').setDescription('User to clear').setRequired(true))),
 	async execute(interaction) {
         const user = interaction.options.getUser('user');
         const tableName = `${interaction.guild.id}-${user.id}`;
