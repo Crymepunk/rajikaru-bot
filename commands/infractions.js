@@ -42,6 +42,7 @@ module.exports = {
                 } else if (interaction.options.getSubcommand() === 'list') {
                     let inf = '';
                     if (infractions[0]) {inf += `${infractions.length} - ${infractions.slice(-1)} \n`;}
+                    else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
                     if (infractions[1]) {inf += `${infractions.length - 1} - ${infractions.slice(-2, -1)} \n`;}
                     if (infractions[2]) {inf += `${infractions.length - 2} - ${infractions.slice(-3, -2)} \n`;}
                     if (infractions[3]) {inf += `${infractions.length - 3} - ${infractions.slice(-4, -3)} \n`;}
@@ -51,7 +52,6 @@ module.exports = {
                     if (infractions[7]) {inf += `${infractions.length - 7} - ${infractions.slice(-8, -7)} \n`;}
                     if (infractions[8]) {inf += `${infractions.length - 8} - ${infractions.slice(-9, -8)} \n`;}
                     if (infractions[9]) {inf += `${infractions.length - 9} - ${infractions.slice(-10, -9)}`;}
-                    else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
                     const infemb = new MessageEmbed()
                         .setColor(randomColor())
                         .setTitle(`${user.username}'s infractions`)
