@@ -3,7 +3,7 @@
 </p>
 
 <a href="https://github.com/Radiicall/rajikaru-bot/blob/main/LICENSE"><img src="https://img.shields.io:/github/license/Radiicall/rajikaru-bot?color=informational"></img></a>
-<a href="https://github.com/Radiicall/rajikaru-bot/issues"><img src="https://img.shields.io:/github/issues/Radiicall/rajikaru-bot?color=important"</img></a>
+<a href="https://github.com/Radiicall/rajikaru-bot/issues"><img src="https://img.shields.io:/github/issues/Radiicall/rajikaru-bot?color=important"></img></a>
 <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FRadiicall%2Frajikaru-bot"><img src="https://img.shields.io:/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2FRadiicall%2Frajikaru-bot"></img></a>
 
 Rajikaru is an Open-Source General Purpose Discord Bot.
