@@ -11,16 +11,12 @@ This bot is still in active development and will not be finished anytime soon.
 We are making great progress and we have switched from Python to JavaScript to make our lives easier when making such an advanced bot.
 
 ## Table of Contents
-- [Installation](#installation-instructions-for-self-hosting)
+- [Installation](INSTALL.md)
   - [Initial Setup](#initial-setup)
   - [Config.json](#gathering-the-required-fields)
   - [Congrats!](#congrats)
 - [Commands](#commands)
 - [Invite](#invite-the-bot)
-
-## Installation Instructions (For Self-Hosting):
-
-The installation instructions can be found in the [INSTALL.md](INSTALL.md) file!
 
 ## Commands:
 ```
