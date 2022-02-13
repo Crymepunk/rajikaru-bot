@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,7 +10,10 @@ module.exports = {
         .addStringOption(option => option.setName('reason').setDescription('Reason for kicking')),
 	async execute(interaction) {
         if (interaction.guild == null) {
-            await interaction.reply('This command only works in Guilds!');
+            const kickemb = new MessageEmbed()
+                .setColor("#CC0000")
+                .setAuthor({ name: `This command only works in guilds!` });
+            await interaction.reply({ embeds: [kickemb], ephemeral: true });
         } else {
             const member = interaction.options.getMember('member');
             let reason = interaction.options.getString('reason');
@@ -23,17 +27,26 @@ module.exports = {
             if (interaction.member == member) {
                 await interaction.reply({ content: 'Please ping someone else to kick.', ephemeral: true });
             } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-                await interaction.reply({ content: 'Cannot kick someone with the same or higher rank as you.', ephemeral: true });
+                const kickemb = new MessageEmbed()
+                    .setColor("#CC0000")
+                    .setAuthor({ name: `Cannot kick someone with the same or higher rank as you.` });
+                await interaction.reply({ embeds: [kickemb], ephemeral: true });
                 return;
             } else if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                 if (interaction.guild.me.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                     await interaction.reply(`${member.user} has been kicked for "${reason}"`);
                     member.kick(reason);
                 } else {
-                    await interaction.reply({ content: 'I am missing the **Kick Members** permission.', ephemeral: true });
+                    const kickemb = new MessageEmbed()
+                        .setColor("#CC0000")
+                        .setAuthor({ name: `I am missing the Kick Members permission` });
+                    await interaction.reply({ embeds: [kickemb], ephemeral: true });
                 }
             } else {
-                await interaction.reply({ content: 'You are missing the **Kick Members** permission.', ephemeral: true });
+                const kickemb = new MessageEmbed()
+                    .setColor("#CC0000")
+                    .setAuthor({ name: `You are missing the Kick Members permission` });
+            await interaction.reply({ embeds: [kickemb], ephemeral: true });
             }
         }
 	},

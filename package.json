@@ -8,7 +8,7 @@
     "sequelize": "^6.15.0"
   },
   "name": "rajikaru-bot",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "A Discord Bot made in Javascript",
   "main": "index.js",
   "devDependencies": {

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,16 +15,25 @@ module.exports = {
         if (interaction.guild == null) {
             await interaction.reply('This command only works in Guilds!');
         } else if (usrole.comparePositionTo(role) <= role.comparePositionTo(usrole)) {
-            await interaction.reply({ content: 'This role is equal to or higher than your highest role!', ephemeral: true });
+            const roleemb = new MessageEmbed()
+                .setColor("#CC0000")
+                .setAuthor({ name: 'This role is equal to or higher than your highest role!' });
+            await interaction.reply({ embeds: [roleemb], ephemeral: true });
             return;
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             member.roles.add(role);
             } else {
-                await interaction.reply({ content: 'I am missing the **Manage Roles** permission.', ephemeral: true });
+                const roleemb = new MessageEmbed()
+                    .setColor("#CC0000")
+                    .setAuthor({ name: `I am missing the Manage Roles Permission.` });
+                await interaction.reply({ embeds: [roleemb], ephemeral: true });
             }
         } else {
-            await interaction.reply({ content: 'You are missing the **Manage Roles** permission.', ephemeral: true });
+            const roleemb = new MessageEmbed()
+                .setColor("#CC0000")
+                .setAuthor({ name: `You are missing the Manage Roles Permission.` });
+            await interaction.reply({ embeds: [roleemb], ephemeral: true });
         }
 	},
 };

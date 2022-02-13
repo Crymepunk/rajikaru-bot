@@ -41,7 +41,8 @@ module.exports = {
                     { name: '/neko', value: '- Sends a random catperson image.' },
                     { name: '/owoify', value: '- Owoifies your text.' },
                     { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
-                );
+                )
+                .setFooter({ text: "v0.2.2" });
             if (interaction.inGuild()) {
                 await interaction.reply('Check your DMs for a full list of commands!');
                 interaction.user.send({ embeds: [helpemb] });
@@ -60,7 +61,8 @@ module.exports = {
                     { name: '/say', value: '- Says the message you tell it to say.' },
                     { name: '/role', value: '- Adds role to the pinged user.' },
                     { name: '/ping', value: 'Replies with Pong!' },
-                );
+                )
+                .setFooter({ text: "v0.2.2" });
             await interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'manager') {
             const helpemb = new MessageEmbed()
@@ -69,7 +71,8 @@ module.exports = {
             .setDescription('Here are the commands in the **Manager** category')
             .addFields(
                 { name: '/settings', value: 'Bot Settings' },
-            );
+            )
+            .setFooter({ text: "v0.2.2" });
         await interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'moderation') {
             const helpemb = new MessageEmbed()
@@ -80,13 +83,15 @@ module.exports = {
                     { name: '/ban', value: '- Bans the pinged member.' },
                     { name: '/kick', value: '- Kicks the pinged member.' },
                     { name: '/purge', value: '- Removes messages.' },
-                );
+                )
+                .setFooter({ text: "v0.2.2" });
             await interaction.reply({ embeds: [helpemb] });
         } else if (category.toLowerCase() == 'fun') {
             const helpemb = new MessageEmbed()
                 .setColor(randomColor())
                 .setTitle('Fun Commands')
                 .setDescription('Here are the commands in the **Fun** category')
+                .setColor("#5B92E5")
                 .addFields(
                     { name: '/cuddle', value: '- Cuddles the pinged member.' },
                     { name: '/hug', value: '- Hugs the pinged member.' },
@@ -96,10 +101,14 @@ module.exports = {
                     { name: '/neko', value: '- Sends a random catperson image.' },
                     { name: '/owoify', value: '- Owoifies your text.' },
                     { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
-                );
+                )
+                .setFooter({ text: "v0.2.2" });
             await interaction.reply({ embeds: [helpemb] });
         } else {
-            await interaction.reply({ content: 'Valid categories include: All, Utility, Manager, Moderation and Fun', ephemeral: true });
+            const helpemb = new MessageEmbed()
+                .setColor("#CC0000")
+                .setAuthor({ name: 'Valid categories include: All, Utility, Manager, Moderation and Fun' });
+            await interaction.reply({ embeds: [helpemb], ephemeral: true });
         }
 	},
 };

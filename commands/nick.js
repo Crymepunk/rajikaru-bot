@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,17 +17,26 @@ module.exports = {
         if (interaction.guild == null) {
             await interaction.reply('This command only works in Guilds!');
         } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-            await interaction.reply({ content: 'Cannot change nickname of someone with the same or higher rank as you.', ephemeral: true });
+            const nickemb = new MessageEmbed()
+                .setColor("#CC0000")
+                .setAuthor({ name: 'Cannot change nickname of someone with the same or higher rank as you.' });
+            await interaction.reply({ embeds: [nickemb], ephemeral: true });
             return;
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_NICKNAMES)) {
             if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_NICKNAMES)) {
             member.edit({ nick: nick });
             await interaction.reply(`Changed ${member.displayName}'s nickname to ${member.user}`);
             } else {
-                await interaction.reply({ content: 'I am missing the **Kick Members** permission.', ephemeral: true });
+                const nickemb = new MessageEmbed()
+                    .setColor("#CC0000")
+                    .setAuthor({ name: 'I am missing the Kick Members permission.' });
+                await interaction.reply({ embeds: [nickemb], ephemeral: true });
             }
         } else {
-            await interaction.reply({ content: 'You are missing the **Manage Nicknames** permission.', ephemeral: true });
+            const nickemb = new MessageEmbed()
+                .setColor("#CC0000")
+                .setAuthor({ name: `You are missing the Manage Nicknames permission.` });
+            await interaction.reply({ embeds: [nickemb], ephemeral: true });
         }
     },
 };

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
 const { contentcheck } = require('../functions');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -17,7 +18,11 @@ module.exports = {
 		} else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
 			await interaction.reply(message);
 		} else {
-			await interaction.reply({ content: 'You are missing the **Manage Server** permission.\n (Needed to prevent spam and stop bad word usage, etc.)', ephemeral: true });
+			const sayemb = new MessageEmbed()
+				.setColor("#CC0000")
+				.setAuthor({ name: 'You are missing the Manage Server permission.' })
+				.setDescription('(Needed to prevent spam and stop bad word usage, etc.)');
+			await interaction.reply({ embeds: [sayemb], ephemeral: true });
 		}
 	},
 };

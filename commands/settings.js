@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { guildTables, guildTableCreate } = require('../functions');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -26,7 +27,10 @@ module.exports = {
 		const owner = await interaction.guild.fetchOwner();
 		let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		if (interaction.guild == null) {
-            return interaction.reply('This command only works in Guilds!');
+			const setemb = new MessageEmbed()
+				.setColor("#CC0000")
+				.setAuthor({ name: `This command only works in Guilds!` });
+			await interaction.reply({ embeds: [setemb] });
         } else if (!guildtable) {
 			guildTableCreate(guildTableName);
 			guildtable = await guildTables.findOne({ where: { name: guildTableName } });
@@ -48,7 +52,10 @@ module.exports = {
 			}
 			guildTables.sync();
 		} else {
-			await interaction.reply('You dont have the Manager Role');
+			const setemb = new MessageEmbed()
+				.setColor("#CC0000")
+				.setAuthor({ name: `You are missing the Manager role.` });
+			await interaction.reply({ embeds: [setemb], ephemeral: true });
 		}
 	},
 };

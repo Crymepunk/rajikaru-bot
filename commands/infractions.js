@@ -51,7 +51,7 @@ module.exports = {
                     await interaction.reply({ content: `Removed all infractions.`, ephemeral: true });
                 } else if (interaction.options.getSubcommand() === 'list') {
                     let inf = '';
-                    if (infractions[0]) {inf += `${infractions.length} - ${infractions.slice(-1)} \n`;}
+                    if (infractions[0]) {inf += `${infractions.slice(-1)} \n`;}
                     else {return interaction.reply('This user doesnt have any infractions apparently but its wrong and i hate it');}
                     if (infractions[1]) {inf += `${infractions.slice(-2, -1)} \n`;}
                     if (infractions[2]) {inf += `${infractions.slice(-3, -2)} \n`;}
@@ -66,7 +66,7 @@ module.exports = {
                         .setColor(randomColor())
                         .setTitle(`${user.username}'s infractions`)
                         .addFields(
-                            { name: 'Total', value: infractions.length },
+                            { name: 'Total', value: `${infractions.length}` },
                             { name: 'Last 10 infractions', value: inf },
                         )
                         .setThumbnail(`${user.avatarURL()}?size=1024`);
@@ -74,13 +74,13 @@ module.exports = {
                 }
             } else {
                 const infemb = new MessageEmbed()
-                    .setColor(randomColor())
+                    .setColor("#CC0000")
                     .setAuthor({ name: `${user.tag} has no infractions`, iconURL: `${user.avatarURL()}?size=1024` });
                 return interaction.reply({ embeds: [infemb] });
             }
         } else {
             const infemb = new MessageEmbed()
-                .setColor(randomColor())
+                .setColor("#CC0000")
                 .setAuthor({ name: `${user.tag} has no infractions`, iconURL: `${user.avatarURL()}?size=1024` });
             return interaction.reply({ embeds: [infemb] });
         }
