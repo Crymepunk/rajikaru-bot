@@ -10,10 +10,20 @@ Rajikaru is an open source, general purpose Discord bot.
 This bot is still in active development and will not be finished anytime soon.
 I'm making great progress and have switched from Python to JavaScript to make my life easier when making such an advanced bot.
 
-## Installation Instructions (For Self-Hosting):
-1. Download node.js from your package manager on Linux/MAC or through their website on Windows:
+## Table of Contents
+- [Installation](#installation-instructions-for-self-hosting)
+  - [Initial Setup](#initial-setup)
+  - [Config.json](#gathering-the-required-fields)
+  - [Congrats!](#congrats)
+- [Commands](#commands)
+- [Invite](#invite-the-bot)
 
-   https://nodejs.org/en/
+## Installation Instructions (For Self-Hosting):
+
+### Initial Setup
+
+1. Download <a href="https://nodejs.org/en/">Node.js</a>
+
 
 2. Run this command in your terminal or command prompt:
 
@@ -25,6 +35,8 @@ $ npm i
 3. Change the name of `config.def.json` to `config.json` and change the required fields.
 
 The required fields are "token", "clientId", "guildId", "sqluser", and "sqlpass".
+
+### Gathering the Required Fields
 
 You can get the guild (server) ID by enabling "Developer Mode" on Discord, right clicking the server in the server list on the left, and clicking "Copy ID".
 
