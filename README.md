@@ -18,24 +18,29 @@ We are making great progress and we have switched from Python to JavaScript to m
 ## Commands:
 ```
 Utility:
-  avatar     Replies with the user's avatar
-  nick       Give a nickname to the mentioned user.
-  role       Adds role to the pinged user.
-  ping       Replies with Pong!
-  say        Says the message you tell it to say.
+  avatar        Replies with the user's avatar
+  nick          Give a nickname to the mentioned user.
+  role          Adds role to the pinged user.
+  ping          Replies with Pong!
+  say           Says the message you tell it to say.
+Manager:
+  settings      Bot Settings
 Moderation:
-  ban        Bans the pinged member.
-  kick       Kicks the pinged member.
-  purge      Removes messages.
+  ban           Bans the pinged member.
+  kick          Kicks the pinged member.
+  warn          Warns the pinged member.
+  infractions   Show, clear or remove infractions from a member.
+  purge         Removes messages.
+  
 Fun:
-  cuddle     Cuddles the pinged member.
-  hug        Hugs the pinged member.
-  pat        Pats the pinged member.
-  slap       Slaps the pinged member.
-  coinflip   Replies with Heads or Tails.
-  neko       Sends a random catperson image.
-  owoify     Owoifies your text.
-  gayrate    How gay is the pinged person (Random)
+  cuddle        Cuddles the pinged member.
+  hug          Hugs the pinged member.
+  pat          Pats the pinged member.
+  slap         Slaps the pinged member.
+  coinflip     Replies with Heads or Tails.
+  neko         Sends a random catperson image.
+  owoify       Owoifies your text.
+  gayrate      How gay is the pinged person (Random)
 ```
 
 ## Invite the Bot!
