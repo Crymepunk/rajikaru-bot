@@ -3,5 +3,6 @@
     "clientId": "Application ID here",
     "guildId": "Guild ID here",
     "sqluser": "sql username",
-    "sqlpass": "sql password"
+    "sqlpass": "sql password",
+    "sqldb": "discord"
 }

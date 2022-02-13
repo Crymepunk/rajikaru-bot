@@ -55,7 +55,8 @@ After you've done that, find "Bot" on the sidebar to the left and click it. Clic
     "clientId": "Application ID here",
     "guildId": "Guild ID here",
     "sqluser": "sql username",
-    "sqlpass": "sql password"
+    "sqlpass": "sql password",
+    "sqldb": "discord"
 }
 ```
 
