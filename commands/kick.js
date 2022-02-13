@@ -35,6 +35,7 @@ module.exports = {
             } else if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                 if (interaction.guild.me.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                     await interaction.reply(`${member.user} has been kicked for "${reason}"`);
+                    member.send(`You have been kicked from ${interaction.guild.name} for "${reason}"`);
                     member.kick(reason);
                 } else {
                     const kickemb = new MessageEmbed()
