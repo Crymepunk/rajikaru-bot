@@ -8,7 +8,7 @@
 
 Rajikaru is an open source, general purpose Discord bot.
 This bot is still in active development and will not be finished anytime soon.
-I'm making great progress and have switched from Python to JavaScript to make my life easier when making such an advanced bot.
+We are making great progress and we have switched from Python to JavaScript to make our lives easier when making such an advanced bot.
 
 ## Table of Contents
 - [Installation](#installation-instructions-for-self-hosting)
