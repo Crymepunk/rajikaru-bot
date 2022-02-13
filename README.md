@@ -11,10 +11,7 @@ This bot is still in active development and will not be finished anytime soon.
 We are making great progress and we have switched from Python to JavaScript to make our lives easier when making such an advanced bot.
 
 ## Table of Contents
-- [Installation](.github/DOCS/INSTALL.md)
-  - [Initial Setup](.github/DOCS/INSTALL.md#initial-setup)
-  - [Config.json](.github/DOCS/INSTALL.md#gathering-the-required-fields)
-  - [Congrats!](.github/DOCS/INSTALL.md#congrats)
+- [INSTALL.md](.github/DOCS/INSTALL.md)
 - [Commands](#commands)
 - [Invite](#invite-the-bot)
 
