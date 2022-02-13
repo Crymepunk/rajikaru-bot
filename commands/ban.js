@@ -7,28 +7,32 @@ module.exports = {
 		.setDescription('Bans the pinged member')
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription('Reason for banning')),
+        // Builds slash command
 	async execute(interaction) {
         if (interaction.guild == null) {
             await interaction.reply('This command only works in Guilds!');
+            // This command only works in Guilds.
         } else {
             const member = interaction.options.getMember('member');
             let reason = interaction.options.getString('reason');
             const usrole = interaction.member.roles.highest;
             const memrole = member.roles.highest;
-
             if (!reason) {
                 reason = 'No reason provided';
             }
-
+            // Gets the victim and the ban reason
             if (interaction.member == member) {
                 await interaction.reply({ content: 'Please ping someone else to ban.', ephemeral: true });
+                // Checks if someone tries to ban themself
             } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
                 await interaction.reply({ content: 'Cannot ban someone with the same or higher rank as you.', ephemeral: true });
+                // Mutiny check
                 return;
             } else if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                     await interaction.reply(`${member.user} has been banned for "${reason}"`);
                     member.ban({ days: 0, reason: reason });
+                    // Bans the victim
                 } else {
                     await interaction.reply({ content: 'I am missing the **Ban Members** permission.', ephemeral: true });
                 }

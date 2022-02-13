@@ -25,6 +25,6 @@ module.exports = {
                 .setColor(`${randomColor()}`)
 				.setImage(img);
             await interaction.reply({ embeds: [nekoemb] });
-			}
+		}
 	},
 };

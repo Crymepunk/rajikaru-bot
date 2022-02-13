@@ -28,8 +28,8 @@ module.exports = {
                     { name: '\u200B', value: '**Moderation Commands**' },
                     { name: '/ban', value: '- Bans the pinged member.' },
                     { name: '/kick', value: '- Kicks the pinged member.' },
-                    { name: '/warn', value: '- Mutes the pinged member. (TBS)' },
-                    { name: '/infractions', value: '- Mutes the pinged member. (TBS)' },
+                    { name: '/warn', value: '- Warns the pinged member.' },
+                    { name: '/infractions', value: '- Show, clear or remove infractions from a member.' },
                     { name: '/purge', value: '- Removes messages.' },
 
                     { name: '\u200B', value: '**Fun Commands**' },
