@@ -1,5 +1,5 @@
 {
-    "token": "put your token here",
+    "token": "Put your token here",
     "clientId": "Application ID here",
     "guildId": "Guild ID here",
     "sqluser": "sql username",
