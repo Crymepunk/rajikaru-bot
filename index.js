@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
+const { MessageEmbed } = require('discord.js');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
@@ -36,7 +37,10 @@ client.on('interactionCreate', async interaction => {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		const emb = new MessageEmbed()
+			.setColor("#CC0000")
+			.setAuthor({ name: 'There was an error while executing this command!' });
+		await interaction.reply({ embeds: [emb], ephemeral: true });
 	}
 });
 
