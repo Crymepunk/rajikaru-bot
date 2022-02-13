@@ -1,10 +1,9 @@
-<p align='center'>
-  <img src='https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png'/>
-</p>
+# Steps
+ - [Initial Setup](#initial-setup)
+ - [Config.json](#gathering-the-required-fields)
+ - [Congrats!](#congrats)
 
-<a href="https://github.com/Radiicall/rajikaru-bot/blob/main/LICENSE"><img src="https://img.shields.io:/github/license/Radiicall/rajikaru-bot?color=informational"></img></a>
-<a href="https://github.com/Radiicall/rajikaru-bot/issues"><img src="https://img.shields.io:/github/issues/Radiicall/rajikaru-bot?color=important"></img></a>
-<a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FRadiicall%2Frajikaru-bot"><img src="https://img.shields.io:/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2FRadiicall%2Frajikaru-bot"></img></a>
+Back to <a href="../../README.md">README.md</a>
 
 # Installation Instructions:
 
