@@ -9,7 +9,7 @@ module.exports = {
         .addIntegerOption(option => option.setName('amount').setDescription('Amount of messages to delete.').setRequired(true)),
 	async execute(interaction) {
         const limit = interaction.options.getInteger('amount');
-        if (interaction.guild == null) {
+        if (!interaction.guild) {
             await interaction.reply('This command only works in Guilds!');
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
             if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {

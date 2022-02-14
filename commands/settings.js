@@ -25,7 +25,7 @@ module.exports = {
 		const guildTableName = String(interaction.guild.id + '-guild');
 		const owner = await interaction.guild.fetchOwner();
 		let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
-		if (interaction.guild == null) {
+		if (!interaction.guild) {
 			const setemb = new MessageEmbed()
 				.setColor("#CC0000")
 				.setAuthor({ name: `This command only works in Guilds!` });

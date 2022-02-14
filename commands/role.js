@@ -12,7 +12,7 @@ module.exports = {
         const member = interaction.options.getMember('member');
         const role = interaction.options.getRole('role');
         const usrole = interaction.member.roles.highest;
-        if (interaction.guild == null) {
+        if (!interaction.guild) {
             await interaction.reply('This command only works in Guilds!');
         } else if (usrole.comparePositionTo(role) <= role.comparePositionTo(usrole)) {
             const roleemb = new MessageEmbed()

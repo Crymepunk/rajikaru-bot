@@ -13,7 +13,7 @@ module.exports = {
             const helpemb = new MessageEmbed()
                 .setColor(randomColor())
                 .setTitle('Rajikaru Bot - Commands')
-                .setDescription('Here are all the commands and what they do.                     ')
+                .setDescription('Here are all the commands and what they do.')
                 .addFields(
                     { name: '\u200B', value: '**Utility Commands**' },
                     { name: '/avatar', value: `- Replies with the user's avatar` },

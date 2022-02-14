@@ -14,7 +14,7 @@ module.exports = {
         const usrole = interaction.member.roles.highest;
         const memrole = member.roles.highest;
 
-        if (interaction.guild == null) {
+        if (!interaction.guild) {
             await interaction.reply('This command only works in Guilds!');
         } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
             const nickemb = new MessageEmbed()

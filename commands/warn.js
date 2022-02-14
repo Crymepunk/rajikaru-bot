@@ -19,7 +19,7 @@ module.exports = {
         let modrole = null;
         let manrole = null;
 
-        if (usertable) {
+        if (guildtable) {
             modrole = await guildtable.get('modrole');
             manrole = await guildtable.get('manrole');
         }
