@@ -16,9 +16,7 @@ module.exports = {
         .addFields(
             { name: '/avatar', value: `- Replies with the user's avatar` },
             { name: '/nick', value: '- Give a nickname to the mentioned user.' },
-            { name: '/say', value: '- Says the message you tell it to say.' },
-            { name: '/role', value: '- Adds role to the pinged user.' },
-            { name: '/ping', value: 'Replies with Pong!' },
+            { name: '/ping', value: '- Replies with Pong!' },
         )
         .setFooter({ text: "v0.2.2" });
         const manemb = new MessageEmbed()
@@ -26,7 +24,8 @@ module.exports = {
         .setTitle('Manager Commands')
         .setDescription('Here are the commands in the **Manager** category')
         .addFields(
-            { name: '/settings', value: 'Bot Settings' },
+            { name: '/settings', value: '- Bot Settings.' },
+            { name: '/role', value: '- Adds role to the pinged user.' },
         )
         .setFooter({ text: "v0.2.2" });
 
@@ -36,8 +35,12 @@ module.exports = {
         .setDescription('Here are the commands in the **Moderation** category')
         .addFields(
             { name: '/ban', value: '- Bans the pinged member.' },
+            { name: '/unban', value: '- Unbans the specified user.' },
             { name: '/kick', value: '- Kicks the pinged member.' },
+            { name: '/warn', value: 'Warns the pinged member.' },
+            { name: '/infractions', value: 'Show, clear or remove infractions from a member.' },
             { name: '/purge', value: '- Removes messages.' },
+            { name: '/say', value: '- Says the message you tell it to say.' },
         )
         .setFooter({ text: "v0.2.2" });
 
