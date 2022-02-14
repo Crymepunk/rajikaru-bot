@@ -5,7 +5,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('settings')
-		.setDescription('Bot Settings')
+		.setDescription('Bot Settings.')
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('modrole')
