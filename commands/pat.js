@@ -11,20 +11,15 @@ module.exports = {
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
 		const user = interaction.options.getUser('member');
+        const img = objToString(await neko.sfw.pat());
+        let patemb = new MessageEmbed()
+            .setColor(`${randomColor()}`)
+            .setImage(img);
 		if (user != interaction.user) {
-            const img = objToString(await neko.sfw.pat());
-            const patemb = new MessageEmbed()
-                .setTitle(`${interaction.user.username} pats ${user.username}`)
-                .setColor(`${randomColor()}`)
-				.setImage(img);
-            await interaction.reply({ embeds: [patemb] });
+            patemb = patemb.setTitle(`${interaction.user.username} pats ${user.username}`);
 		} else {
-            const img = objToString(await neko.sfw.pat());
-            const patemb = new MessageEmbed()
-                .setTitle(`${interaction.user.username} pats themselves`)
-                .setColor(`${randomColor()}`)
-				.setImage(img);
-            await interaction.reply({ embeds: [patemb] });
-			}
+            patemb = patemb.setTitle(`${interaction.user.username} pats themselves`);
+		}
+        await interaction.reply({ embeds: [patemb] });
 	},
 };

@@ -11,20 +11,15 @@ module.exports = {
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
 		const user = interaction.options.getUser('member');
+        const img = objToString(await neko.sfw.hug());
+        let hugemb = new MessageEmbed()
+            .setColor(`${randomColor()}`)
+            .setImage(img);
 		if (user != interaction.user) {
-            const img = objToString(await neko.sfw.hug());
-            const hugemb = new MessageEmbed()
-                .setTitle(`${interaction.user.username} hugs ${user.username}`)
-                .setColor(`${randomColor()}`)
-				.setImage(img);
-            await interaction.reply({ embeds: [hugemb] });
+            hugemb = hugemb.setTitle(`${interaction.user.username} hugs ${user.username}`);
 		} else {
-            const img = objToString(await neko.sfw.hug());
-            const hugemb = new MessageEmbed()
-                .setTitle(`${interaction.user.username} hugs themselves`)
-                .setColor(`${randomColor()}`)
-				.setImage(img);
-            await interaction.reply({ embeds: [hugemb] });
-			}
+            hugemb = hugemb.setTitle(`${interaction.user.username} hugs themselves`);
+        }
+        await interaction.reply({ embeds: [hugemb] });
 	},
 };
