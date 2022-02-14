@@ -20,17 +20,18 @@ We are making great progress and we have switched from Python to JavaScript to m
 Utility:
   avatar        Replies with the user's avatar
   nick          Give a nickname to the mentioned user.
-  role          Adds role to the pinged user.
   ping          Replies with Pong!
-  say           Says the message you tell it to say.
 Manager:
-  settings      Bot Settings
+  settings      Bot Settings.
+  role          Adds role to the pinged user.
 Moderation:
   ban           Bans the pinged member.
+  unban         Unbans the specified user.
   kick          Kicks the pinged member.
   warn          Warns the pinged member.
   infractions   Show, clear or remove infractions from a member.
   purge         Removes messages.
+  say           Says the message you tell it to say.
   
 Fun:
   cuddle        Cuddles the pinged member.
