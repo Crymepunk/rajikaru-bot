@@ -12,7 +12,7 @@ module.exports = {
 		let user = interaction.options.getUser('member');
 		if (!user) {
 			user = interaction.user;
-			// Gets the sender???
+			// If user doesnt exist, return interaction.user
 		}
 		const aviemb = new MessageEmbed()
 			.setTitle(`${user.username}'s avatar`)

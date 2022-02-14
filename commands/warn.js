@@ -35,7 +35,7 @@ module.exports = {
                 return interaction.reply({ content: 'Cannot warn a Moderator.', ephemeral: true });
             }
         }
-        if (!contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member != owner) {
+        if (contentcheck(interaction.member._roles, [manrole, modrole]) || interaction.member == owner) {
             if (!guildtable) {
                 await guildTableCreate(guildTableName);
                 guildtable = await guildTables.findOne({ where: { name: guildTableName } });
