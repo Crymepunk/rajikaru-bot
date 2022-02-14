@@ -21,7 +21,7 @@ module.exports = {
 				.setName('maxinfractions')
 				.setDescription('Max allowed infractions')
 				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions').setRequired(true))),
-		// Builds slash command
+		// Builds slash command.
 	async execute(interaction) {
 		const guildTableName = String(interaction.guild.id + '-guild');
 		const owner = await interaction.guild.fetchOwner();
