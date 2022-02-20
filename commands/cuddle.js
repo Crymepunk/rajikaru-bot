@@ -10,11 +10,13 @@ module.exports = {
 		.setDescription("Cuddles the pinged member.")
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
+		// Assign variables
 		const user = interaction.options.getUser('member');
         const img = objToString(await neko.sfw.cuddle());
         let cudlemb = new MessageEmbed()
             .setColor(`${randomColor()}`)
             .setImage(img);
+		// Check if user is sender or not.
 		if (user != interaction.user) {
             cudlemb = cudlemb.setTitle(`${interaction.user.username} cuddles ${user.username}`);
 		} else {

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { userTables, randomColor } = require('../functions');
+const { userTables, randomColor, infractionlist } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -60,6 +60,7 @@ module.exports = {
                     .setAuthor({ name: `${user.tag} has no infractions`, iconURL: `${user.avatarURL()}?size=1024` });
                 return interaction.reply({ embeds: [infemb] });
             }
+/*
             if (infractions[1]) {inf += `${infractions.slice(-2, -1)} \n`;}
             if (infractions[2]) {inf += `${infractions.slice(-3, -2)} \n`;}
             if (infractions[3]) {inf += `${infractions.slice(-4, -3)} \n`;}
@@ -69,6 +70,8 @@ module.exports = {
             if (infractions[7]) {inf += `${infractions.slice(-8, -7)} \n`;}
             if (infractions[8]) {inf += `${infractions.slice(-9, -8)} \n`;}
             if (infractions[9]) {inf += `${infractions.slice(-10, -9)} \n`;}
+*/
+            inf = infractionlist(infractions);
             const infemb = new MessageEmbed()
                 .setColor(randomColor())
                 .setTitle(`${user.username}'s infractions`)

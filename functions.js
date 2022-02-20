@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const Sequelize = require('sequelize');
 const { sqluser, sqlpass, sqldb } = require('./config.json');
 
@@ -6,7 +7,6 @@ const sequelize = new Sequelize(sqldb, sqluser, sqlpass, {
 	dialect: 'mariadb',
 	logging: false,
 });
-
 
 const userTables = sequelize.define('usertables', {
 	name: {
@@ -106,4 +106,30 @@ function contentcheck(message, filter) {
 	return false;
 }
 
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, userTableCreate, guildTableCreate };
+function infractionlist(infractions) {
+    let str;
+    for (let i = 0; i <= infractions.length; i++) {
+        const x = i + 1;
+        console.log(i);
+        if (i == 10) {
+            return str;
+        } else {
+            str += `${infractions.slice(-x, -i)} \n`;
+        }
+    }
+    return str;
+}
+
+function errembed({ interaction, author, desc }) {
+    let emb = new MessageEmbed()
+    .setColor('#CC0000');
+    if (author) {
+        emb = emb.setAuthor({ name: author });
+    }
+    if (desc) {
+        emb = emb.setDescription(desc);
+    }
+    return interaction.reply({ embeds: [emb], ephemeral: true });
+}
+
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, userTableCreate, guildTableCreate, errembed, infractionlist };

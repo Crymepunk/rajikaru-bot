@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
-const { MessageEmbed } = require('discord.js');
+const { errembed } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -13,26 +13,17 @@ module.exports = {
         const role = interaction.options.getRole('role');
         const usrole = interaction.member.roles.highest;
         if (!interaction.guild) {
-            return interaction.reply('This command only works in Guilds!');
+            return errembed({ interaction: interaction, author: `This command only works in Guilds!` });
         } else if (usrole.comparePositionTo(role) <= role.comparePositionTo(usrole)) {
-            const roleemb = new MessageEmbed()
-                .setColor("#CC0000")
-                .setAuthor({ name: 'This role is equal to or higher than your highest role!' });
-            return interaction.reply({ embeds: [roleemb], ephemeral: true });
+            return errembed({ interaction: interaction, author: 'This role is equal to or higher than your highest role!' });
         } else if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             if (interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
                 member.roles.add(role);
             } else {
-                const roleemb = new MessageEmbed()
-                    .setColor("#CC0000")
-                    .setAuthor({ name: `I am missing the Manage Roles Permission.` });
-                return interaction.reply({ embeds: [roleemb], ephemeral: true });
+                return errembed({ interaction: interaction, author: `I am missing the Manage Roles Permission.` });
             }
         } else {
-            const roleemb = new MessageEmbed()
-                .setColor("#CC0000")
-                .setAuthor({ name: `You are missing the Manage Roles Permission.` });
-            return interaction.reply({ embeds: [roleemb], ephemeral: true });
+            return errembed({ interaction: interaction, author: `You are missing the Manage Roles Permission.` });
         }
 	},
 };

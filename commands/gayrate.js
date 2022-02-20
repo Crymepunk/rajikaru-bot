@@ -8,10 +8,12 @@ module.exports = {
 		.setDescription("How gay is the pinged person O_o")
         .addUserOption(option => option.setName('member').setDescription('Select a user')),
 	async execute(interaction) {
+		// Assign variables
 		const user = interaction.options.getMember('member');
         let gayemb = new MessageEmbed()
             .setTitle(`Gayness Percentage`)
             .setColor(`${randomColor()}`);
+		// Check if user is sender or not.
 		if (!user) {
             gayemb = gayemb.setDescription(`${user.displayName} is ${getRandomIntInclusive(0, 101)}% gay`);
 		} else {

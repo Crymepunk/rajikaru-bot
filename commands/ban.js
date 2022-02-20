@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Permissions, MessageEmbed } = require('discord.js');
-const { contentcheck, guildTables } = require('../functions');
+const { Permissions } = require('discord.js');
+const { contentcheck, guildTables, errembed } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,10 +11,7 @@ module.exports = {
         // Builds slash command
 	async execute(interaction) {
         if (!interaction.guild) {
-            const banemb = new MessageEmbed()
-                .setColor("#CC0000")
-                .setAuthor({ name: `This command only works in Guilds!` });
-            return interaction.reply({ embeds: [banemb], ephemeral: true });
+            return errembed({ interaction: interaction, author: `This command only works in Guilds!` });
         }
         const member = interaction.options.getMember('member');
         const brole = interaction.guild.me.roles.highest;
@@ -33,40 +30,28 @@ module.exports = {
             reason = 'No reason provided';
         }
         if (interaction.member == member) {
-            const banemb = new MessageEmbed()
-                .setColor("#CC0000")
-                .setAuthor({ name: `Please ping someone else to ban!` });
-            return interaction.reply({ embeds: [banemb], ephemeral: true });
+            return errembed({ interaction: interaction, author: `Please ping someone else to ban!` });
         } else if (!interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
 			if (!contentcheck(interaction.member._roles, [manrole, modrole])) {
-                const banemb = new MessageEmbed()
-                    .setColor("#CC0000")
-                    .setAuthor({ name: `You are missing the required permissions!` });
-                return interaction.reply({ embeds: [banemb], ephemeral: true });
+                return errembed({ interaction: interaction, author: 'You are missing the required permissions!' });
 			}
-        } else if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-            const banemb = new MessageEmbed()
-                .setColor("#CC0000")
-                .setAuthor({ name: `Cannot ban someone with the same or higher rank than you` })
-                .setDescription('||Unless you have set a modrole with /settings modrole||');
-            return interaction.reply({ embeds: [banemb], ephemeral: true });
+        } else if (!contentcheck(interaction.member._roles, [manrole, modrole])) {
+            if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+                return errembed({ interaction: interaction, author: `Cannot ban someone with the same or higher rank than you`, desc: '||Unless you have set a modrole with /settings modrole||' });
+            }
         }
-        if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+        if (contentcheck(member._roles, [manrole, modrole]) || member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+            return errembed({ interaction: interaction, author: 'Cannot ban a Moderator!' });
+        } else if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
             if (brole.comparePositionTo(memrole) <= memrole.comparePositionTo(brole)) {
-                const banemb = new MessageEmbed()
-                    .setColor("#CC0000")
-                    .setAuthor({ name: `This member's highest role is higher than my highest role` });
-                return interaction.reply({ embeds: [banemb], ephemeral: true });
+                return errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role` });
             } else {
                 member.send(`You have been banned from ${interaction.guild.name} for "${reason}"`);
                 await interaction.reply(`${member.user} has been banned for "${reason}"`);
                 member.ban({ days: 0, reason: reason });
             }
         } else {
-            const banemb = new MessageEmbed()
-                .setColor("#CC0000")
-                .setAuthor({ name: `I am missing the Ban Members permission` });
-            return interaction.reply({ embeds: [banemb], ephemeral: true });
+            return errembed({ interaction: interaction, author: `I am missing the Ban Members permission` });
         }
 	},
 };

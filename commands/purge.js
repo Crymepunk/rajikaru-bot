@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
 const { MessageEmbed } = require('discord.js');
+const { errembed } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,10 +17,7 @@ module.exports = {
                 await interaction.channel.bulkDelete(limit);
                 await interaction.reply(`Chat purged by ${interaction.user}`);
             } else {
-                const puremb = new MessageEmbed()
-                    .setColor("#CC0000")
-                    .setAuthor({ name: `I am missing the Manage Messages permission.` });
-                await interaction.reply({ embeds: [puremb], ephemeral: true });
+                return errembed({ interaction: interaction, author: `I am missing the Manage Messages permission.` });
             }
         } else {
             const puremb = new MessageEmbed()

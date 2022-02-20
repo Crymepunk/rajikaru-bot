@@ -10,11 +10,13 @@ module.exports = {
 		.setDescription("Hugs the pinged member.")
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
+        // Assign variables
 		const user = interaction.options.getUser('member');
         const img = objToString(await neko.sfw.hug());
         let hugemb = new MessageEmbed()
             .setColor(`${randomColor()}`)
             .setImage(img);
+        // Check if user is sender or not.
 		if (user != interaction.user) {
             hugemb = hugemb.setTitle(`${interaction.user.username} hugs ${user.username}`);
 		} else {

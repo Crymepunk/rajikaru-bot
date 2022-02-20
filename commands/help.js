@@ -59,6 +59,7 @@ module.exports = {
             { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
         )
         .setFooter({ text: "v0.2.2" });
+
         if (!category || category.toLowerCase() == 'all') {
             if (interaction.inGuild()) {
                 await interaction.reply('Check your DMs for a full list of commands!');
