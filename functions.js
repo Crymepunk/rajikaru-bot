@@ -107,10 +107,9 @@ function contentcheck(message, filter) {
 }
 
 function infractionlist(infractions) {
-    let str;
-    for (let i = 0; i <= infractions.length; i++) {
+    let str = '';
+    for (let i = 2; i <= infractions.length - 1; i++) {
         const x = i + 1;
-        console.log(i);
         if (i == 10) {
             return str;
         } else {
