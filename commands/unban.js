@@ -8,6 +8,9 @@ module.exports = {
 		.setDescription('Unbans the specified user.')
         .addUserOption(option => option.setName('user').setDescription('User to unban.').setRequired(true)),
 	async execute(interaction) {
+		if (!interaction.guild) {
+            return errembed({ interaction: interaction, author: 'This command only works in Guilds!' });
+        }
 		const userId = interaction.options.get('user')?.value;
 		const guildTableName = String(interaction.guild.id + '-guild');
 		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });

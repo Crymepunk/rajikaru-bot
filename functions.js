@@ -108,10 +108,12 @@ function contentcheck(message, filter) {
 
 function infractionlist(infractions) {
     let str = '';
-    for (let i = 2; i <= infractions.length - 1; i++) {
+    for (let i = 0; i <= infractions.length - 1; i++) {
         const x = i + 1;
         if (i == 10) {
             return str;
+        } else if (i == 0) {
+            str += `${infractions.slice(-1)} \n`;
         } else {
             str += `${infractions.slice(-x, -i)} \n`;
         }
@@ -119,7 +121,7 @@ function infractionlist(infractions) {
     return str;
 }
 
-function errembed({ interaction, author, desc }) {
+function errembed({ interaction, author, desc, defer }) {
     let emb = new MessageEmbed()
     .setColor('#CC0000');
     if (author) {
@@ -128,7 +130,11 @@ function errembed({ interaction, author, desc }) {
     if (desc) {
         emb = emb.setDescription(desc);
     }
-    return interaction.reply({ embeds: [emb], ephemeral: true });
+    if (defer == true) {
+        return interaction.editReply({ embeds: [emb], ephemeral: true });
+    } else {
+        return interaction.reply({ embeds: [emb], ephemeral: true });
+    }
 }
 
 module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, userTableCreate, guildTableCreate, errembed, infractionlist };

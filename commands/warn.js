@@ -31,6 +31,8 @@ module.exports = {
         } else if (member) {
             if (interaction.member == member) {
                 return interaction.reply({ content: 'Please ping someone else to warn.', ephemeral: true });
+            } else if (member.user.bot) {
+                return interaction.reply({ content: 'This member is a bot!', ephemeral: true });
             } else if (contentcheck(member._roles, [manrole, modrole]) || member == owner) {
                 return interaction.reply({ content: 'Cannot warn a Moderator.', ephemeral: true });
             }
