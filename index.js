@@ -1,8 +1,9 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
-const { MessageEmbed } = require('discord.js');
+const { errembed } = require('./functions');
 
+// Create a client with the required intents
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
@@ -37,11 +38,10 @@ client.on('interactionCreate', async interaction => {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
-		const emb = new MessageEmbed()
-			.setColor("#CC0000")
-			.setAuthor({ name: 'There was an error while executing this command!' });
-		await interaction.reply({ embeds: [emb], ephemeral: true });
+		// Create a new error embed using the function from functions.js
+		errembed({ interaction: interaction, author: 'There was an error while executing this command!' });
 	}
 });
 
+// Login to the client using the token from config.json
 client.login(token);
