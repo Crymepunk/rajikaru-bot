@@ -1,5 +1,5 @@
 <p align='center'>
-  <img src='https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png'/>
+  <img src='https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png' />
 </p>
 
 <a href="https://github.com/Crymepunk/rajikaru-bot/blob/main/LICENSE"><img src="https://img.shields.io:/github/license/Crymepunk/rajikaru-bot?color=informational"></img></a>
@@ -16,33 +16,9 @@ We are making great progress and we have switched from Python to JavaScript to m
 - [Invite](#invite-the-bot)
 
 ## Commands:
-```
-Utility:
-  avatar        Replies with the user's avatar
-  nick          Give a nickname to the mentioned user.
-  ping          Replies with Pong!
-Manager:
-  settings      Bot Settings.
-  role          Adds role to the pinged user.
-Moderation:
-  ban           Bans the pinged member.
-  unban         Unbans the specified user.
-  kick          Kicks the pinged member.
-  warn          Warns the pinged member.
-  infractions   Show, clear or remove infractions from a member.
-  purge         Removes messages.
-  say           Says the message you tell it to say.
-  
-Fun:
-  cuddle        Cuddles the pinged member.
-  hug          Hugs the pinged member.
-  pat          Pats the pinged member.
-  slap         Slaps the pinged member.
-  coinflip     Replies with Heads or Tails.
-  neko         Sends a random catperson image.
-  owoify       Owoifies your text.
-  gayrate      How gay is the pinged person (Random)
-```
+<p align='center'>
+  <img src="https://user-images.githubusercontent.com/66682497/155179948-9b692aa2-e6cd-415c-a460-732280966756.png" />
+</p>
 
 ## Invite the Bot!
 If you don't want to spend time setting up and/or hosting the bot yourself, you can invite the bot hosted by me by <a href="https://discord.com/api/oauth2/authorize?client_id=900694117355487283&permissions=1377073080902&scope=bot%20applications.commands">clicking here</a>!
