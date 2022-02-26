@@ -16,6 +16,8 @@ module.exports = {
         .addFields(
             { name: '/avatar', value: `- Replies with the user's avatar` },
             { name: '/nick', value: '- Give a nickname to the mentioned user.' },
+            { name: '/userinfo', value: '- Replies with users info.' },
+            { name: '/serverinfo', value: '- Replies with server info.' },
             { name: '/ping', value: '- Replies with Pong!' },
         )
         .setFooter({ text: "v0.2.2" });
@@ -37,6 +39,8 @@ module.exports = {
             { name: '/ban', value: '- Bans the pinged member.' },
             { name: '/unban', value: '- Unbans the specified user.' },
             { name: '/kick', value: '- Kicks the pinged member.' },
+            { name: '/mute', value: '- Mutes the pinged member.' },
+            { name: '/unmute', value: '- Unmutes the pinged member.' },
             { name: '/warn', value: 'Warns the pinged member.' },
             { name: '/infractions', value: 'Show, clear or remove infractions from a member.' },
             { name: '/purge', value: '- Removes messages.' },

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const Sequelize = require('sequelize');
 const { sqluser, sqlpass, sqldb } = require('./config.json');
 
@@ -39,6 +39,31 @@ const guildTables = sequelize.define('guildtables', {
         type: Sequelize.STRING,
         allowNull: true,
     },
+    mutedrole: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+});
+
+// TODO: everything
+const punTables = sequelize.define('puntables', {
+    name: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
+    },
+    punishment: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    duration: {
+        type: Sequelize.TIME,
+        allowNull: true,
+    },
+    expiretime: {
+        type: Sequelize.DATE,
+        allowNull: true,
+    },
 });
 
 async function userTableCreate(name, infractions) {
@@ -54,13 +79,14 @@ async function userTableCreate(name, infractions) {
     }
 }
 
-async function guildTableCreate(name, max, manrole, modrole) {
+async function guildTableCreate(name, max, manrole, modrole, mutedrole) {
     try {
         const guildtable = await guildTables.create({
             name: name,
             maxinfractions: max,
             manrole: manrole,
             modrole: modrole,
+            mutedrole: mutedrole,
         });
         return guildtable;
     }
@@ -137,4 +163,94 @@ function errembed({ interaction, author, desc, defer }) {
     }
 }
 
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, userTableCreate, guildTableCreate, errembed, infractionlist };
+function punembed({ interaction, reason = null, punishmenttext }) {
+    const title = () => `${punishmenttext.charAt(0).toUpperCase()}${punishmenttext.slice(1).toLowerCase()}`;
+    const emb = new MessageEmbed()
+    .setColor('#CC0000')
+    .setTitle(title.toString())
+    .setDescription(`You have been ${punishmenttext} from ${interaction.guild.name}!`);
+    if (punishmenttext === 'banned' && punishmenttext == 'muted') {
+        emb.addFields({ name: 'Duration:', value: 'Permanent', inline: true });
+    } else if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
+        emb.addFields({ name: 'Reason:', value: reason, inline: false });
+    }
+}
+
+async function permcheck({ interaction, member, selfcheck, permflag, manonly, roleposcheck, defer }) {
+    let brole; let usrole;
+    let memrole;
+    if (member) {
+        brole = interaction.guild.me.roles.highest;
+        usrole = interaction.member.roles.highest;
+        memrole = member.roles.highest;
+    }
+    const owner = interaction.guild.fetchOwner();
+
+    if (interaction.member != owner) {
+        const guildTableName = String(interaction.guild.id + '-guild');
+        const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+        let modrole; let manrole;
+        let modroles;
+        if (guildtable) {
+            modrole = await guildtable.get('modrole');
+            manrole = await guildtable.get('manrole');
+        }
+
+        if (manonly == true) {
+            modroles = [manrole];
+        } else {
+            modroles = [modrole, manrole];
+        }
+
+        // If it should check if user is member or not
+        if (selfcheck == true) {
+            // Check if member is sender and if so send an error message
+            if (interaction.member == member) {
+                return errembed({ interaction: interaction, author: `Please ping someone other than yourself!`, defer: defer });
+            }
+        }
+
+        // If permflag exists check for permissions
+        if (permflag) {
+            if (!interaction.member.permissions.has(permflag)) {
+                if (!contentcheck(interaction.member._roles, modroles)) {
+                    return errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer });
+                }
+                // Check for modrole and or manrole and if not check role positions
+            } else if (!contentcheck(interaction.member._roles, modroles)) {
+                if (member) {
+                    if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+                        return errembed({ interaction: interaction, author: `Cannot use this on a member with the same or a higher rank than you`, desc: '||Unless you have set a modrole with /settings modrole||', defer: defer });
+                    }
+                }
+            }
+        // Else just check for modrole or manrole
+        } else if (!contentcheck(interaction.member._roles, modroles)) {
+            return errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer });
+        }
+
+        // Check that member isnt a moderator
+        if (member) {
+            if (contentcheck(member._roles, modroles) || member && member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+                return errembed({ interaction: interaction, author: 'This member is a Moderator!', defer: defer });
+            }
+        }
+    }
+    if (roleposcheck != false) {
+        if (brole.comparePositionTo(memrole) <= memrole.comparePositionTo(brole)) {
+            return errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role`, defer: defer });
+        }
+    }
+}
+
+async function updateroles({ interaction, previousRole, newRole }) {
+    for (let member of await interaction.guild.members.fetch()) {
+        member = member.at(1);
+        if (member._roles.includes(previousRole.id)) {
+            await member.roles.remove(previousRole);
+            await member.roles.add(newRole);
+        }
+    }
+}
+
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, punTables, userTableCreate, guildTableCreate, errembed, punembed, infractionlist, permcheck, updateroles };

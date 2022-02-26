@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { userTables, randomColor, infractionlist, contentcheck, errembed, guildTables } = require('../functions');
+const { userTables, randomColor, infractionlist, permcheck } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,14 +29,6 @@ module.exports = {
         }
         // Assign variables
         const user = interaction.options.getUser('user');
-        const guildTableName = String(interaction.guild.id + '-guild');
-		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
-        let modrole;
-        let manrole;
-        if (guildtable) {
-            modrole = await guildtable.get('modrole');
-            manrole = await guildtable.get('manrole');
-        }
         const userTableName = `${interaction.guild.id}-${user.id}`;
         const usertable = await userTables.findOne({ where: { name: userTableName } });
         let infractions = usertable.get('infractions');
@@ -45,10 +37,9 @@ module.exports = {
         }
 
         // Permission checks!
-        if (!interaction.member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
-			if (!contentcheck(interaction.member._roles, [manrole, modrole])) {
-                return errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: true });
-            }
+
+        if (await permcheck ({ interaction: interaction, permflag: Permissions.FLAGS.BAN_MEMBERS, roleposcheck: false, defer: true })) {
+            return;
         }
 
         if (interaction.options.getSubcommand() === 'remove') {

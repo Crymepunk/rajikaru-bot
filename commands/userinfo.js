@@ -1,0 +1,71 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed, Permissions } = require('discord.js');
+const { errembed, userTables } = require('../functions');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('userinfo')
+		.setDescription('Replies with users info.')
+        .addUserOption(option => option.setName('member').setDescription('Member to show info for.').setRequired(true)),
+	async execute(interaction) {
+        if (!interaction.guild) {
+            return errembed({ interaction: interaction, author: `This command only works in Guilds!` });
+        }
+        const member = interaction.options.getMember('member');
+        const owner = await interaction.guild.fetchOwner();
+        let status;
+        const userTableName = `${interaction.guild.id}-${member.user.id}`;
+        const usertable = await userTables.findOne({ where: { name: userTableName } });
+        let infractions;
+        if (usertable) {
+            infractions = usertable.get('infractions');
+        } else {
+            infractions = null;
+        }
+        if (infractions) {
+            infractions = infractions.split('§');
+            infractions = infractions.length;
+        } else {
+            infractions = `None`;
+        }
+
+        if (member == owner) {
+            status = `Server Owner,\nServer Administrator,\nServer Moderator`;
+        } else if (member || member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+            status = `Server Administrator,\nServer Moderator`;
+        } else if (member || member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+            status = `Server Moderator`;
+        } else {
+            status = `None`;
+        }
+
+        let perms;
+        if (member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+            perms = `Administrator`;
+        } else {
+            perms = member.permissions.toArray();
+            perms = perms.map(perm => perm.toLowerCase());
+        }
+
+        let boosting;
+        if (member.premiumSince != null) {
+            boosting = `<t:${Math.floor(member.premiumSince / 1000)}>`;
+        } else {
+            boosting = `Not Boosting`;
+        }
+
+        const emb = new MessageEmbed()
+        .setThumbnail(`${member.user.avatarURL()}?size=1024`)
+        .addFields(
+            { name: `Userinfo command for ${member.user.tag}`, value: `UserID | ${member.user.id}`, inline: true },
+            { name: `Server Permissions`, value: `${perms}`, inline: true },
+            { name: `User Status`, value: status, inline: true },
+            { name: `Server Infractions`, value: `${infractions}`, inline: true },
+            { name: `Joined Server at`, value: `<t:${Math.floor(member.joinedAt / 1000)}>`, inline: true },
+            { name: `Joined Discord at`, value: `<t:${Math.floor(member.user.createdAt / 1000)}>`, inline: true },
+            { name: `Boosting Since`, value: `${boosting}` },
+        )
+        .setFooter({ text: `Requested by ${interaction.user.tag} | ${interaction.user.id}` });
+        await interaction.reply({ embeds: [emb] });
+	},
+};
