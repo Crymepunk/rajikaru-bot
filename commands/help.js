@@ -21,7 +21,7 @@ module.exports = {
             { name: '/serverinfo', value: '- Replies with server info.' },
             { name: '/ping', value: '- Replies with Pong!' },
         )
-        .setFooter({ text: "Rajikaru Dev Branch | Made by the Crymepunk Team" });
+        .setFooter({ text: "Rajikaru Main Branch | Made by the Crymepunk Team" });
 
         const manemb = new MessageEmbed()
         .setColor('#d00202')
@@ -31,7 +31,7 @@ module.exports = {
             { name: '/settings', value: '- Bot Settings.' },
             { name: '/role', value: '- Adds role to the pinged user.' },
         )
-        .setFooter({ text: "Rajikaru Dev Branch | Made by the Crymepunk Team" });
+        .setFooter({ text: "Rajikaru Main Branch | Made by the Crymepunk Team" });
 
         const modemb = new MessageEmbed()
         .setColor('#5B92E5')
@@ -48,7 +48,7 @@ module.exports = {
             { name: '/purge', value: '- Removes messages.' },
             { name: '/say', value: '- Says the message you tell it to say.' },
         )
-        .setFooter({ text: "Rajikaru Dev Branch | Made by the Crymepunk Team" });
+        .setFooter({ text: "Rajikaru Main Branch | Made by the Crymepunk Team" });
 
         const funemb = new MessageEmbed()
         .setColor('#f57ae0')
@@ -64,7 +64,7 @@ module.exports = {
             { name: '/owoify', value: '- Owoifies your text.' },
             { name: '/gayrate', value: '-  How gay is the pinged person (Random)' },
         )
-        .setFooter({ text: "Rajikaru Dev Branch | Made by the Crymepunk Team" });
+        .setFooter({ text: "Rajikaru Main Branch | Made by the Crymepunk Team" });
 
         if (!category || category.toLowerCase() == 'all') {
             if (interaction.inGuild()) {
