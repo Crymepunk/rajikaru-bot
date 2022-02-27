@@ -24,5 +24,5 @@ module.exports = {
                 { name: '\u200B', value: '\u200B', inline: true },
             );
         await interaction.reply({ embeds: [infoemb], ephemeral: false });
-        },
-	};
+    },
+};

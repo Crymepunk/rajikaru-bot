@@ -60,15 +60,11 @@ module.exports = {
 				await guildTables.update({ maxinfractions: int }, { where: { name: guildTableName } });
 				await interaction.editReply(`Set max infractions to ${int}`);
 			} else if (interaction.options.getSubcommand() === 'mutedrole') {
-				console.log('here');
 				const previousRole = await interaction.guild.roles.fetch(guildtable.get('mutedrole'));
 				const role = interaction.options.getRole('mutedrole');
-				console.log('here 2');
 				await updateroles({ interaction: interaction, previousRole: previousRole, newRole: role });
-				console.log('here 3');
 				await guildTables.update({ mutedrole: `${role.id}` }, { where: { name: guildTableName } });
 				await interaction.editReply(`Set muted role to ${role.name}`);
-				console.log('here 3');
 			}
 			guildTables.sync();
 		} else {
