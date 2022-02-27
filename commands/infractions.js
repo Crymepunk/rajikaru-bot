@@ -38,11 +38,9 @@ module.exports = {
 
         // Permission checks!
 
-        if (await permcheck ({ interaction: interaction, permflag: Permissions.FLAGS.BAN_MEMBERS, roleposcheck: false, defer: true })) {
+        if (await permcheck({ interaction: interaction, permflag: Permissions.FLAGS.MODERATE_MEMBERS, roleposcheck: false, defer: true })) {
             return;
-        }
-
-        if (interaction.options.getSubcommand() === 'remove') {
+        } else if (interaction.options.getSubcommand() === 'remove') {
             // If the command is remove then get the infraction number from the users input
             const int = interaction.options.getInteger('infractionnum');
             // If there's more than one infraction then remove the requested infraction

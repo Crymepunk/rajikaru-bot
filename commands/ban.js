@@ -21,9 +21,7 @@ module.exports = {
 
         if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.BAN_MEMBERS })) {
             return;
-        }
-
-        if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+        } else if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
             member.ban({ days: 0, reason: reason });
             member.send({ embeds: [punembed({ interaction: interaction, reason: reason, punishmenttext: 'banned' })] });
             await interaction.reply(`${member.user} has been banned for "${reason}"`);

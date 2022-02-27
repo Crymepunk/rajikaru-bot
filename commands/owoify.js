@@ -10,11 +10,13 @@ module.exports = {
         .addStringOption(option => option.setName('message').setDescription('Message to say').setRequired(true)),
 	async execute(interaction) {
         let message = interaction.options.getString('message');
+        message = objToString(await neko.sfw.OwOify({ text: message }));
 
-        if (contentcheck(message, ['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'])) {
+        if (!interaction.guild) {
+            await interaction.reply(message);
+        } else if (contentcheck(message, ['nigger', 'niggër', 'niggêr', 'nigg3r', 'nïgger', 'nïggër', 'nïggêr', 'nïgg3r', 'nîgger', 'nîggër', 'nîggêr', 'nîgg3r', 'n1gger', 'n1ggër', 'n1ggêr', 'n1gg3r'])) {
             await interaction.reply({ content: 'This conytainys a bad wowd.', ephemeral: true });
         } else {
-            message = objToString(await neko.sfw.OwOify({ text: message }));
             await interaction.reply(message);
         }
 	},

@@ -183,6 +183,9 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
         brole = interaction.guild.me.roles.highest;
         usrole = interaction.member.roles.highest;
         memrole = member.roles.highest;
+        if (member.user.bot) {
+            return (errembed({ interaction: interaction, author: 'This member is a bot!', defer: defer }), true);
+        }
     }
     const owner = interaction.guild.fetchOwner();
 
@@ -206,7 +209,7 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
         if (selfcheck == true) {
             // Check if member is sender and if so send an error message
             if (interaction.member == member) {
-                return errembed({ interaction: interaction, author: `Please ping someone other than yourself!`, defer: defer });
+                return (errembed({ interaction: interaction, author: `Please ping someone other than yourself!`, defer: defer }), true);
             }
         }
 
@@ -214,33 +217,34 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
         if (permflag) {
             if (!interaction.member.permissions.has(permflag)) {
                 if (!contentcheck(interaction.member._roles, modroles)) {
-                    return errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer });
+                    return (errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer }), true);
                 }
                 // Check for modrole and or manrole and if not check role positions
             } else if (!contentcheck(interaction.member._roles, modroles)) {
                 if (member) {
                     if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-                        return errembed({ interaction: interaction, author: `Cannot use this on a member with the same or a higher rank than you`, desc: '||Unless you have set a modrole with /settings modrole||', defer: defer });
+                        return (errembed({ interaction: interaction, author: `Cannot use this on a member with the same or a higher rank than you`, desc: '||Unless you have set a modrole with /settings modrole||', defer: defer }), true);
                     }
                 }
             }
         // Else just check for modrole or manrole
         } else if (!contentcheck(interaction.member._roles, modroles)) {
-            return errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer });
+            return (errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer }), true);
         }
 
         // Check that member isnt a moderator
         if (member) {
             if (contentcheck(member._roles, modroles) || member && member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
-                return errembed({ interaction: interaction, author: 'This member is a Moderator!', defer: defer });
+                return (errembed({ interaction: interaction, author: 'This member is a Moderator!', defer: defer }), true);
             }
         }
     }
     if (roleposcheck != false) {
         if (brole.comparePositionTo(memrole) <= memrole.comparePositionTo(brole)) {
-            return errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role`, defer: defer });
+            return (errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role`, defer: defer }), true);
         }
     }
+    return false;
 }
 
 async function updateroles({ interaction, previousRole, newRole }) {
