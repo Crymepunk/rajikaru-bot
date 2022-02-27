@@ -55,6 +55,7 @@ module.exports = {
         }
 
         const emb = new MessageEmbed()
+        .setColor("#5B92E5")
         .setThumbnail(`${member.user.avatarURL()}?size=1024`)
         .addFields(
             { name: `Userinfo command for ${member.user.tag}`, value: `UserID | ${member.user.id}`, inline: true },
