@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { userTables, randomColor, infractionlist, permcheck } = require('../functions');
+const { userTables, randomColor, infractionlist, permcheck } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()

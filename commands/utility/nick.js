@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
-const { guildTables, contentcheck, errembed } = require('../functions');
+const { guildTables, contentcheck, errembed } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()

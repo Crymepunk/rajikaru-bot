@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const client = require('nekos.life');
-const { objToString, contentcheck } = require('../functions');
+const { objToString, contentcheck } = require('../../functions');
 const neko = new client();
 
 module.exports = {

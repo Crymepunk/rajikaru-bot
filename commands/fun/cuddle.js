@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { randomColor, objToString } = require('../functions');
+const { randomColor, objToString } = require('../../functions');
 const client = require('nekos.life');
 const neko = new client();
 

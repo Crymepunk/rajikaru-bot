@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { getRandomIntInclusive, randomColor } = require('../functions');
+const { getRandomIntInclusive, randomColor } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()

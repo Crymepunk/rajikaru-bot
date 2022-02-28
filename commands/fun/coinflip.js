@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { getRandomIntInclusive } = require('../functions');
+const { getRandomIntInclusive } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
