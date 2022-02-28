@@ -12,4 +12,5 @@ rest.get(Routes.applicationCommands(clientId))
             promises.push(rest.delete(deleteUrl));
         }
         return Promise.all(promises);
-    });
+    },
+);

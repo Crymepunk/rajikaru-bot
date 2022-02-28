@@ -39,8 +39,8 @@ module.exports = {
 				lastoutcome = 4;
 				await wait(7200000);
 			} else if (lastoutcome != outcome && outcome == 5) {
-				client.user.setActivity('Security Breach');
-				console.log('Set Activity to "Playing Security Breach"');
+				client.user.setActivity('SIFU');
+				console.log('Set Activity to "Playing SIFU"');
 				lastoutcome = 5;
 				await wait(7200000);
 			}

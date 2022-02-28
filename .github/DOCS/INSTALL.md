@@ -52,7 +52,7 @@ After you've done that, find "Bot" on the sidebar to the left and click it. Clic
 ```json
 {
     "token": "Put your token here",
-    "clientId": "Application ID here",
+    "clientId": "Client ID here",
     "guildId": "Guild ID here",
     "sqluser": "sql username",
     "sqlpass": "sql password",
