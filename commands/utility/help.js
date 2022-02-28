@@ -17,6 +17,7 @@ module.exports = {
         .setTitle('Utility Commands')
         .setDescription('Here are the commands in the **Utility** category')
         .addFields(
+            { name: '/help', value: `- View a list of commands` },
             { name: '/avatar', value: `- Replies with the user's avatar` },
             { name: '/nick', value: '- Give a nickname to the mentioned user.' },
             { name: '/userinfo', value: '- Replies with users info.' },

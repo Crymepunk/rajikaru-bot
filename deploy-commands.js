@@ -5,14 +5,19 @@ const { clientId, token } = require('./config.json');
 
 // Assign commands
 const commands = [];
-// Get commands from ./commands
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+// Get command folders from ./commands
+const commandFolders = fs.readdirSync('./commands');
+for (const folder of commandFolders) {
+	if (folder != 'developer') {
+		const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	// Get command from files
-	const command = require(`./commands/${file}`);
-	// Push command to array
-	commands.push(command.data.toJSON());
+		for (const file of commandFiles) {
+			// Get command from files
+			const command = require(`./commands/${folder}/${file}`);
+			// Push command to array
+			commands.push(command.data.toJSON());
+		}
+	}
 }
 
 const rest = new REST({ version: '9' }).setToken(token);
