@@ -10,11 +10,15 @@ module.exports = {
 		.setDescription("Pats the pinged member.")
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
+		// Assign variables
 		const user = interaction.options.getUser('member');
-        const img = objToString(await neko.sfw.pat());
+        // Get image from nekos.life
+		const img = objToString(await neko.sfw.pat());
+		// Construct embed
         let patemb = new MessageEmbed()
             .setColor(`${randomColor()}`)
             .setImage(img);
+		// Check if user is sender
 		if (user != interaction.user) {
             patemb = patemb.setTitle(`${interaction.user.username} pats ${user.username}`);
 		} else {

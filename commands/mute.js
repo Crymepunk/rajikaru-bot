@@ -23,11 +23,13 @@ module.exports = {
         if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.MUTE_MEMBERS })) {
             return;
         } else {
-            let mutedrole = null;
+            // Assign variables
+            let mutedrole;
             const guildTableName = String(interaction.guild.id + '-guild');
             const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
             if (guildtable) {
-                mutedrole = await guildtable.get('mutedrole');
+                await guildtable.get('mutedrole')
+                .then(_mutedrole => mutedrole = interaction.guild.roles.fetch(_mutedrole));
             }
             if (!mutedrole) {
                 // TODO: Make it so it only modifies the permissions of the categories and have the channels sync permissions with them

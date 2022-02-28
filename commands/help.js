@@ -8,8 +8,10 @@ module.exports = {
 		.setDescription('View a list of commands')
         .addStringOption(option => option.setName('category').setDescription('Which category to show')),
 	async execute(interaction) {
+        // Assign variables
         const category = interaction.options.getString('category');
 
+        // Construct embeds
         const utilemb = new MessageEmbed()
         .setColor('#7ff520')
         .setTitle('Utility Commands')
@@ -66,10 +68,13 @@ module.exports = {
         )
         .setFooter({ text: "Rajikaru Main Branch | Made by the Crymepunk Team" });
 
+        // Check category
         if (!category || category.toLowerCase() == 'all') {
+            // If the category is all and the command was in a guild, send a response and DM the help output
             if (interaction.inGuild()) {
                 await interaction.reply('Check your DMs for a full list of commands!');
                 interaction.user.send({ embeds: [utilemb, manemb, modemb, funemb] });
+            // If the command was in DM's just send the help output
             } else {
                 await interaction.reply({ embeds: [utilemb, manemb, modemb, funemb] });
             }
@@ -81,6 +86,7 @@ module.exports = {
             await interaction.reply({ embeds: [modemb] });
         } else if (category.toLowerCase() == 'fun') {
             await interaction.reply({ embeds: [funemb] });
+        // Return errembed if no valid category was provided
         } else {
             return errembed({ interaction: interaction, author: 'Valid categories include: All, Utility, Manager, Moderation and Fun' });
         }

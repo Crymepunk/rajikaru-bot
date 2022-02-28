@@ -199,6 +199,7 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
             manrole = await guildtable.get('manrole');
         }
 
+        // If command can be used by only Managers or both Moderators and Managers
         if (manonly == true) {
             modroles = [manrole];
         } else {
@@ -239,8 +240,11 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
             }
         }
     }
+    // Check if bot should check its own role position against the member's
     if (roleposcheck != false) {
+        // Check positions
         if (brole.comparePositionTo(memrole) <= memrole.comparePositionTo(brole)) {
+            // Error if it cant execute
             return (errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role`, defer: defer }), true);
         }
     }

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { errembed, userTables } = require('../functions');
+const { errembed, userTables, guildTables, contentcheck } = require('../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,14 +8,25 @@ module.exports = {
 		.setDescription('Replies with users info.')
         .addUserOption(option => option.setName('member').setDescription('Member to show info for.').setRequired(true)),
 	async execute(interaction) {
+        // Check for guild
         if (!interaction.guild) {
+            // Error if no guild
             return errembed({ interaction: interaction, author: `This command only works in Guilds!` });
         }
+        // Assign variables
         const member = interaction.options.getMember('member');
         const owner = await interaction.guild.fetchOwner();
         let status;
         const userTableName = `${interaction.guild.id}-${member.user.id}`;
         const usertable = await userTables.findOne({ where: { name: userTableName } });
+        const guildTableName = String(interaction.guild.id + '-guild');
+        const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+        let modrole; let manrole;
+        if (guildtable) {
+            modrole = await guildtable.get('modrole');
+            manrole = await guildtable.get('manrole');
+        }
+        // Get infractions from usertable
         let infractions;
         if (usertable) {
             infractions = usertable.get('infractions');
@@ -29,24 +40,29 @@ module.exports = {
             infractions = `None`;
         }
 
+        // Set "Server Status" by checking permissions
         if (member == owner) {
             status = `Server Owner,\nServer Administrator,\nServer Moderator`;
-        } else if (member || member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+        } else if (contentcheck(member._roles, manrole) || member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
             status = `Server Administrator,\nServer Moderator`;
-        } else if (member || member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+        } else if (contentcheck(member._roles, modrole) || member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
             status = `Server Moderator`;
         } else {
             status = `None`;
         }
 
+        // Get perms
         let perms;
+        // Set perms to "Administrator" if they have all (done to not fill chat)
         if (member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
             perms = `Administrator`;
         } else {
+            // Else get the permissions and make them lowercase (upper by default)
             perms = member.permissions.toArray();
             perms = perms.map(perm => perm.toLowerCase());
         }
 
+        // Get boosting status
         let boosting;
         if (member.premiumSince != null) {
             boosting = `<t:${Math.floor(member.premiumSince / 1000)}>`;
@@ -54,6 +70,7 @@ module.exports = {
             boosting = `Not Boosting`;
         }
 
+        // Construct embed
         const emb = new MessageEmbed()
         .setColor("#5B92E5")
         .setThumbnail(`${member.user.avatarURL()}?size=1024`)
@@ -67,6 +84,8 @@ module.exports = {
             { name: `Boosting Since`, value: `${boosting}` },
         )
         .setFooter({ text: `Requested by ${interaction.user.tag} | ${interaction.user.id}` });
-        await interaction.reply({ embeds: [emb] });
+
+        // Send embed
+        return interaction.reply({ embeds: [emb] });
 	},
 };

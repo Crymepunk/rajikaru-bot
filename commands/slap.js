@@ -10,16 +10,22 @@ module.exports = {
 		.setDescription("Slaps the pinged member.")
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
 	async execute(interaction) {
+		// Assign variables
 		const user = interaction.options.getUser('member');
-        const img = objToString(await neko.sfw.slap());
+        // Get image from nekos.life
+		const img = objToString(await neko.sfw.slap());
+		// Construct embed
         let slapemb = new MessageEmbed()
             .setColor(`${randomColor()}`)
             .setImage(img);
+		// Check if user is sender
 		if (user != interaction.user) {
             slapemb = slapemb.setTitle(`${interaction.user.username} slaps ${user.username}`);
 		} else {
             slapemb = slapemb.setTitle(`${interaction.user.username} slaps themselves`);
 		}
-        await interaction.reply({ embeds: [slapemb] });
+
+		// Return embed
+        return interaction.reply({ embeds: [slapemb] });
 	},
 };

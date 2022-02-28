@@ -36,8 +36,7 @@ module.exports = {
             infractions = infractions.split('§');
         }
 
-        // Permission checks!
-
+        // Check permissions with permcheck function from ../functions.js
         if (await permcheck({ interaction: interaction, permflag: Permissions.FLAGS.MODERATE_MEMBERS, roleposcheck: false, defer: true })) {
             return;
         } else if (interaction.options.getSubcommand() === 'remove') {

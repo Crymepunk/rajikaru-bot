@@ -12,7 +12,9 @@ module.exports = {
 	async execute(interaction) {
 		// Assign variables
 		const user = interaction.options.getUser('member');
+		// Get image from nekos.life
         const img = objToString(await neko.sfw.cuddle());
+		// Construct embed
         let cudlemb = new MessageEmbed()
             .setColor(`${randomColor()}`)
             .setImage(img);
@@ -22,6 +24,7 @@ module.exports = {
 		} else {
             cudlemb = cudlemb.setTitle(`${interaction.user.username} cuddles themselves`);
 		}
+		// Reply with embed
         await interaction.reply({ embeds: [cudlemb] });
 	},
 };

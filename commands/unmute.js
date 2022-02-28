@@ -9,14 +9,20 @@ module.exports = {
         .addUserOption(option => option.setName('member').setDescription('Select a user').setRequired(true)),
         // Builds slash command
 	async execute(interaction) {
+        // Check for guild
         if (!interaction.guild) {
+            // Error if no guild
             return errembed({ interaction: interaction, author: `This command only works in Guilds!` });
         }
+        // Assign member
         const member = interaction.options.getMember('member');
 
+        // Check for permissions with permcheck function from ../functions.js
         if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.MUTE_MEMBERS })) {
             return;
+        // Else execute
         } else {
+            // Assign variables
             let mutedrole = null;
             const guildTableName = String(interaction.guild.id + '-guild');
             const guildtable = await guildTables.findOne({ where: { name: guildTableName } });

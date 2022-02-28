@@ -20,14 +20,16 @@ module.exports = {
             reason = 'No reason provided';
         }
 
+        // Check permissions with permcheck from ../functions.js
         if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.KICK_MEMBERS == true }) != undefined) {
             return;
         // Check if bot has kick permissions
         } else if (interaction.guild.me.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
-            // Kick command
-            member.kick(reason);
+            // Send messages in channel and user's DMs
             member.send({ embeds: [punembed({ interaction: interaction, reason: reason, punishmenttext: 'kicked' })] });
             await interaction.reply(`${member.user} has been kicked for "${reason}"`);
+            // Kick command
+            member.kick(reason);
         // If bot doesnt have kick permissions return an error
         } else {
             return errembed({ interaction: interaction, author: `I am missing the Kick Members permission` });

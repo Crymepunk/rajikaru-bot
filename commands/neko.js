@@ -9,10 +9,13 @@ module.exports = {
 		.setName('neko')
 		.setDescription("Sends a random catperson image."),
 	async execute(interaction) {
+        // Get image from nekos.life
         const img = objToString(await neko.sfw.neko());
+        // Construct embed
         const nekoemb = new MessageEmbed()
             .setColor(`${randomColor()}`)
             .setImage(img);
+        // Reply with embed
         await interaction.reply({ embeds: [nekoemb] });
 	},
 };
