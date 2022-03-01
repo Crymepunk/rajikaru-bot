@@ -17,8 +17,9 @@ We are making great progress and we have switched from Python to JavaScript to m
 
 ## Commands:
 <p align='center'>
-  <img src="https://user-images.githubusercontent.com/66682497/155179948-9b692aa2-e6cd-415c-a460-732280966756.png" alt="Image showing all the bot commands.">
+  <img src="https://user-images.githubusercontent.com/66682497/156263641-c8e1ea00-c10a-428f-8983-b07c9dea9b20.png" alt="Image showing all the bot commands.">
 </p>
+
 
 ## Invite the Bot!
 If you don't want to spend time setting up and/or hosting the bot yourself, you can invite the bot hosted by me
