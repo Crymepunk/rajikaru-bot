@@ -8,8 +8,8 @@ module.exports = {
 		// Reply with pong
 		const shards = await interaction.client.shard.fetchClientValues('guilds.cache.size');
         let string = '';
-        for (let i = 1; i <= shards.length; i++) {
-            string += `Shard ${i} has ${shards[i - 1]} guilds.\n`;
+        for (let i = 0; i <= shards.length; i++) {
+            string += `Shard ${i} has ${shards[i]} guilds.\n`;
         }
         return interaction.reply({ content: string, ephemeral: true });
 	},
