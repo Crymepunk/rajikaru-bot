@@ -29,4 +29,4 @@ If you don't want to spend time setting up and/or hosting the bot yourself, you 
 #### Dev Bot:
 <a href="https://discord.com/api/oauth2/authorize?client_id=891463473102487563&permissions=1532732239574&scope=bot%20applications.commands">Invite</a>
 
-The Dev Bot is used by us for testing and is restarted constantly. Dont use this for anything outside of testing
+The Dev Bot is used by us for testing and is restarted constantly. Don't use this for anything outside of testing.
