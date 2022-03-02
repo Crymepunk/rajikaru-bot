@@ -36,6 +36,7 @@ module.exports = {
 		const i = getRandomIntInclusive(0, 19);
         let ebemb = new MessageEmbed()
             // CHANGE 8BALL IMAGE
+            .setColor('#f57ae0')
             .setAuthor({ name: '8ball', iconURL: 'https://dm61q01mhxuli.cloudfront.net/images/m135/image2/500-gt-4025.jpg' });
         if (q) {
             ebemb = ebemb.addField(`${q}`, `${a[i]}`);

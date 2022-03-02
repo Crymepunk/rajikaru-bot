@@ -6,7 +6,14 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('View a list of commands')
-        .addStringOption(option => option.setName('category').setDescription('Which category to show')),
+        .addStringOption(option =>
+            option.setName('category')
+                .setDescription('Which category to show')
+                .addChoice('All Commands', 'all')
+                .addChoice('Utility commands', 'utility')
+                .addChoice('Manager Commands', 'manager')
+                .addChoice('Moderation Commands', 'moderation')
+                .addChoice('Fun Commands', 'fun')),
 	async execute(interaction) {
         // Assign variables
         const category = interaction.options.getString('category');

@@ -28,8 +28,7 @@ module.exports = {
             const guildTableName = String(interaction.guild.id + '-guild');
             const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
             if (guildtable) {
-                await guildtable.get('mutedrole')
-                .then(_mutedrole => mutedrole = interaction.guild.roles.fetch(_mutedrole));
+                mutedrole = await interaction.guild.roles.fetch(guildtable.get('mutedrole'));
             }
             if (!mutedrole) {
                 // TODO: Make it so it only modifies the permissions of the categories and have the channels sync permissions with them
@@ -66,7 +65,6 @@ module.exports = {
                                 ADD_REACTIONS: false,
                             },
                         );
-                        await channel.lockPermissions();
                     } else if (channel.isVoice()) {
                         channel.permissionOverwrites.edit(
                             mutedrole.id,
@@ -74,7 +72,6 @@ module.exports = {
                                 CONNECT: false,
                             },
                         );
-                        await channel.lockPermissions();
                     }
                 }
             }
