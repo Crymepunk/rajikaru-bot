@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 const { guildTables, guildTableCreate, errembed, updateroles } = require('../../functions');
 
 module.exports = {
@@ -39,6 +40,9 @@ module.exports = {
 		const owner = await interaction.guild.fetchOwner();
 		let guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		let manrole;
+		const sericon = await interaction.guild.iconURL();
+		// Construct embed
+		let setemb = new MessageEmbed().setColor('#8C56AB').setAuthor({ name: interaction.guild.name.toString(), iconURL: sericon });
 		// Check for a guildtable
 		if (!guildtable) {
 			// Create a guildtable if none exists
@@ -53,30 +57,24 @@ module.exports = {
 		if (interaction.member._roles.includes(manrole) || interaction.member == owner) {
 			// Check if subcommand is modrole
 			if (interaction.options.getSubcommand() === 'modrole') {
-				// Get old modrole
-				const previousRole = await guildtable.get('modrole');
 				// Get new modrole from command
 				const role = interaction.options.getRole('modrole');
-				// Update people with the old role to have the new one
-				await updateroles({ interaction: interaction, previousRole: previousRole, newRole: role.id });
 				// Update the table
 				await guildTables.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });
 				// Reply saying its done
-				await interaction.editReply(`Set moderator role to ${role.name}`);
+				setemb = setemb.setDescription(`Set muted role to: ${role.name}`);
+				await interaction.editReply({ embeds: [setemb] });
 			// Check if subcommand is manrole
 			} else if (interaction.options.getSubcommand() === 'manrole') {
 				// Check if sender is owner
 				if (interaction.member == owner) {
-					// Get old manrole
-					const previousRole = await guildtable.get('manrole');
 					// Get new manrole from command
 					const role = interaction.options.getRole('managerrole');
-					// Update people with the old role to have the new one
-					await updateroles({ interaction: interaction, previousRole: previousRole, newRole: role.id });
 					// Update the table
 					await guildTables.update({ manrole: `${role.id}` }, { where: { name: guildTableName } });
 					// Reply saying its done
-					await interaction.editReply(`Set manager role to ${role.name}`);
+					setemb = setemb.setDescription(`Set muted role to: ${role.name}`);
+					await interaction.editReply({ embeds: [setemb] });
 				} else {
 					// Error if the sender is not owner
 					return errembed({ interaction: interaction, author: 'Only the guild owner can change the manager role!' });
@@ -88,7 +86,8 @@ module.exports = {
 				// Update the table
 				await guildTables.update({ maxinfractions: int }, { where: { name: guildTableName } });
 				// Reply saying its done
-				await interaction.editReply(`Set max infractions to ${int}`);
+				setemb = setemb.setDescription(`Set max infractions to: ${int }`);
+				await interaction.editReply({ embeds: [setemb] });
 			// Check if subcommand is mutedrole
 			} else if (interaction.options.getSubcommand() === 'mutedrole') {
 				// Get old mutedrole
@@ -100,7 +99,8 @@ module.exports = {
 				// Update the table
 				await guildTables.update({ mutedrole: `${role.id}` }, { where: { name: guildTableName } });
 				// Reply saying its done
-				await interaction.editReply(`Set muted role to ${role.name}`);
+				setemb = setemb.setDescription(`Set muted role to: ${role.name}`);
+				await interaction.editReply({ embeds: [setemb] });
 			}
 			// Sync the table
 			guildTables.sync();

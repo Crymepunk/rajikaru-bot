@@ -27,7 +27,7 @@ module.exports = {
         .setFooter({ text: `Rajikaru Dev Branch | Made by the Crymepunk Team\nCommand requested by ${interaction.user.tag} | ${interaction.user.id}` });
 
         const manemb = new MessageEmbed()
-        .setColor('#d00202')
+        .setColor('#8C56AB')
         .setTitle('Manager Commands')
         .setDescription('Here are the commands in the **Manager** category')
         .addFields(
