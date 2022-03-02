@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { userTables, randomColor, infractionlist, permcheck } = require('../../functions');
+const { userTables, infractionlist, permcheck } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -79,8 +79,7 @@ module.exports = {
 
             // Infractions embed
             const infemb = new MessageEmbed()
-                // TODO: Set a color instead of using randomColor()
-                .setColor(randomColor())
+                .setColor('#5B92E5')
                 .setTitle(`${user.username}'s infractions`)
                 .addFields(
                     { name: 'Total', value: `${infractions.length}` },
