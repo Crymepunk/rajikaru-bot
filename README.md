@@ -25,7 +25,7 @@ We are making great progress and we have switched from Python to JavaScript to m
 If you don't want to spend time setting up and/or hosting the bot yourself, you can invite the bot hosted by me
 
 #### Main Bot:
-<a href="https://discord.com/api/oauth2/authorize?client_id=900694117355487283&permissions=1532732239574&scope=bot%20applications.commands">Invite</a>!
+<a href="https://discord.com/api/oauth2/authorize?client_id=900694117355487283&permissions=1532732239574&scope=bot%20applications.commands">Invite</a>
 
 #### Dev Bot:
 <a href="https://discord.com/api/oauth2/authorize?client_id=891463473102487563&permissions=1532732239574&scope=bot%20applications.commands">Invite</a>
