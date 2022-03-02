@@ -31,7 +31,7 @@ module.exports = {
         let roles; await interaction.guild.roles.fetch().then(role => roles = role.size);
         // Construct embed
         const infoemb = new MessageEmbed()
-            .setColor("#5B92E5")
+            .setColor("#7ff520")
             .setThumbnail(icon)
             .setAuthor({ name: interaction.guild.name.toString(), iconURL: icon })
             .addFields(
