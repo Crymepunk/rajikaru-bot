@@ -26,7 +26,6 @@ module.exports = {
         .addFields(
             { name: '/help', value: `- View a list of commands` },
             { name: '/avatar', value: `- Replies with the user's avatar` },
-            { name: '/nick', value: '- Give a nickname to the mentioned user.' },
             { name: '/userinfo', value: '- Replies with users info.' },
             { name: '/serverinfo', value: '- Replies with server info.' },
             { name: '/ping', value: '- Replies with Pong!' },
@@ -56,6 +55,7 @@ module.exports = {
             { name: '/warn', value: 'Warns the pinged member.' },
             { name: '/infractions', value: 'Show, clear or remove infractions from a member.' },
             { name: '/purge', value: '- Removes messages.' },
+            { name: '/nick', value: '- Give a nickname to the mentioned user.' },
             { name: '/say', value: '- Says the message you tell it to say.' },
         )
         .setFooter({ text: `Rajikaru Dev Branch | Made by the Crymepunk Team\nCommand requested by ${interaction.user.tag} | ${interaction.user.id}` });

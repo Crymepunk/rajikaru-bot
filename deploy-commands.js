@@ -9,6 +9,7 @@ const commands = [];
 const commandFolders = fs.readdirSync('./commands');
 for (const folder of commandFolders) {
 	if (folder != 'developer') {
+		// Find files ending with .js in commands folder
 		const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
 
 		for (const file of commandFiles) {
@@ -29,10 +30,12 @@ const rest = new REST({ version: '9' }).setToken(token);
 		await rest.put(
 			Routes.applicationCommands(clientId),
 			{ body: commands },
+			// Register slash commands with Discord's REST API
 		);
 
 		console.log('Successfully reloaded application (/) commands.');
 	} catch (error) {
 		console.error(error);
+		// Catch and display any potential errors
 	}
 })();

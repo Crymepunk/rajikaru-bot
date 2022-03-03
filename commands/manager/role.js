@@ -17,7 +17,7 @@ module.exports = {
         const roemb = new MessageEmbed()
             .setAuthor({ name: `Added ${role.name} Role!` })
             .setDescription(`${interaction.user} added ${role} to ${member}`)
-            .setColor('#5B92E5');
+            .setColor('#8C56AB');
         // Check if interaction is in guild
         if (!interaction.guild) {
             return errembed({ interaction: interaction, author: `This command only works in Guilds!` });

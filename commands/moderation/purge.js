@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Permissions } = require('discord.js');
+const { Permissions, MessageEmbed } = require('discord.js');
 const { errembed } = require('../../functions');
 
 module.exports = {
@@ -12,6 +12,10 @@ module.exports = {
         interaction.deferReply({ ephemeral: true });
         // Assign limit
         const limit = interaction.options.getInteger('amount');
+        const puremb = new MessageEmbed()
+            .setColor('#5B92E5')
+            .setAuthor({ name: `Purged ${limit} messages` })
+            .setDescription(`Chat purged by ${interaction.user}`);
         // Check if interaction was in guild
         if (!interaction.guild) {
             // Return error if not
@@ -25,7 +29,7 @@ module.exports = {
                 // Send a reply
                 await interaction.editReply(`Purged ${limit} messages!`);
                 // Followup the reply
-                await interaction.followUp(`Chat purged by ${interaction.user}`);
+                await interaction.followUp({ embeds: [puremb] });
             } else {
                 // Return error if bot doesnt have perms
                 return errembed({ interaction: interaction, author: `I am missing the Manage Messages permission.`, defer: true });

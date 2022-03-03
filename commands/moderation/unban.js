@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Permissions } = require('discord.js');
+const { Permissions, MessageEmbed } = require('discord.js');
 const { contentcheck, guildTables, errembed } = require('../../functions');
 
 module.exports = {
@@ -14,6 +14,7 @@ module.exports = {
         }
 		// Assign variables
 		const userId = interaction.options.get('user')?.value;
+		const user = interaction.options.getUser('user');
 		const guildTableName = String(interaction.guild.id + '-guild');
 		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		let modrole;
@@ -22,6 +23,11 @@ module.exports = {
             modrole = await guildtable.get('modrole');
             manrole = await guildtable.get('manrole');
         }
+		const banemb = new MessageEmbed()
+			.setColor('#5B92E5')
+			.setThumbnail(`${user.avatarURL()}`)
+			.setAuthor({ name: `${userId} has been unbanned` })
+			.setDescription(`${interaction.user} unbanned ${user.tag}`);
 
 		// Check if user has permissions
 		if (!interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
@@ -35,7 +41,12 @@ module.exports = {
 			return errembed({ interaction: interaction, author: `I am missing the Ban Members permissions!` });
 		}
 
-		interaction.guild.members.unban(userId);
-		interaction.reply(`${userId} has been unbanned`);
+		const banlist = await interaction.guild.bans.fetch();
+		if (banlist.find(bluser => bluser.id == userId)) {
+			interaction.guild.members.unban(userId);
+			await interaction.reply({ embeds: [banemb] });
+		} else {
+			await errembed({ interaction: interaction, author: `This user is not banned.` });
+		}
 	},
 };
