@@ -30,16 +30,20 @@ const guildTables = sequelize.define('guildtables', {
         type: Sequelize.STRING,
         allowNull: true,
     },
+    manrole: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
     maxinfractions: {
         type: Sequelize.INTEGER,
         defaultValue: 3,
 		allowNull: false,
     },
-    manrole: {
+    mutedrole: {
         type: Sequelize.STRING,
         allowNull: true,
     },
-    mutedrole: {
+    disabledcommands: {
         type: Sequelize.STRING,
         allowNull: true,
     },
@@ -79,7 +83,7 @@ async function userTableCreate(name, infractions) {
     }
 }
 
-async function guildTableCreate(name, max, manrole, modrole, mutedrole) {
+async function guildTableCreate(name, max, manrole, modrole, mutedrole, disabledcommands) {
     try {
         const guildtable = await guildTables.create({
             name: name,
@@ -87,6 +91,7 @@ async function guildTableCreate(name, max, manrole, modrole, mutedrole) {
             manrole: manrole,
             modrole: modrole,
             mutedrole: mutedrole,
+            disabledcommands: disabledcommands,
         });
         return guildtable;
     }
@@ -132,11 +137,11 @@ function contentcheck(message, filter) {
 	return false;
 }
 
-function infractionlist(infractions) {
+function infractionlist(infractions, limit) {
     let str = '';
     for (let i = 0; i <= infractions.length - 1; i++) {
         const x = i + 1;
-        if (i == 10) {
+        if (i == limit) {
             return str;
         } else if (i == 0) {
             str += `${infractions.slice(-1)} \n`;

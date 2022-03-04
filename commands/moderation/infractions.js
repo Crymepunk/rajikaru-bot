@@ -66,8 +66,8 @@ module.exports = {
             await interaction.editReply({ content: `Removed all infractions.`, ephemeral: true });
         } else if (interaction.options.getSubcommand() === 'list') {
             // Assign a value to "inf" so it can be used later without issue
-            let inf = '';
-            if (infractions && infractions[0]) {inf += infractionlist(infractions);}
+            let inf;
+            if (infractions && infractions[0]) {inf = infractionlist(infractions, 10);}
             else {
                 // No infractions embed
                 const infemb = new MessageEmbed()

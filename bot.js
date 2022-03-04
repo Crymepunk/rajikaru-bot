@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
-const { errembed } = require('./functions');
+const { errembed, guildTables } = require('./functions');
 
 // Create a client with the required intents
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS], shards: 'auto' });
@@ -32,7 +32,7 @@ const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'
 
 // For loop for each event file in events/
 for (const file of eventFiles) {
-	// Grab command from events/
+	// Grab event from events/
 	const event = require(`./events/${file}`);
 	// Execute event
 	if (event.once) {
@@ -52,6 +52,12 @@ client.on('interactionCreate', async interaction => {
 
 	// If its not a command in the collection then return
 	if (!command) return;
+
+	const guildTableName = String(interaction.guild.id + '-guild');
+	const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+	let disCmds;
+	if (guildtable) disCmds = await guildtable.get('disabledcommands'); if (disCmds) disCmds.split('§');
+	if (disCmds) {if (disCmds.includes(interaction.commandName)) return errembed({ interaction: interaction, author: 'This command has been disabled!' });}
 
 	// Try executing command
 	try {

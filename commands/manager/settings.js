@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { guildTables, guildTableCreate, errembed, updateroles } = require('../../functions');
+const { guildTables, guildTableCreate, errembed, updateroles, infractionlist } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,12 +10,12 @@ module.exports = {
 			subcommand
 				.setName('modrole')
 				.setDescription('Set a moderation role.')
-				.addRoleOption(option => option.setName('modrole').setDescription('Select a moderator role').setRequired(true)))
+				.addRoleOption(option => option.setName('modrole').setDescription('Select a moderator role.').setRequired(true)))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('manrole')
 				.setDescription('Set a manager role.')
-				.addRoleOption(option => option.setName('managerrole').setDescription('Select a manager role').setRequired(true)))
+				.addRoleOption(option => option.setName('managerrole').setDescription('Select a manager role.').setRequired(true)))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('mutedrole')
@@ -25,7 +25,44 @@ module.exports = {
 			subcommand
 				.setName('maxinfractions')
 				.setDescription('Max allowed infractions')
-				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions').setRequired(true))),
+				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions.').setRequired(true)))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('commands')
+				.setDescription('Enable/Disable commands.')
+				.addStringOption(option => option.setName('option').setDescription('Enable or Disable command.').addChoice('Enable', 'enable').addChoice('Disable', 'disable').setRequired(true))
+				.addStringOption(option =>
+					option.setName('command')
+					.setDescription('Command or Category to change')
+					.addChoice('Help', 'help')
+					.addChoice('Avatar', 'avatar')
+					.addChoice('Userinfo', 'userinfo')
+					.addChoice('Serverinfo', 'serverinfo')
+					.addChoice('Ping', 'ping')
+					.addChoice('Role', 'role')
+					.addChoice('Ban', 'ban')
+					.addChoice('Unban', 'unban')
+					.addChoice('Kick', 'kick')
+					.addChoice('Mute', 'mute')
+					.addChoice('Unmute', 'unmute')
+					.addChoice('Warn', 'warn')
+					.addChoice('Infractions', 'infractions')
+					.addChoice('Purge', 'purge')
+					.addChoice('Nick', 'nick')
+					.addChoice('Say', 'say')
+					.addChoice('Cuddle', 'cuddle')
+					.addChoice('Hug', 'hug')
+					.addChoice('Pat', 'pat')
+					.addChoice('Slap', 'slap')
+					.addChoice('Neko', 'neko')
+					.addChoice('Coinflip', 'coinflip')
+					.addChoice('8ball', '8ball')
+					.addChoice('Owoify', 'owoify')
+					.addChoice('Gayrate', 'gayrate').setRequired(true)))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('disabled_commands')
+				.setDescription('List disabled commands')),
 		// Builds slash command.
 	async execute(interaction) {
 		// Defer reply
@@ -46,7 +83,7 @@ module.exports = {
 		// Check for a guildtable
 		if (!guildtable) {
 			// Create a guildtable if none exists
-			guildTableCreate(guildTableName);
+			await guildTableCreate(guildTableName);
 			// Reassign guildtable after creation
 			guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 		} else {
@@ -62,7 +99,7 @@ module.exports = {
 				// Update the table
 				await guildTables.update({ modrole: `${role.id}` }, { where: { name: guildTableName } });
 				// Reply saying its done
-				setemb = setemb.setDescription(`Set muted role to: ${role.name}`);
+				setemb = setemb.setDescription(`Set moderator role to: ${role.name}`);
 				await interaction.editReply({ embeds: [setemb] });
 			// Check if subcommand is manrole
 			} else if (interaction.options.getSubcommand() === 'manrole') {
@@ -73,7 +110,7 @@ module.exports = {
 					// Update the table
 					await guildTables.update({ manrole: `${role.id}` }, { where: { name: guildTableName } });
 					// Reply saying its done
-					setemb = setemb.setDescription(`Set muted role to: ${role.name}`);
+					setemb = setemb.setDescription(`Set manager role to: ${role.name}`);
 					await interaction.editReply({ embeds: [setemb] });
 				} else {
 					// Error if the sender is not owner
@@ -100,6 +137,56 @@ module.exports = {
 				await guildTables.update({ mutedrole: `${role.id}` }, { where: { name: guildTableName } });
 				// Reply saying its done
 				setemb = setemb.setDescription(`Set muted role to: ${role.name}`);
+				await interaction.editReply({ embeds: [setemb] });
+			} else if (interaction.options.getSubcommand() === 'commands') {
+				const option = interaction.options.getString('option');
+				const cmd = interaction.options.getString('command');
+				let disCmds = await guildtable.get('disabledcommands');
+				if (disCmds) {
+					disCmds = disCmds.split('§');
+				}
+				setemb = setemb.setDescription(`${option.charAt(0).toUpperCase() + option.slice(1)}d ${cmd} command!`);
+				if (option == 'disable') {
+					if (disCmds) {
+						if (disCmds.includes(cmd)) {
+							return errembed({ interaction: interaction, author: 'This command is already disabled!', defer: true });
+						}
+						disCmds.push(cmd);
+						disCmds.join('§');
+					} else {
+						disCmds = cmd;
+					}
+				} else if (option == 'enable') {
+					if (disCmds) {
+						if (!disCmds.includes(cmd)) {
+							return errembed({ interaction: interaction, author: 'This command is already enabled!', defer: true });
+						} else if (disCmds.length > 1) {
+							delete disCmds.key(cmd);
+							disCmds = disCmds.filter(el => {
+								return el != null;
+							});
+							disCmds = disCmds.join('§');
+						// If there's only 1 command then just set disCmds to "null"
+						} else {
+							disCmds = null;
+						}
+					} else {
+						return errembed({ interaction: interaction, author: 'This command is already enabled!', defer: true });
+					}
+				}
+				// Update the table
+				await guildTables.update({ disabledcommands: disCmds }, { where: { name: guildTableName } });
+				// Reply saying its done
+				await interaction.editReply({ embeds: [setemb] });
+			} else if (interaction.options.getSubcommand() === 'disabled_commands') {
+				let disCmds = await guildtable.get('disabledcommands');
+				if (disCmds) {
+					disCmds = disCmds.split('§');
+				} else {
+					return errembed({ interaction: interaction, author: 'There are no disabled commands!', defer: true });
+				}
+				disCmds = disCmds.join(', ');
+				setemb = setemb.addField('All disabled commands', disCmds);
 				await interaction.editReply({ embeds: [setemb] });
 			}
 			// Sync the table
