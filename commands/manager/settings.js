@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { guildTables, guildTableCreate, errembed, updateroles, infractionlist } = require('../../functions');
+const { guildTables, guildTableCreate, errembed, updateroles, contentcheck, botCommands, removeItemOnce } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -25,44 +25,24 @@ module.exports = {
 			subcommand
 				.setName('maxinfractions')
 				.setDescription('Max allowed infractions')
-				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions.').setRequired(true)))
+				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions.').setRequired(true)),
+		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('commands')
 				.setDescription('Enable/Disable commands.')
-				.addStringOption(option => option.setName('option').setDescription('Enable or Disable command.').addChoice('Enable', 'enable').addChoice('Disable', 'disable').setRequired(true))
+				.addStringOption(option => option.setName('option').setDescription('Enable or Disable command(s).').addChoice('Enable', 'enable').addChoice('Disable', 'disable').setRequired(true))
 				.addStringOption(option =>
 					option.setName('command')
-					.setDescription('Command or Category to change')
-					.addChoice('Help', 'help')
-					.addChoice('Avatar', 'avatar')
-					.addChoice('Userinfo', 'userinfo')
-					.addChoice('Serverinfo', 'serverinfo')
-					.addChoice('Ping', 'ping')
-					.addChoice('Role', 'role')
-					.addChoice('Ban', 'ban')
-					.addChoice('Unban', 'unban')
-					.addChoice('Kick', 'kick')
-					.addChoice('Mute', 'mute')
-					.addChoice('Unmute', 'unmute')
-					.addChoice('Warn', 'warn')
-					.addChoice('Infractions', 'infractions')
-					.addChoice('Purge', 'purge')
-					.addChoice('Nick', 'nick')
-					.addChoice('Say', 'say')
-					.addChoice('Cuddle', 'cuddle')
-					.addChoice('Hug', 'hug')
-					.addChoice('Pat', 'pat')
-					.addChoice('Slap', 'slap')
-					.addChoice('Neko', 'neko')
-					.addChoice('Coinflip', 'coinflip')
-					.addChoice('8ball', '8ball')
-					.addChoice('Owoify', 'owoify')
-					.addChoice('Gayrate', 'gayrate').setRequired(true)))
+					.setDescription('Command(s) or Category to change, seperated by comma.')
+					.setRequired(true),
+			),
+		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('disabled_commands')
-				.setDescription('List disabled commands')),
+				.setDescription('List disabled commands'),
+			),
 		// Builds slash command.
 	async execute(interaction) {
 		// Defer reply
@@ -140,40 +120,90 @@ module.exports = {
 				await interaction.editReply({ embeds: [setemb] });
 			} else if (interaction.options.getSubcommand() === 'commands') {
 				const option = interaction.options.getString('option');
-				const cmd = interaction.options.getString('command');
+				let cmd = interaction.options.getString('command');
+				cmd = cmd.replaceAll(" ", ""); cmd = cmd.split(',');
+				let cat;
+				if (contentcheck(cmd, ['utility', 'moderation', 'fun'])) {
+					let arr;
+                    if (cmd.includes('utility')) {
+						if (cmd.length > 1) {
+							removeItemOnce(cmd, 'utility');
+						} else {
+							cmd = [];
+						}
+                        arr = ['help', 'avatar', 'userinfo', 'serverinfo', 'ping'];
+                    }
+					if (cmd.includes('moderation')) {
+						if (cmd.length > 1) {
+							removeItemOnce(cmd, 'moderation');
+						} else {
+							cmd = [];
+						}
+						if (arr) {
+							arr.push('ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'infractions', 'purge', 'nick', 'say');
+						} else {
+							arr = ['ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'infractions', 'purge', 'nick', 'say'];
+						}
+                    }
+					if (cmd.includes('fun')) {
+						if (cmd.length > 1) {
+							removeItemOnce(cmd, 'fun');
+						} else {
+							cmd = [];
+						}
+						if (arr) {
+							arr.push('cuddle', 'hug', 'pat', 'slap', 'neko', 'coinflip', '8ball', 'owoify', 'gayrate');
+						} else {
+							arr = ['cuddle', 'hug', 'pat', 'slap', 'neko', 'coinflip', '8ball', 'owoify', 'gayrate'];
+						}
+                    }
+					cat = true;
+					for (const command of arr) {
+						if (!cmd.includes(command)) cmd.push(command);
+					}
+				}
 				let disCmds = await guildtable.get('disabledcommands');
 				if (disCmds) {
 					disCmds = disCmds.split('§');
 				}
-				setemb = setemb.setDescription(`${option.charAt(0).toUpperCase() + option.slice(1)}d ${cmd} command!`);
+				setemb = setemb.setDescription(`${option.charAt(0).toUpperCase() + option.slice(1)}d ${cmd.join(', ')} command(s)!`);
 				if (option == 'disable') {
-					if (disCmds) {
-						if (disCmds.includes(cmd)) {
-							return errembed({ interaction: interaction, author: 'This command is already disabled!', defer: true });
+					for (const command of cmd) {
+						if (command == 'settings') {
+							return errembed({ interaction: interaction, author: 'Cannot disable the settings command!', defer: true });
+						} else if (!botCommands.includes(command)) {
+							return errembed({ interaction: interaction, author: `${command} is not a valid command!`, defer: true });
+						} else if (disCmds) {
+							if (cat && disCmds.includes(command)) {
+								continue;
+							} else if (disCmds.includes(command)) {
+								return errembed({ interaction: interaction, author: `${command} is already disabled!`, defer: true });
+							} else {
+								disCmds.push(command);
+							}
+						} else {
+							disCmds = [command];
 						}
-						disCmds.push(cmd);
-						disCmds.join('§');
-					} else {
-						disCmds = cmd;
 					}
 				} else if (option == 'enable') {
 					if (disCmds) {
-						if (!disCmds.includes(cmd)) {
-							return errembed({ interaction: interaction, author: 'This command is already enabled!', defer: true });
-						} else if (disCmds.length > 1) {
-							delete disCmds.key(cmd);
-							disCmds = disCmds.filter(el => {
-								return el != null;
-							});
-							disCmds = disCmds.join('§');
-						// If there's only 1 command then just set disCmds to "null"
-						} else {
-							disCmds = null;
+						for (const command of cmd) {
+							console.log(command);
+							if (!disCmds.includes(`${command}`)) {
+								if (!botCommands.includes(`${command}`)) return errembed({ interaction: interaction, author: `${command} is not a valid command!`, defer: true });
+								return errembed({ interaction: interaction, author: 'This command is already enabled!', defer: true });
+							} else if (disCmds.length > 1) {
+								removeItemOnce(disCmds, command);
+							// If there's only 1 command then just set disCmds to "null"
+							} else {
+								disCmds = null;
+							}
 						}
 					} else {
 						return errembed({ interaction: interaction, author: 'This command is already enabled!', defer: true });
 					}
 				}
+				if (disCmds && disCmds[0]) disCmds = disCmds.join('§');
 				// Update the table
 				await guildTables.update({ disabledcommands: disCmds }, { where: { name: guildTableName } });
 				// Reply saying its done
