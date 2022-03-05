@@ -266,4 +266,13 @@ async function updateroles({ interaction, previousRole, newRole }) {
     }
 }
 
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, punTables, userTableCreate, guildTableCreate, errembed, punembed, infractionlist, permcheck, updateroles };
+function removeItemOnce(arr, value) {
+    const index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
+  }
+
+const botCommands = ['help', 'avatar', 'userinfo', 'serverinfo', 'ping', 'settings', 'role', 'ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'infractions', 'purge', 'nick', 'say', 'cuddle', 'hug', 'pat', 'slap', 'neko', 'coinflip', '8ball', 'owoify', 'gayrate'];
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, punTables, userTableCreate, guildTableCreate, errembed, punembed, infractionlist, permcheck, updateroles, botCommands, removeItemOnce };
