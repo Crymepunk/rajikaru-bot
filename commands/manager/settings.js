@@ -40,8 +40,8 @@ module.exports = {
 		)
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('disabled_commands')
-				.setDescription('List disabled commands'),
+				.setName('list')
+				.setDescription('List all server settings.'),
 			),
 		// Builds slash command.
 	async execute(interaction) {
@@ -70,8 +70,37 @@ module.exports = {
 			// If there is a guildtable, fetch the manager role
 			manrole = await guildtable.get('manrole');
 		}
+		if (interaction.options.getSubcommand() === 'list') {
+			let modrole = await guildtable.get('modrole');
+			if (!modrole) modrole = 'None';
+			else modrole = await interaction.guild.roles.fetch(modrole);
+
+			if (!manrole) manrole = 'None';
+			else manrole = await interaction.guild.roles.fetch(manrole);
+
+			let mutedrole = await guildtable.get('mutedrole');
+			if (!mutedrole) mutedrole = 'None';
+			else mutedrole = await interaction.guild.roles.fetch(mutedrole);
+
+			const maxinf = await guildtable.get('maxinfractions');
+
+			let disCmds = await guildtable.get('disabledcommands');
+			if (disCmds) {
+				disCmds = disCmds.split('§');
+				disCmds = disCmds.join(', ');
+			} else {
+				disCmds = 'None';
+			}
+
+			setemb = setemb.addFields(
+				{ name: 'Moderator Role', value: `${modrole}`, inline: true },
+				{ name: 'Manager Role', value: `${manrole}`, inline: true },
+				{ name: 'Max Infractions', value: `${maxinf}`, inline: true },
+				{ name: 'Disabled Commands', value: `${disCmds}` },
+			).setThumbnail(sericon);
+			await interaction.editReply({ embeds: [setemb] });
 		// Check if the sender is a manager or owner
-		if (interaction.member._roles.includes(manrole) || interaction.member == owner) {
+		} else if (interaction.member._roles.includes(manrole) || interaction.member == owner) {
 			// Check if subcommand is modrole
 			if (interaction.options.getSubcommand() === 'modrole') {
 				// Get new modrole from command
@@ -124,14 +153,14 @@ module.exports = {
 				cmd = cmd.replaceAll(" ", ""); cmd = cmd.split(',');
 				let cat;
 				if (contentcheck(cmd, ['utility', 'moderation', 'fun'])) {
-					let arr;
+					const arr = [];
                     if (cmd.includes('utility')) {
 						if (cmd.length > 1) {
 							removeItemOnce(cmd, 'utility');
 						} else {
 							cmd = [];
 						}
-                        arr = ['help', 'avatar', 'userinfo', 'serverinfo', 'ping'];
+                        arr.push('help', 'avatar', 'userinfo', 'serverinfo', 'ping');
                     }
 					if (cmd.includes('moderation')) {
 						if (cmd.length > 1) {
@@ -139,11 +168,7 @@ module.exports = {
 						} else {
 							cmd = [];
 						}
-						if (arr) {
-							arr.push('ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'infractions', 'purge', 'nick', 'say');
-						} else {
-							arr = ['ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'infractions', 'purge', 'nick', 'say'];
-						}
+						arr.push('ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'infractions', 'purge', 'nick', 'say');
                     }
 					if (cmd.includes('fun')) {
 						if (cmd.length > 1) {
@@ -151,11 +176,7 @@ module.exports = {
 						} else {
 							cmd = [];
 						}
-						if (arr) {
-							arr.push('cuddle', 'hug', 'pat', 'slap', 'neko', 'coinflip', '8ball', 'owoify', 'gayrate');
-						} else {
-							arr = ['cuddle', 'hug', 'pat', 'slap', 'neko', 'coinflip', '8ball', 'owoify', 'gayrate'];
-						}
+						arr.push('cuddle', 'hug', 'pat', 'slap', 'neko', 'coinflip', '8ball', 'owoify', 'gayrate');
                     }
 					cat = true;
 					for (const command of arr) {
@@ -188,9 +209,10 @@ module.exports = {
 				} else if (option == 'enable') {
 					if (disCmds) {
 						for (const command of cmd) {
-							console.log(command);
-							if (!disCmds.includes(`${command}`)) {
-								if (!botCommands.includes(`${command}`)) return errembed({ interaction: interaction, author: `${command} is not a valid command!`, defer: true });
+							if (!botCommands.includes(command)) return errembed({ interaction: interaction, author: `${command} is not a valid command!`, defer: true });
+							if (cat && !disCmds.includes(command)) {
+								continue;
+							} else if (!disCmds.includes(command)) {
 								return errembed({ interaction: interaction, author: 'This command is already enabled!', defer: true });
 							} else if (disCmds.length > 1) {
 								removeItemOnce(disCmds, command);
@@ -208,19 +230,9 @@ module.exports = {
 				await guildTables.update({ disabledcommands: disCmds }, { where: { name: guildTableName } });
 				// Reply saying its done
 				await interaction.editReply({ embeds: [setemb] });
-			} else if (interaction.options.getSubcommand() === 'disabled_commands') {
-				let disCmds = await guildtable.get('disabledcommands');
-				if (disCmds) {
-					disCmds = disCmds.split('§');
-				} else {
-					return errembed({ interaction: interaction, author: 'There are no disabled commands!', defer: true });
-				}
-				disCmds = disCmds.join(', ');
-				setemb = setemb.addField('All disabled commands', disCmds);
-				await interaction.editReply({ embeds: [setemb] });
-			}
 			// Sync the table
 			guildTables.sync();
+			}
 		} else {
 			// Error if they arent owner/doesnt have manrole
 			await errembed({ interaction: interaction, author: `You are missing the Manager role.`, defer: true });
