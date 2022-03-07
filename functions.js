@@ -61,11 +61,11 @@ const punTables = sequelize.define('puntables', {
         allowNull: true,
     },
     duration: {
-        type: Sequelize.TIME,
+        type: Sequelize.INTEGER,
         allowNull: true,
     },
-    expiretime: {
-        type: Sequelize.DATE,
+    expiration: {
+        type: Sequelize.STRING,
         allowNull: true,
     },
 });
@@ -192,7 +192,7 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
             return (errembed({ interaction: interaction, author: 'This member is a bot!', defer: defer }), true);
         }
     }
-    const owner = interaction.guild.fetchOwner();
+    const owner = await interaction.guild.fetchOwner();
 
     if (interaction.member != owner) {
         const guildTableName = String(interaction.guild.id + '-guild');
@@ -212,7 +212,7 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
         }
 
         // If it should check if user is member or not
-        if (selfcheck == true) {
+        if (selfcheck == true && member) {
             // Check if member is sender and if so send an error message
             if (interaction.member == member) {
                 return (errembed({ interaction: interaction, author: `Please ping someone other than yourself!`, defer: defer }), true);
@@ -227,10 +227,8 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
                 }
                 // Check for modrole and or manrole and if not check role positions
             } else if (!contentcheck(interaction.member._roles, modroles)) {
-                if (member) {
-                    if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
-                        return (errembed({ interaction: interaction, author: `Cannot use this on a member with the same or a higher rank than you`, desc: '||Unless you have set a modrole with /settings modrole||', defer: defer }), true);
-                    }
+                if (member && usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+                    return (errembed({ interaction: interaction, author: `Cannot use this on a member with the same or a higher rank than you`, desc: '||Unless you have set a modrole with /settings modrole||', defer: defer }), true);
                 }
             }
         // Else just check for modrole or manrole
@@ -239,19 +237,15 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
         }
 
         // Check that member isnt a moderator
-        if (member) {
-            if (contentcheck(member._roles, modroles) || member && member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
-                return (errembed({ interaction: interaction, author: 'This member is a Moderator!', defer: defer }), true);
-            }
+        if (member && contentcheck(member._roles, modroles) || member && member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+            return (errembed({ interaction: interaction, author: 'This member is a Moderator!', defer: defer }), true);
         }
     }
     // Check if bot should check its own role position against the member's
-    if (roleposcheck != false) {
         // Check positions
-        if (brole.comparePositionTo(memrole) <= memrole.comparePositionTo(brole)) {
-            // Error if it cant execute
-            return (errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role`, defer: defer }), true);
-        }
+    if (roleposcheck != false && member && brole.comparePositionTo(memrole) <= memrole.comparePositionTo(brole)) {
+        // Error if it cant execute
+        return (errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role`, defer: defer }), true);
     }
     return false;
 }

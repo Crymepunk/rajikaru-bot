@@ -57,7 +57,7 @@ client.on('interactionCreate', async interaction => {
 	const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 	let disCmds;
 	if (guildtable) disCmds = await guildtable.get('disabledcommands'); if (disCmds) disCmds.split('§');
-	if (disCmds) {if (disCmds.includes(interaction.commandName)) return errembed({ interaction: interaction, author: 'This command has been disabled!' });}
+	if (disCmds && disCmds.includes(interaction.commandName)) return errembed({ interaction: interaction, author: 'This command has been disabled!' });
 
 	// Try executing command
 	try {
