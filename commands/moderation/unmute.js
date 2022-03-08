@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
-const { guildTables, errembed, punembed, permcheck } = require('../../functions');
+const { guildTables, errembed, dmpunembed, punembed, permcheck } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -33,8 +33,8 @@ module.exports = {
             // Check that the member is muted and then unmute the member, otherwise send errembed
             if (member._roles.includes(mutedrole)) {
                 await member.roles.remove(mutedrole);
-                member.send({ embeds: [punembed({ interaction: interaction, punishmenttext: 'unmuted' })] });
-                await interaction.reply({ content: `${member.user} has been unmuted`, ephemeral: true });
+                member.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'unmuted' })] });
+                await interaction.reply({ embeds: [punembed({ member: member, punishmenttext: 'unmuted' })] });
             } else {
                 return errembed({ interaction: interaction, author: 'Member is not muted!' });
             }

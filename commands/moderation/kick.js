@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Permissions, MessageEmbed } = require('discord.js');
-const { errembed, permcheck, punembed } = require('../../functions');
+const { Permissions } = require('discord.js');
+const { errembed, permcheck, dmpunembed, punembed } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,12 +19,6 @@ module.exports = {
         if (!reason) {
             reason = 'No reason provided';
         }
-        // Construct embed
-        const kickemb = new MessageEmbed()
-            .setColor('#5B92E5')
-            .setThumbnail(`${member.user.avatarURL()}`)
-            .setAuthor({ name: `${member.user.tag} has been kicked` })
-            .setDescription(`${interaction.user} kicked ${member.user} for "${reason}"`);
 
         // Check permissions with permcheck from ../functions.js
         if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.KICK_MEMBERS == true }) != undefined) {
@@ -32,8 +26,8 @@ module.exports = {
         // Check if bot has kick permissions
         } else if (interaction.guild.me.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
             // Send messages in channel and user's DMs
-            member.send({ embeds: [punembed({ interaction: interaction, reason: reason, punishmenttext: 'kicked' })] });
-            await interaction.reply({ embeds: [kickemb] });
+            member.send({ embeds: [dmpunembed({ interaction: interaction, reason: reason, punishmenttext: 'kicked' })] });
+            await interaction.reply({ embeds: [punembed({ member: member, reason: reason, punishmenttext: 'banned' })] });
             // Kick command
             member.kick(reason);
         // If bot doesnt have kick permissions return an error

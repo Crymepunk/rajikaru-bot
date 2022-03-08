@@ -137,7 +137,10 @@ module.exports = {
 			// Check if subcommand is mutedrole
 			} else if (interaction.options.getSubcommand() === 'mutedrole') {
 				// Get old mutedrole
-				const previousRole = await interaction.guild.roles.fetch(guildtable.get('mutedrole'));
+				let previousRole;
+				if (guildtable.get('mutedrole')) {
+					previousRole = await interaction.guild.roles.fetch(guildtable.get('mutedrole'));
+				}
 				// Get new mutedrole from command
 				const role = interaction.options.getRole('mutedrole');
 				// Update people with the old role to have the new one

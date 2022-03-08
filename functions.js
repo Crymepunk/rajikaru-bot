@@ -168,17 +168,37 @@ function errembed({ interaction, author, desc, defer }) {
     }
 }
 
-function punembed({ interaction, reason = null, punishmenttext }) {
-    const title = () => `${punishmenttext.charAt(0).toUpperCase()}${punishmenttext.slice(1).toLowerCase()}`;
+function dmpunembed({ interaction, reason = null, punishmenttext }) {
+    const title = `${punishmenttext.charAt(0).toUpperCase()}${punishmenttext.slice(1).toLowerCase()}`;
     const emb = new MessageEmbed()
-    .setColor('#CC0000')
-    .setTitle(title.toString())
-    .setDescription(`You have been ${punishmenttext} from ${interaction.guild.name}!`);
-    if (punishmenttext === 'banned' && punishmenttext == 'muted') {
+    .setTitle(title)
+    .setDescription(`You have been ${punishmenttext} in ${interaction.guild.name}!`);
+    if (punishmenttext === 'banned' || punishmenttext == 'muted') {
+        emb.setColor('#CC0000');
         emb.addFields({ name: 'Duration:', value: 'Permanent', inline: true });
-    } else if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
-        emb.addFields({ name: 'Reason:', value: reason, inline: false });
     }
+    if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
+        emb.addFields({ name: 'Reason:', value: reason, inline: true });
+    } else if (punishmenttext == 'unbanned' || punishmenttext == 'unmuted') {
+        emb.setColor('GREEN');
+    }
+    return emb;
+}
+
+function punembed({ member, reason = null, punishmenttext }) {
+    const title = `${punishmenttext.charAt(0).toUpperCase()}${punishmenttext.slice(1).toLowerCase()}`;
+    const emb = new MessageEmbed()
+    .setTitle(title)
+    .setColor('#5B92E5')
+    .setDescription(`${member} has been ${punishmenttext}!`)
+    .setThumbnail(`${member.user.avatarURL()}`);
+    if (punishmenttext == 'banned' || punishmenttext == 'muted') {
+        emb.addFields({ name: 'Duration:', value: 'Permanent', inline: true });
+    }
+    if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
+        emb.addFields({ name: 'Reason:', value: reason, inline: true });
+    }
+    return emb;
 }
 
 async function permcheck({ interaction, member, selfcheck, permflag, manonly, roleposcheck, defer }) {
@@ -253,8 +273,10 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
 async function updateroles({ interaction, previousRole, newRole }) {
     for (let member of await interaction.guild.members.fetch()) {
         member = member.at(1);
-        if (member._roles.includes(previousRole.id)) {
+        if (previousRole && member._roles.includes(previousRole.id)) {
             await member.roles.remove(previousRole);
+            await member.roles.add(newRole);
+        } else {
             await member.roles.add(newRole);
         }
     }
@@ -269,4 +291,4 @@ function removeItemOnce(arr, value) {
   }
 
 const botCommands = ['help', 'avatar', 'userinfo', 'serverinfo', 'ping', 'settings', 'role', 'ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'infractions', 'purge', 'nick', 'say', 'cuddle', 'hug', 'pat', 'slap', 'neko', 'coinflip', '8ball', 'owoify', 'gayrate'];
-module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, punTables, userTableCreate, guildTableCreate, errembed, punembed, infractionlist, permcheck, updateroles, botCommands, removeItemOnce };
+module.exports = { getRandomIntInclusive, objToString, randomColor, contentcheck, sequelize, userTables, guildTables, punTables, userTableCreate, guildTableCreate, errembed, dmpunembed, punembed, infractionlist, permcheck, updateroles, botCommands, removeItemOnce };
