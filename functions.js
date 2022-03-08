@@ -175,10 +175,10 @@ function dmpunembed({ interaction, reason = null, punishmenttext }) {
     .setDescription(`You have been ${punishmenttext} in ${interaction.guild.name}!`);
     if (punishmenttext === 'banned' || punishmenttext == 'muted') {
         emb.setColor('#CC0000');
-        emb.addFields({ name: 'Duration:', value: 'Permanent', inline: true });
+        emb.addField('Duration:', 'Permanent', true);
     }
     if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
-        emb.addFields({ name: 'Reason:', value: reason, inline: true });
+        emb.addField('Reason:', reason, true);
     } else if (punishmenttext == 'unbanned' || punishmenttext == 'unmuted') {
         emb.setColor('GREEN');
     }
@@ -193,10 +193,10 @@ function punembed({ member, reason = null, punishmenttext }) {
     .setDescription(`${member} has been ${punishmenttext}!`)
     .setThumbnail(`${member.user.avatarURL()}`);
     if (punishmenttext == 'banned' || punishmenttext == 'muted') {
-        emb.addFields({ name: 'Duration:', value: 'Permanent', inline: true });
+        emb.addField('Duration:', 'Permanent', true);
     }
     if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
-        emb.addFields({ name: 'Reason:', value: reason, inline: true });
+        emb.addField('Reason:', reason, true);
     }
     return emb;
 }

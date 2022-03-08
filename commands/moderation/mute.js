@@ -13,6 +13,7 @@ module.exports = {
         if (!interaction.guild) {
             return errembed({ interaction: interaction, author: `This command only works in Guilds!` });
         }
+        await interaction.deferReply();
         const member = interaction.options.getMember('member');
         let reason = interaction.options.getString('reason');
         const permFlags = Permissions.FLAGS;
@@ -32,8 +33,7 @@ module.exports = {
             if (guildtable && await guildtable.get('mutedrole')) {
                 mutedrole = await interaction.guild.roles.fetch(await guildtable.get('mutedrole'));
             }
-
-            // If the mutedrole isn't resolved, checks if a role called 'Muted' already exists, otherwise it creates one
+            // If the mutedrole isn't fetched, checks if a role called 'Muted' already exists, otherwise it creates one
             if (!mutedrole) {
                 if (await interaction.guild.roles.cache.has('Muted')) {
                     mutedrole = await interaction.guild.roles.cache.find(r => r == 'Muted');
@@ -53,30 +53,42 @@ module.exports = {
                     // Denies the SEND_MESSAGES, ADD_REACTIONS, and CONNECT permissions for the muted role in each channel
                     for (let channel of interaction.guild.channels.cache) {
                         channel = channel.at(1);
-                        if (channel.type === 'GUILD_CATEGORY') {
-                            channel.permissionOverwrites.edit(
-                                mutedrole.id,
-                                {
-                                    SEND_MESSAGES: false,
-                                    ADD_REACTIONS: false,
-                                    CONNECT: false,
-                                },
-                            );
-                        } else if (channel.isText() || channel.isThread()) {
-                            channel.permissionOverwrites.edit(
-                                mutedrole.id,
-                                {
-                                    SEND_MESSAGES: false,
-                                    ADD_REACTIONS: false,
-                                },
-                            );
-                        } else if (channel.isVoice()) {
-                            channel.permissionOverwrites.edit(
-                                mutedrole.id,
-                                {
-                                    CONNECT: false,
-                                },
-                            );
+                        // Gets the bot user's permissions for the channel
+                        const channelPerms = await channel.permissionsFor(interaction.guild.me);
+                        // Gets the permissionsLocked property of channel, which tells us if
+                        // the channel perms are synced with the parent category perms
+                        const permissionsLocked = channel.permissionsLocked;
+                        if (channelPerms.has(permFlags.VIEW_CHANNEL) && channelPerms.has(permFlags.MANAGE_CHANNELS)) {
+                            if (channel.type === 'GUILD_CATEGORY') {
+                                channel.permissionOverwrites.edit(
+                                    mutedrole.id,
+                                    {
+                                        SEND_MESSAGES: false,
+                                        ADD_REACTIONS: false,
+                                        CONNECT: false,
+                                    },
+                                );
+                            } else if (channel.isText() || channel.isThread()) {
+                                channel.permissionOverwrites.edit(
+                                    mutedrole.id,
+                                    {
+                                        SEND_MESSAGES: false,
+                                        ADD_REACTIONS: false,
+                                    },
+                                );
+                            } else if (channel.isVoice()) {
+                                channel.permissionOverwrites.edit(
+                                    mutedrole.id,
+                                    {
+                                        CONNECT: false,
+                                    },
+                                );
+                            }
+                            // Checks if the channel permissions were synced with the category permissions
+                            // before it added the overwrites for the Muted role and syncs permissions if true
+                            if (permissionsLocked) {
+                                await channel.lockPermissions();
+                            }
                         }
                     }
                 }
@@ -86,9 +98,9 @@ module.exports = {
             if (!member._roles.includes(mutedrole.id)) {
                 await member.roles.add(mutedrole);
                 member.send({ embeds: [dmpunembed({ interaction: interaction, reason: reason, punishmenttext: 'muted' })] });
-                await interaction.reply({ embeds: [punembed({ member: member, reason: reason, punishmenttext: 'muted' })] });
+                await interaction.editReply({ embeds: [punembed({ member: member, reason: reason, punishmenttext: 'muted' })] });
             } else {
-                return errembed({ interaction: interaction, author: 'Member is already muted!' });
+                return errembed({ interaction: interaction, author: 'Member is already muted!', defer: true });
             }
         }
 	},
