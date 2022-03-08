@@ -17,7 +17,7 @@ module.exports = {
         // Assign member
         const member = interaction.options.getMember('member');
 
-        // Check for permissions with permcheck function from ../functions.js
+        // Check for permissions with permcheck function from functions.js
         if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.MUTE_MEMBERS })) {
             return;
         // Else execute

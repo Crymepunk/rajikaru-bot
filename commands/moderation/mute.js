@@ -21,6 +21,7 @@ module.exports = {
             reason = 'No reason provided';
         }
 
+        // Check for permissions with permcheck function from functions.js
         if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.MUTE_MEMBERS, roleposcheck: false })) {
             return;
         } else {
@@ -29,7 +30,7 @@ module.exports = {
             const guildTableName = String(interaction.guild.id + '-guild');
             const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
 
-            // Checks if guildtable exists, then attempts to resolve the mutedrole ID from the database into a Role object
+            // Checks if guildtable exists, then attempts to fetch the mutedrole ID from the database
             if (guildtable && await guildtable.get('mutedrole')) {
                 mutedrole = await interaction.guild.roles.fetch(await guildtable.get('mutedrole'));
             }
@@ -48,18 +49,24 @@ module.exports = {
                                 permFlags.READ_MESSAGE_HISTORY,
                             ],
                         });
+
+                    // Updates the guildtable with the mutedrole ID
                     await guildTables.update({ mutedrole: `${mutedrole.id}` }, { where: { name: guildTableName } });
 
-                    // Denies the SEND_MESSAGES, ADD_REACTIONS, and CONNECT permissions for the muted role in each channel
                     for (let channel of interaction.guild.channels.cache) {
+                        // The channels cache is a Collection<Snowflake, Channel>
+                        // so this gets the channel object at index 1
                         channel = channel.at(1);
                         // Gets the bot user's permissions for the channel
                         const channelPerms = await channel.permissionsFor(interaction.guild.me);
                         // Gets the permissionsLocked property of channel, which tells us if
                         // the channel perms are synced with the parent category perms
                         const permissionsLocked = channel.permissionsLocked;
+                        // Checks if the bot has permission to view and manage the channel
                         if (channelPerms.has(permFlags.VIEW_CHANNEL) && channelPerms.has(permFlags.MANAGE_CHANNELS)) {
-                            if (channel.type === 'GUILD_CATEGORY') {
+                            // Denies the SEND_MESSAGES, ADD_REACTIONS, and CONNECT permissions for the muted role in each channel
+                            // depending on what type of channel it is
+                            if (channel.type == 'GUILD_CATEGORY') {
                                 channel.permissionOverwrites.edit(
                                     mutedrole.id,
                                     {
@@ -84,8 +91,8 @@ module.exports = {
                                     },
                                 );
                             }
-                            // Checks if the channel permissions were synced with the category permissions
-                            // before it added the overwrites for the Muted role and syncs permissions if true
+                            // Checks if the channel permissions were synced with the category permissions before
+                            // it added the overwrites for the Muted role, then syncs permissions if true
                             if (permissionsLocked) {
                                 await channel.lockPermissions();
                             }
