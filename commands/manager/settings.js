@@ -5,11 +5,11 @@ const { guildTables, guildTableCreate, errembed, updateroles, contentcheck, botC
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('settings')
-		.setDescription('Bot Settings.')
+		.setDescription('Bot settings.')
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('modrole')
-				.setDescription('Set a moderation role.')
+				.setDescription('Set a moderator role.')
 				.addRoleOption(option => option.setName('modrole').setDescription('Select a moderator role.').setRequired(true)))
 		.addSubcommand(subcommand =>
 			subcommand
@@ -19,12 +19,12 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('mutedrole')
-				.setDescription('Set a muted role.')
+				.setDescription('Set a custom muted role.')
 				.addRoleOption(option => option.setName('mutedrole').setDescription('Select a muted role.').setRequired(true)))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('maxinfractions')
-				.setDescription('Max allowed infractions')
+				.setDescription('Set max allowed infractions')
 				.addIntegerOption(option => option.setName('number').setDescription('Max number of infractions.').setRequired(true)),
 		)
 		.addSubcommand(subcommand =>
