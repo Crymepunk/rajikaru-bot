@@ -37,13 +37,12 @@ module.exports = {
         .setTitle('Manager Commands')
         .setDescription('Here are the commands in the **Manager** category')
         .addFields(
-            { name: '/settings', value: '<:uparrow:951323368064442398> **modrole** - Set a moderator role.\n<:uparrow:951323368064442398> **manrole** - Set a manager role.\n<:uparrow:951323368064442398> **mutedrole** - Set a custom muted role.\n<:uparrow:951323368064442398> **maxinfractions** - Set max allowed infractions.\n<:uparrow:951323368064442398> **commands** - Enable/Disable commands.\n<:uparrow:951323368064442398> **list** - List all server settings.' },
- /*           { name: '<:uparrow:951323368064442398> modrole', value: '- Set a moderator role.' },
-            { name: '<:uparrow:951323368064442398> manrole', value: '- Set a manager role.' },
-            { name: '<:uparrow:951323368064442398> mutedrole', value: '- Set a custom muted role.' },
-            { name: '<:uparrow:951323368064442398> maxinfractions', value: '- Set max allowed infractions.' },
-            { name: '<:uparrow:951323368064442398> commands', value: '- Enable/Disable commands.' },
-            { name: '<:uparrow:951323368064442398> list', value: '- List all server settings.' }, */
+            { name: '/settings', value: '<:uparrow:951323368064442398> **modrole** - Set a moderator role.\n' +
+            '<:uparrow:951323368064442398> **manrole** - Set a manager role.\n' +
+            '<:uparrow:951323368064442398> **mutedrole** - Set a custom muted role.\n' +
+            '<:uparrow:951323368064442398> **maxinfractions** - Set max allowed infractions.\n' +
+            '<:uparrow:951323368064442398> **commands** - Enable/Disable commands.\n' +
+            '<:uparrow:951323368064442398> **list** - List all server settings.' },
             { name: '/role', value: '- Adds role to the pinged user.' },
         )
         .setFooter({ text: `Rajikaru Dev Branch | Made by the Crymepunk Team\nCommand requested by ${interaction.user.tag} | ${interaction.user.id}` });

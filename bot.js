@@ -53,12 +53,13 @@ client.on('interactionCreate', async interaction => {
 	// If its not a command in the collection then return
 	if (!command) return;
 
-	const guildTableName = String(interaction.guild.id + '-guild');
-	const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
-	let disCmds;
-	if (guildtable) disCmds = await guildtable.get('disabledcommands'); if (disCmds) disCmds.split('§');
-	if (disCmds && disCmds.includes(interaction.commandName)) return errembed({ interaction: interaction, author: 'This command has been disabled!' });
-
+	if (interaction.guild) {
+		const guildTableName = String(interaction.guild.id + '-guild');
+		const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+		let disCmds;
+		if (guildtable) disCmds = await guildtable.get('disabledcommands'); if (disCmds) disCmds.split('§');
+		if (disCmds && disCmds.includes(interaction.commandName)) return errembed({ interaction: interaction, author: 'This command has been disabled!' });
+	}
 	// Try executing command
 	try {
 		await command.execute(interaction);
