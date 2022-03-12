@@ -1,6 +1,7 @@
 <p align='center'>
-  <img src='https://user-images.githubusercontent.com/66682497/151678869-494ec38e-5626-4a55-8cfa-e483bfe4d455.png' />
+  <img src='https://user-images.githubusercontent.com/66682497/158024309-ad9d4feb-e3ea-4d7c-a4e2-06e091395f43.png' />
 </p>
+
 
 <a href="https://github.com/Crymepunk/rajikaru-bot/blob/main/LICENSE"><img src="https://img.shields.io:/github/license/Crymepunk/rajikaru-bot?color=informational"></img></a>
 <a href="https://github.com/Crymepunk/rajikaru-bot/issues"><img src="https://img.shields.io:/github/issues/Crymepunk/rajikaru-bot?color=important"></img></a>
