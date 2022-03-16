@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
-const { contentcheck, guildTables, errembed, dmpunembed, punembed } = require('../../functions');
+const { contentcheck, guildTables, errembed, punembed } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -39,7 +39,6 @@ module.exports = {
 		const banlist = await interaction.guild.bans.fetch();
 		if (banlist.find(bluser => bluser.id == userId)) {
 			interaction.guild.members.unban(userId);
-			user.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'unbanned' })] });
 			await interaction.reply({ embeds: [punembed({ member: user, punishmenttext: 'unbanned' })] });
 		} else {
 			await errembed({ interaction: interaction, author: `This user is not banned.` });

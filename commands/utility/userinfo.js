@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { errembed, userTables, guildTables, contentcheck } = require('../../functions');
+const { errembed, userTables, guildTables } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -43,9 +43,9 @@ module.exports = {
         // Set "Server Status" by checking permissions
         if (member == owner) {
             status = `Server Owner,\nServer Administrator,\nServer Moderator`;
-        } else if (contentcheck(member._roles, manrole) || member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+        } else if (member._roles.includes(manrole) || member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
             status = `Server Administrator,\nServer Moderator`;
-        } else if (contentcheck(member._roles, modrole) || member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+        } else if (member._roles.includes(modrole) || member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
             status = `Server Moderator`;
         } else {
             status = `None`;

@@ -16,7 +16,12 @@ module.exports = {
                 .addChoice('Fun Commands', 'fun')),
 	async execute(interaction) {
         // Assign variables
-        const category = interaction.options.getString('category');
+        let category;
+        if (interaction.options.getString('category')) {
+            category = interaction.options.getString('category');
+        } else {
+            category = 'all';
+        }
 
         // Construct embeds
         const utilemb = new MessageEmbed()
@@ -83,26 +88,25 @@ module.exports = {
         .setFooter({ text: `Rajikaru Dev Branch | Made by the Crymepunk Team\nCommand requested by ${interaction.user.tag} | ${interaction.user.id}` });
 
         // Check category
-        if (!category || category.toLowerCase() == 'all') {
-            // If the category is all and the command was in a guild, send a response and DM the help output
-            if (interaction.inGuild()) {
-                await interaction.reply('Check your DMs for a full list of commands!');
-                interaction.user.send({ embeds: [utilemb, manemb, modemb, funemb] });
-            // If the command was in DM's just send the help output
-            } else {
-                await interaction.reply({ embeds: [utilemb, manemb, modemb, funemb] });
-            }
-        } else if (category.toLowerCase() == 'utility') {
-            await interaction.reply({ embeds: [utilemb] });
-        } else if (category.toLowerCase() == 'manager') {
-        await interaction.reply({ embeds: [manemb] });
-        } else if (category.toLowerCase() == 'moderation') {
-            await interaction.reply({ embeds: [modemb] });
-        } else if (category.toLowerCase() == 'fun') {
-            await interaction.reply({ embeds: [funemb] });
-        // Return errembed if no valid category was provided
-        } else {
-            return errembed({ interaction: interaction, author: 'Valid categories include: All, Utility, Manager, Moderation and Fun' });
+        switch (category.toLowerCase()) {
+            case 'all':
+                if (interaction.inGuild()) {
+                    await interaction.reply('Check your DMs for a full list of commands!');
+                    return interaction.user.send({ embeds: [utilemb, manemb, modemb, funemb] });
+                // If the command was in DM's just send the help output
+                } else {
+                    return interaction.reply({ embeds: [utilemb, manemb, modemb, funemb] });
+                }
+            case 'utility':
+                return interaction.reply({ embeds: [utilemb] });
+            case 'manager':
+                return interaction.reply({ embeds: [manemb] });
+            case 'moderation':
+                return interaction.reply({ embeds: [modemb] });
+            case 'fun':
+                return interaction.reply({ embeds: [funemb] });
+            default:
+                return errembed({ interaction: interaction, author: 'Valid categories include: All, Utility, Manager, Moderation and Fun' });
         }
 	},
 };

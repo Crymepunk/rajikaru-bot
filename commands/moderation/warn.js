@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions } = require('discord.js');
-const { userTables, guildTables, userTableCreate, guildTableCreate, permcheck, errembed } = require('../../functions');
+const { userTables, guildTables, userTableCreate, guildTableCreate, permcheck, errembed, punembed, dmpunembed } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -52,16 +52,20 @@ module.exports = {
                 infractions = infractions.split('§');
             }
             // Send warned message
-            await interaction.reply(`${user} has been warned for "${interaction.options.getString('reason')}"`);
-            member.send(`You have been warned in ${interaction.guild.name} for "${interaction.options.getString('reason')}"`);
+            await interaction.reply({ embeds: [punembed({ member: user, punishmenttext: 'warned', reason: `${interaction.options.getString('reason')}` })] });
+            await user.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'warned', reason: `${interaction.options.getString('reason')}` })] });
             // If the member is in the server and they have more or equal to maxinfractions, ban them
             if (member && maxinf != -1 && infractions.length >= maxinf) {
+                if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 // FollowUp with a ban message
-                await interaction.followUp(`${member.user} has been banned for "Too many infractions."`);
+                await interaction.followUp({ embeds: [punembed({ member: user, punishmenttext: 'banned', reason: "Too many infractions." })] });
                 // Send a message to the user saying they've been banned
-                member.send(`You have been banned from ${interaction.guild.name} for "Too many infractions."`);
+                await user.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'banned', reason: "Too many infractions." })] });
                 // Ban the user
                 member.ban({ days: 0, reason: 'Too many infractions.' });
+                } else {
+                    await errembed({ interaction: interaction, author: `Cannot ban member, missing permissions!` });
+                }
             }
             infractions = infractions.join('§');
             await userTables.update({ infractions: infractions }, { where: { name: userTableName } });
@@ -70,16 +74,20 @@ module.exports = {
             await userTableCreate(userTableName, reason);
             userTables.sync();
             // Send warned message
-            await interaction.reply(`${user} has been warned for "${interaction.options.getString('reason')}"`);
-            member.send(`You have been warned in ${interaction.guild.name} for "${interaction.options.getString('reason')}"`);
+            await interaction.reply({ embeds: [punembed({ member: user, punishmenttext: 'warned', reason: `${interaction.options.getString('reason')}` })] });
+            await user.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'warned', reason: `${interaction.options.getString('reason')}` })] });
             // If the member is in the server and they have more or equal to maxinfractions, ban them
             if (member && maxinf != -1 && maxinf <= 1) {
-                // FollowUp with a ban message
-                await interaction.followUp(`${user} has been banned for "Too many infractions."`);
-                // Send a message to the user saying they've been banned
-                member.send(`You have been banned from ${interaction.guild.name} for "Too many infractions."`);
-                // Ban the user
-                member.ban({ days: 0, reason: 'Too many infractions.' });
+                if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+                    // FollowUp with a ban message
+                    await interaction.followUp({ embeds: [punembed({ member: user, punishmenttext: 'banned', reason: "Too many infractions." })] });
+                    // Send a message to the user saying they've been banned
+                    await user.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'banned', reason: "Too many infractions." })] });
+                    // Ban the user
+                    member.ban({ days: 0, reason: 'Too many infractions.' });
+                } else {
+                    return errembed({ interaction: interaction, author: `Cannot ban member, missing permissions!` });
+                }
             }
         }
 	},
