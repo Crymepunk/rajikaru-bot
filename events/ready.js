@@ -12,6 +12,7 @@ module.exports = {
 		}
 		userTables.sync();
 		guildTables.sync();
+
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };

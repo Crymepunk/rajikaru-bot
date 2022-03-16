@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { userTables, randomColor, infractionlist, permcheck } = require('../functions');
+const { userTables, infractionlist, permcheck } = require('../../functions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -36,8 +36,7 @@ module.exports = {
             infractions = infractions.split('§');
         }
 
-        // Permission checks!
-
+        // Check permissions with permcheck function from ../functions.js
         if (await permcheck({ interaction: interaction, permflag: Permissions.FLAGS.MODERATE_MEMBERS, roleposcheck: false, defer: true })) {
             return;
         } else if (interaction.options.getSubcommand() === 'remove') {
@@ -67,8 +66,8 @@ module.exports = {
             await interaction.editReply({ content: `Removed all infractions.`, ephemeral: true });
         } else if (interaction.options.getSubcommand() === 'list') {
             // Assign a value to "inf" so it can be used later without issue
-            let inf = '';
-            if (infractions && infractions[0]) {inf += infractionlist(infractions);}
+            let inf;
+            if (infractions && infractions[0]) {inf = infractionlist(infractions, 10);}
             else {
                 // No infractions embed
                 const infemb = new MessageEmbed()
@@ -80,8 +79,7 @@ module.exports = {
 
             // Infractions embed
             const infemb = new MessageEmbed()
-                // TODO: Set a color instead of using randomColor()
-                .setColor(randomColor())
+                .setColor('#5B92E5')
                 .setTitle(`${user.username}'s infractions`)
                 .addFields(
                     { name: 'Total', value: `${infractions.length}` },
