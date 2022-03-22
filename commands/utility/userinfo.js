@@ -28,18 +28,21 @@ module.exports = {
         }
         // Get infractions from usertable
         let infractions;
-        if (usertable) {
-            infractions = usertable.get('infractions');
-        } else {
-            infractions = null;
+        switch (usertable) {
+            case null:
+                infractions = null;
+                break;
+            default:
+                infractions = usertable.get('infractions');
         }
-        if (infractions) {
-            infractions = infractions.split('§');
-            infractions = infractions.length;
-        } else {
-            infractions = `None`;
+        switch (infractions) {
+            case null:
+                infractions = `None`;
+                break;
+            default:
+                infractions = infractions.split('§');
+                infractions = infractions.length;
         }
-
         // Set "Server Status" by checking permissions
         if (member == owner) {
             status = `Server Owner,\nServer Administrator,\nServer Moderator`;
@@ -53,37 +56,41 @@ module.exports = {
 
         // Get perms
         let perms;
-        // Set perms to "Administrator" if they have all (done to not fill chat)
-        if (member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-            perms = `Administrator`;
-        } else {
-            // Else get the permissions and make them lowercase (upper by default)
-            perms = member.permissions.toArray();
-            perms = perms.map(perm => perm.toLowerCase());
+        switch (member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+            case true:
+                // true: Set perms to "Administrator" if they have all (done to not fill chat)
+                perms = `Administrator`;
+                break;
+            default:
+                //  default: get the permissions and make them lowercase (upper by default)
+                perms = member.permissions.toArray();
+                perms = perms.map(perm => perm.toLowerCase());
         }
 
         // Get boosting status
         let boosting;
-        if (member.premiumSince != null) {
-            boosting = `<t:${Math.floor(member.premiumSince / 1000)}>`;
-        } else {
-            boosting = `Not Boosting`;
+        switch (member.premiumSince) {
+            case null:
+                boosting = `Not Boosting`;
+                break;
+            default:
+                boosting = `<t:${Math.floor(member.premiumSince / 1000)}>`;
         }
 
         // Construct embed
         const emb = new MessageEmbed()
-        .setColor("#7ff520")
-        .setThumbnail(`${member.user.avatarURL()}?size=1024`)
-        .addFields(
-            { name: `Userinfo command for ${member.user.tag}`, value: `UserID | ${member.user.id}`, inline: true },
-            { name: `Server Permissions`, value: `${perms}`, inline: true },
-            { name: `User Status`, value: status, inline: true },
-            { name: `Server Infractions`, value: `${infractions}`, inline: true },
-            { name: `Joined Server at`, value: `<t:${Math.floor(member.joinedAt / 1000)}>`, inline: true },
-            { name: `Joined Discord at`, value: `<t:${Math.floor(member.user.createdAt / 1000)}>`, inline: true },
-            { name: `Boosting Since`, value: `${boosting}` },
-        )
-        .setFooter({ text: `Requested by ${interaction.user.tag} | ${interaction.user.id}` });
+            .setColor("#7ff520")
+            .setThumbnail(`${member.user.avatarURL()}?size=1024`)
+            .addFields(
+                { name: `Userinfo command for ${member.user.tag}`, value: `UserID | ${member.user.id}`, inline: true },
+                { name: `Server Permissions`, value: `${perms}`, inline: true },
+                { name: `User Status`, value: status, inline: true },
+                { name: `Server Infractions`, value: `${infractions}`, inline: true },
+                { name: `Joined Server at`, value: `<t:${Math.floor(member.joinedAt / 1000)}>`, inline: true },
+                { name: `Joined Discord at`, value: `<t:${Math.floor(member.user.createdAt / 1000)}>`, inline: true },
+                { name: `Boosting Since`, value: `${boosting}` },
+            )
+            .setFooter({ text: `Requested by ${interaction.user.tag} | ${interaction.user.id}` });
 
         // Send embed
         return interaction.reply({ embeds: [emb] });

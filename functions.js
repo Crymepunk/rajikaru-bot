@@ -119,11 +119,11 @@ function getRandomIntInclusive(min, max) {
 
 // Function to turn objects to string, used for nekos.life api
 function objToString(object) {
-    let str = '';
+    let str;
     for (const k in object) {
         // eslint-disable-next-line no-prototype-builtins
         if (object.hasOwnProperty(k)) {
-            str += object[k];
+            str = object[k];
         }
     }
     return str;
@@ -170,17 +170,18 @@ function infractionlist(infractions, limit) {
 // errembed function, makes a standard error embed. Used for all errors in the bot
 function errembed({ interaction, author, desc, defer }) {
     let emb = new MessageEmbed()
-    .setColor('#CC0000');
+        .setColor('#CC0000');
     if (author) {
         emb = emb.setAuthor({ name: author });
     }
     if (desc) {
         emb = emb.setDescription(desc);
     }
-    if (defer == true) {
-        return interaction.editReply({ embeds: [emb], ephemeral: true });
-    } else {
-        return interaction.reply({ embeds: [emb], ephemeral: true });
+    switch (defer) {
+        case true:
+            return interaction.editReply({ embeds: [emb], ephemeral: true });
+        default:
+            return interaction.reply({ embeds: [emb], ephemeral: true });
     }
 }
 
@@ -188,16 +189,20 @@ function errembed({ interaction, author, desc, defer }) {
 function dmpunembed({ interaction, reason = null, punishmenttext }) {
     const title = `${punishmenttext.charAt(0).toUpperCase()}${punishmenttext.slice(1).toLowerCase()}`;
     const emb = new MessageEmbed()
-    .setTitle(title)
-    .setDescription(`You have been ${punishmenttext} in ${interaction.guild.name}!`);
-    if (punishmenttext === 'banned' || punishmenttext == 'muted') {
-        emb.setColor('#CC0000');
-        emb.addField('Duration:', 'Permanent', true);
-    }
-    if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
-        emb.addField('Reason:', reason, true);
-    } else if (punishmenttext == 'unbanned' || punishmenttext == 'unmuted') {
-        emb.setColor('GREEN');
+        .setTitle(title)
+        .setDescription(`You have been ${punishmenttext} in ${interaction.guild.name}!`);
+    // DONT ADD BREAKS
+    switch (punishmenttext) {
+        case 'banned':
+        case 'muted':
+            emb.setColor('#CC0000');
+            emb.addField('Duration:', 'Permanent', true);
+        case !'unbanned':
+        case !'unmuted':
+            emb.addField('Reason:', reason, true);
+        case 'unmuted':
+            emb.setColor('GREEN');
+        break;
     }
     return emb;
 }
@@ -206,15 +211,19 @@ function dmpunembed({ interaction, reason = null, punishmenttext }) {
 function punembed({ member, reason = null, punishmenttext }) {
     const title = `${punishmenttext.charAt(0).toUpperCase()}${punishmenttext.slice(1).toLowerCase()}`;
     const emb = new MessageEmbed()
-    .setTitle(title)
-    .setColor('#5B92E5')
-    .setDescription(`${member} has been ${punishmenttext}!`)
-    .setThumbnail(`${member.user.avatarURL()}`);
-    if (punishmenttext == 'banned' || punishmenttext == 'muted') {
-        emb.addField('Duration:', 'Permanent', true);
-    }
-    if (punishmenttext !== 'unbanned' && punishmenttext !== 'unmuted') {
-        emb.addField('Reason:', reason, true);
+        .setTitle(title)
+        .setColor('#5B92E5')
+        .setDescription(`${member} has been ${punishmenttext}!`)
+        .setThumbnail(`${member.user.avatarURL()}`);
+    // DONT ADD BREAKS
+    switch (punishmenttext) {
+        case 'banned':
+        case 'muted':
+            emb.addField('Duration:', 'Permanent', true);
+        case !'unbanned':
+        case !'unmuted':
+            emb.addField('Reason:', reason, true);
+        break;
     }
     return emb;
 }
@@ -224,6 +233,120 @@ Permcheck function.
 Checks permissions of the given user and has multiple checks to make it usable in most commands.
 TODO: Make this less complicated if possible.
 */
+async function permcheck({ interaction, member, selfcheck, permflag, manonly, roleposcheck, defer }) {
+    let brole; let usrole;
+    let memrole;
+    const owner = await interaction.guild.fetchOwner();
+    switch (member) {
+        case null:
+            switch (interaction.member) {
+                case !owner:
+                    const guildTableName = String(interaction.guild.id + '-guild');
+                    const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+                    let modrole; let manrole;
+                    let modroles;
+                    if (guildtable) {
+                        modrole = await guildtable.get('modrole');
+                        manrole = await guildtable.get('manrole');
+                    }
+
+                    // If command can be used by only Managers or both Moderators and Managers
+                    switch (manonly) {
+                        case true:
+                            modroles = [manrole];
+                            break;
+                        default:
+                            modroles = [modrole, manrole];
+                    }
+
+                    switch (permflag) {
+                        // Just check for modrole or manrole
+                        case null:
+                            if (!contentcheck(interaction.member._roles, modroles)) {
+                                return (errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer }), true);
+                            }
+                            break;
+                        // If permflag exists check for permissions
+                        default:
+                            if (!interaction.member.permissions.has(permflag)) {
+                                if (!contentcheck(interaction.member._roles, modroles)) {
+                                    return (errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer }), true);
+                                }
+                            }
+                    }
+            }
+            break;
+        default:
+            brole = interaction.guild.me.roles.highest;
+            usrole = interaction.member.roles.highest;
+            memrole = member.roles.highest;
+            if (member.user.bot) {
+                return (errembed({ interaction: interaction, author: 'This member is a bot!', defer: defer }), true);
+            }
+            switch (interaction.member) {
+                case !owner:
+                    const guildTableName = String(interaction.guild.id + '-guild');
+                    const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+                    let modrole; let manrole;
+                    let modroles;
+                    if (guildtable) {
+                        modrole = await guildtable.get('modrole');
+                        manrole = await guildtable.get('manrole');
+                    }
+
+                    // If command can be used by only Managers or both Moderators and Managers
+                    switch (manonly) {
+                        case true:
+                            modroles = [manrole];
+                            break;
+                        default:
+                            modroles = [modrole, manrole];
+                    }
+
+                    // If it should check if user is member or not
+                    if (selfcheck == true) {
+                        // Check if member is sender and if so send an error message
+                        if (interaction.member == member) {
+                            return (errembed({ interaction: interaction, author: `Please ping someone other than yourself!`, defer: defer }), true);
+                        }
+                    }
+                    switch (permflag) {
+                        // Just check for modrole or manrole
+                        case null:
+                            if (!contentcheck(interaction.member._roles, modroles)) {
+                                return (errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer }), true);
+                            }
+                            break;
+                        // If permflag exists check for permissions
+                        default:
+                            if (!interaction.member.permissions.has(permflag)) {
+                                if (!contentcheck(interaction.member._roles, modroles)) {
+                                    return (errembed({ interaction: interaction, author: 'You are missing the required permissions!', defer: defer }), true);
+                                }
+                             // Check for modrole and or manrole and if not check role positions
+                            } else if (!contentcheck(interaction.member._roles, modroles)) {
+                                if (usrole.comparePositionTo(memrole) <= memrole.comparePositionTo(usrole)) {
+                                    return (errembed({ interaction: interaction, author: `Cannot use this on a member with the same or a higher rank than you`, desc: '||Unless you have set a modrole with /settings modrole||', defer: defer }), true);
+                                }
+                            }
+                    }
+                    // Check that member isnt a moderator
+                    if (contentcheck(member._roles, modroles) || member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+                        return (errembed({ interaction: interaction, author: 'This member is a Moderator!', defer: defer }), true);
+                    }
+            }
+            // Check if bot should check its own role position against the member's
+                // Check positions
+            if (roleposcheck != false && brole.comparePositionTo(memrole) <= memrole.comparePositionTo(brole)) {
+                // Error if it cant execute
+                return (errembed({ interaction: interaction, author: `This member's highest role is higher than my highest role`, defer: defer }), true);
+            }
+            return false;
+    }
+}
+
+/*
+OLD FUNCTION
 async function permcheck({ interaction, member, selfcheck, permflag, manonly, roleposcheck, defer }) {
     let brole; let usrole;
     let memrole;
@@ -292,16 +415,21 @@ async function permcheck({ interaction, member, selfcheck, permflag, manonly, ro
     }
     return false;
 }
+*/
 
 // updateroles function, updates user(s) roles when a role like "Muted" has been changed.
 async function updateroles({ interaction, previousRole, newRole }) {
     for (let member of await interaction.guild.members.fetch()) {
         member = member.at(1);
-        if (previousRole && member._roles.includes(previousRole.id)) {
-            await member.roles.remove(previousRole);
-            await member.roles.add(newRole);
-        } else {
-            await member.roles.add(newRole);
+        switch (previousRole) {
+            case null:
+                await member.roles.add(newRole);
+                break;
+            default:
+                if (member._roles.includes(previousRole.id)) {
+                    await member.roles.remove(previousRole);
+                    await member.roles.add(newRole);
+                }
         }
     }
 }

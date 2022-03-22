@@ -17,10 +17,12 @@ module.exports = {
 	async execute(interaction) {
         // Assign variables
         let category;
-        if (interaction.options.getString('category')) {
-            category = interaction.options.getString('category');
-        } else {
-            category = 'all';
+        switch (interaction.options.getString('category')) {
+            case null:
+                category = 'all';
+                break;
+            default:
+                category = interaction.options.getString('category');
         }
 
         // Construct embeds

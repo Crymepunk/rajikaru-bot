@@ -18,26 +18,28 @@ module.exports = {
         const member = interaction.options.getMember('member');
 
         // Check for permissions with permcheck function from functions.js
-        if (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.MUTE_MEMBERS })) {
-            return;
-        // Else execute
-        } else {
-            // Assign variables
-            let mutedrole = null;
-            const guildTableName = String(interaction.guild.id + '-guild');
-            const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
-            if (guildtable) {
-                mutedrole = await guildtable.get('mutedrole');
-            }
+        switch (await permcheck({ interaction: interaction, member: member, selfcheck: true, permflag: Permissions.FLAGS.MUTE_MEMBERS })) {
+            case true:
+                return;
+            // Else execute
+            default:
+                // Assign variables
+                let mutedrole = null;
+                const guildTableName = String(interaction.guild.id + '-guild');
+                const guildtable = await guildTables.findOne({ where: { name: guildTableName } });
+                if (guildtable) {
+                    mutedrole = await guildtable.get('mutedrole');
+                }
 
-            // Check that the member is muted and then unmute the member, otherwise send errembed
-            if (member._roles.includes(mutedrole)) {
-                await member.roles.remove(mutedrole);
-                member.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'unmuted' })] });
-                await interaction.reply({ embeds: [punembed({ member: member, punishmenttext: 'unmuted' })] });
-            } else {
-                return errembed({ interaction: interaction, author: 'Member is not muted!' });
-            }
+                // Check that the member is muted and then unmute the member, otherwise send errembed
+                switch (member._roles.includes(mutedrole)) {
+                    case true:
+                        await member.roles.remove(mutedrole);
+                        member.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'unmuted' })] });
+                        return interaction.reply({ embeds: [punembed({ member: member, punishmenttext: 'unmuted' })] });
+                    default:
+                        return errembed({ interaction: interaction, author: 'Member is not muted!' });
+                }
         }
 	},
 };

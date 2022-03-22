@@ -42,6 +42,8 @@
 		"space-unary-ops": "error",
 		"spaced-comment": "error",
 		"yoda": "error",
-		"no-unused-vars": "warn"
+		"no-unused-vars": "warn",
+		"no-fallthrough": "off",
+		"no-case-declarations": "off"
 	}
 }

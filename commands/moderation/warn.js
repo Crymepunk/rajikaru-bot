@@ -57,12 +57,12 @@ module.exports = {
             // If the member is in the server and they have more or equal to maxinfractions, ban them
             if (member && maxinf != -1 && infractions.length >= maxinf) {
                 if (interaction.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
-                // FollowUp with a ban message
-                await interaction.followUp({ embeds: [punembed({ member: user, punishmenttext: 'banned', reason: "Too many infractions." })] });
-                // Send a message to the user saying they've been banned
-                await user.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'banned', reason: "Too many infractions." })] });
-                // Ban the user
-                member.ban({ days: 0, reason: 'Too many infractions.' });
+                    // FollowUp with a ban message
+                    await interaction.followUp({ embeds: [punembed({ member: user, punishmenttext: 'banned', reason: "Too many infractions." })] });
+                    // Send a message to the user saying they've been banned
+                    await user.send({ embeds: [dmpunembed({ interaction: interaction, punishmenttext: 'banned', reason: "Too many infractions." })] });
+                    // Ban the user
+                    member.ban({ days: 0, reason: 'Too many infractions.' });
                 } else {
                     await errembed({ interaction: interaction, author: `Cannot ban member, missing permissions!` });
                 }

@@ -29,34 +29,39 @@ module.exports = {
         if (vc == 0) vc = "None";
         if (tc == 0) tc = "None";
         if (cc == 0) cc = "None";
+
         let boosts; let boosttext;
-        if (interaction.guild.premiumSubscriptionCount == 0) {
-            boosttext = `<:boost_grey:952568685648818268> Boost Status`;
-            boosts =
-                `Count: 0\n` +
-                `Tier: 0/3`;
-        } else if (interaction.guild.premiumSubscriptionCount == 1) {
-            boosttext = `<:boost:952522274819407912> Boost Status`;
-            boosts =
-                `Count: 1\n` +
-                `Tier: 0/3`;
-        } else {
-            boosttext = `<:boost:952522274819407912> Boost Status`;
-            boosts =
-                `Count: ${interaction.guild.premiumSubscriptionCount}\n` +
-                `Tier: ${interaction.guild.premiumTier.slice(5)}/3`;
+        switch (interaction.guild.premiumSubscriptionCount) {
+            case 0:
+                boosttext = `<:boost_grey:952568685648818268> Boost Status`;
+                boosts =
+                    `Count: 0\n` +
+                    `Tier: 0/3`;
+            case 1:
+                boosttext = `<:boost:952522274819407912> Boost Status`;
+                boosts =
+                    `Count: 1\n` +
+                    `Tier: 0/3`;
+            default:
+                boosttext = `<:boost:952522274819407912> Boost Status`;
+                boosts =
+                    `Count: ${interaction.guild.premiumSubscriptionCount}\n` +
+                    `Tier: ${interaction.guild.premiumTier.slice(5)}/3`;
         }
+
+        let verified; let verifiedtext;
+        switch (interaction.guild.verified) {
+            case true:
+                verifiedtext = `<:verified:952504138862829618> Verified`;
+                verified = "True";
+            default:
+                verifiedtext = `<:gcverified:952525107128061962> Verified`;
+                verified = "False";
+        }
+
         const icon = await interaction.guild.iconURL();
         const owner = await interaction.guild.fetchOwner();
         const sername = interaction.guild.name.toString();
-        let verified; let verifiedtext;
-        if (interaction.guild.verified) {
-            verifiedtext = `<:verified:952504138862829618> Verified`;
-            verified = "True";
-        } else {
-            verifiedtext = `<:gcverified:952525107128061962> Verified`;
-            verified = "False";
-        }
         let roles; await interaction.guild.roles.fetch().then(role => roles = role.size);
         // Construct embed
         const infoemb = new MessageEmbed()
