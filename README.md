@@ -16,7 +16,7 @@ Rajikaru is an open source, general purpose Discord bot.
 
 ## Commands:
 <p align='center'>
-  <img src="https://user-images.githubusercontent.com/66682497/156263641-c8e1ea00-c10a-428f-8983-b07c9dea9b20.png" alt="Image showing all the bot commands.">
+  <img src="https://user-images.githubusercontent.com/66682497/160156500-f878ada9-4073-49ba-92d7-ac2c1670f9b0.png" alt="Image showing all the bot commands.">
 </p>
 
 
