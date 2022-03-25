@@ -8,8 +8,6 @@
 <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FCrymepunk%2Frajikaru-bot"><img src="https://img.shields.io:/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2FCrymepunk%2Frajikaru-bot"></img></a>
 
 Rajikaru is an open source, general purpose Discord bot.
-This bot is still in active development and will not be finished anytime soon.
-We are making great progress and we have switched from Python to JavaScript to make our lives easier when making such an advanced bot.
 
 ## Table of Contents
 - [INSTALL.md](.github/DOCS/INSTALL.md)
